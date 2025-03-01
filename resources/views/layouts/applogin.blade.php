@@ -11,57 +11,57 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    {{-- <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
 
-    {{-- themes --}}
+
     <!-- [Favicon] icon -->
-    <link rel="icon" href="{{ asset('berry/dist/assets/images/favicon.svg') }} " type="image/x-icon" />
-    <!-- [Page specific CSS] start -->
-    <link href="{{ asset('berry/dist/assets/css/plugins/animate.min.css') }} " rel="stylesheet" type="text/css" />
-    <!-- [Page specific CSS] end -->
+    <link rel="icon" href="{{ asset('assets/images/favicon.svg') }} " type="image/x-icon" />
+
     <!-- [Google Font] Family -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
         id="main-font-link" />
-    <!-- [Tabler Icons] https://tablericons.com -->
-    <link rel="stylesheet" href="{{ asset('berry/dist/assets/fonts/tabler-icons.min.css') }} " />
-    <!-- [Feather Icons] https://feathericons.com -->
-    <link rel="stylesheet" href="{{ asset('berry/dist/assets/fonts/feather.css') }} " />
-    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
-    <link rel="stylesheet" href="{{ asset('berry/dist/assets/fonts/fontawesome.css') }} " />
-    <!-- [Material Icons] https://fonts.google.com/icons -->
-    <link rel="stylesheet" href="{{ asset('berry/dist/assets/fonts/material.css') }} " />
-    <!-- [Template CSS Files] -->
-    <link rel="stylesheet" href="{{ asset('berry/dist/assets/css/style.css') }} " id="main-style-link" />
-    <link rel="stylesheet" href="{{ asset('berry/dist/assets/css/style-preset.css') }} " />
 
-    <link rel="stylesheet" href="{{ asset('berry/dist/assets/css/landing.css') }} " />
+    <!-- [phosphor Icons] https://phosphoricons.com/ -->
+    {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/phosphor/duotone/style.css') }}" /> --}}
+
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/tabler-icons.min.css') }} " />
+
+    <!-- [Feather Icons] https://feathericons.com -->
+    {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/feather.css') }} " /> --}}
+
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome.css') }} " /> --}}
+
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/material.css') }} " /> --}}
+
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} " id="main-style-link" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style-preset.css') }} " />
+
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+
+    @stack('css')
+
 </head>
 
 <body>
-    <!-- [ Pre-loader ] start -->
-    <div class="loader-bg">
-        <div class="loader-track">
-            <div class="loader-fill"></div>
-        </div>
-    </div>
-
-    <div id="app">
-        @yield('content')
-        </main>
-    </div>
+    @include('layouts.partials.loader')
+    @yield('content')
 
     <!-- Required Js -->
-    <script src="{{ asset('berry/dist/assets/js/plugins/popper.min.js') }}"></script>
-    <script src="{{ asset('berry/dist/assets/js/plugins/simplebar.min.js') }}"></script>
-    <script src="{{ asset('berry/dist/assets/js/plugins/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('berry/dist/assets/js/icon/custom-font.js') }}"></script>
-    <script src="{{ asset('berry/dist/assets/js/script.js') }}"></script>
-    <script src="{{ asset('berry/dist/assets/js/theme.js') }}"></script>
-    <script src="{{ asset('berry/dist/assets/js//plugins/feather.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/simplebar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/fonts/custom-font.js') }}"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
+    <script src="{{ asset('assets/js/theme.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/feather.min.js') }}"></script>
 
+    {{-- setting js --}}
     <script>
         layout_change('light');
     </script>
@@ -86,14 +86,7 @@
         preset_change('preset-1');
     </script>
 
-
-
-    <!-- [Page Specific JS] start -->
-    <!-- Apex Chart -->
-    <script src="{{ asset('berry/dist/assets/js/plugins/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('berry/dist/assets/js/pages/dashboard-default.js') }}"></script>
-
-    <!-- [Page Specific JS] end -->
+    @stack('script')
 </body>
 
 </html>

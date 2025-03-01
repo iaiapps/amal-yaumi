@@ -1,5 +1,6 @@
 <header class="pc-header">
-    <div class="header-wrapper"><!-- [Mobile Media Block] start -->
+    <div class="header-wrapper">
+        <!-- [Mobile Media Block] start -->
         <div class="me-auto pc-mob-drp">
             <ul class="list-unstyled">
                 <li class="pc-h-item header-mobile-collapse">
@@ -76,8 +77,8 @@
                                 <div class="list-group-item list-group-item-action">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0">
-                                            <img src="../assets/images/user/avatar-3.jpg" alt="user-image"
-                                                class="user-avtar" />
+                                            <img src="{{ asset('berry/dist/assets/images/user/avatar-3.jpg') }} "
+                                                alt="user-image" class="user-avtar" />
                                         </div>
                                         <div class="flex-grow-1 ms-1">
                                             <span class="float-end text-muted">10 min ago</span>
@@ -100,7 +101,8 @@
                 <li class="dropdown pc-h-item header-user-profile">
                     <a class="pc-head-link head-link-primary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown"
                         href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar" />
+                        <img src="{{ asset('berry/dist/assets/images/user/avatar-2.jpg') }}" alt="user-image"
+                            class="user-avtar" />
                         <span>
                             <i class="ti ti-settings"></i>
                         </span>
@@ -137,6 +139,15 @@
                             </div>
                         </div>
                     </div>
+                </li>
+                <li class="pc-h-item">
+                    <div class="float-end d-flex">
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="ms-2 btn btn-danger">logout</button>
+                        </form>
+                    </div>
+
                 </li>
             </ul>
         </div>
