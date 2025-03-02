@@ -14,7 +14,9 @@ Route::middleware('auth')->group(function () {
 
     // admin
     Route::middleware('role:admin')->group(function () {
-        Route::resource('user', UserController::class);
+        Route::get('user', [UserController::class, 'index'])->name('user.index');
+        Route::get('user-reset', [UserController::class, 'reset'])->name('user.reset');
+
         Route::resource('student', StudentController::class);
         Route::resource('mutabaah', MutabaahController::class);
         Route::resource('answer', AnswerController::class);

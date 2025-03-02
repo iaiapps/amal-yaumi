@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,7 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.index');
+        $users = User::all();
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -61,5 +63,14 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    // reset password
+    public function reset(User $user)
+    {
+        $user->update([
+            'password' => Hash::make('password1234')
+        ]);
+        return redirect()->back()->with('success', 'Berhasil reset password!');
     }
 }
