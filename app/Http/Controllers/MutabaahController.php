@@ -12,7 +12,8 @@ class MutabaahController extends Controller
      */
     public function index()
     {
-        //
+        $mutabaahs = Mutabaah::all();
+        return view('mutabaah.index', compact('mutabaahs'));
     }
 
     /**
@@ -20,7 +21,7 @@ class MutabaahController extends Controller
      */
     public function create()
     {
-        //
+        return view('mutabaah.create');
     }
 
     /**
@@ -28,7 +29,9 @@ class MutabaahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        Mutabaah::create($data);
+        return redirect()->route('mutabaah.index')->with('success', 'Berhasil menambah data');
     }
 
     /**
@@ -44,7 +47,7 @@ class MutabaahController extends Controller
      */
     public function edit(Mutabaah $mutabaah)
     {
-        //
+        return view('mutabaah.edit', compact('mutabaah'));
     }
 
     /**
@@ -52,7 +55,9 @@ class MutabaahController extends Controller
      */
     public function update(Request $request, Mutabaah $mutabaah)
     {
-        //
+        $data = $request->all();
+        $mutabaah->update($data);
+        return redirect()->route('mutabaah.index')->with('success', 'Berhasil update data');
     }
 
     /**
@@ -60,6 +65,7 @@ class MutabaahController extends Controller
      */
     public function destroy(Mutabaah $mutabaah)
     {
-        //
+        $mutabaah->delete();
+        return redirect()->back()->with('success', 'Berhasil menghapus data');
     }
 }
