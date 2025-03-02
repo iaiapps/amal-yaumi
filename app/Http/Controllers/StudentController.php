@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -12,7 +14,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::all();
+        return view('student.index', compact('students'));
     }
 
     /**
@@ -20,7 +23,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('student.create');
     }
 
     /**
@@ -28,7 +31,16 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $id = User::create([
+            'name' => $request->nama,
+            'email' => $request->nis . '@gmail.com',
+            'password' => Hash::make('password1234')
+        ])->id;
+
+        $data['user_id'] = $id;
+        Student::create($data);
+        return redirect()->route('student.index')->with('success', 'Berhasil menambah data');
     }
 
     /**
@@ -44,7 +56,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        return view('student.edit', compact('student'));
     }
 
     /**
@@ -52,7 +64,13 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $data = $request->all();
+        $student->user->update([
+            'name' => $request->nama,
+            'email' => $request->nis . '@gmail.com',
+        ]);
+        $student->update($data);
+        return redirect()->route('student.index')->with('success', 'Berhasil update data');
     }
 
     /**
@@ -60,6 +78,8 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->user->delete();
+        $student->delete();
+        return redirect()->back()->with('success', 'Berhasil menghapus data');
     }
 }

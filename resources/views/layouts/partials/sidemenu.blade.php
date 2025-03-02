@@ -23,7 +23,7 @@
                     <i class="ti ti-apps"></i>
                 </li>
                 <li class="pc-item">
-                    <a href="../elements/bc_typography.html" class="pc-link">
+                    <a href="{{ route('student.index') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-school"></i></span>
                         <span class="pc-mtext">Siswa</span>
                     </a>

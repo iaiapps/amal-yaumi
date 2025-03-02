@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('title', 'Home')
 @section('content')
+
+    <div class="card">
+        <div class="card-body">
+            <p class="fs-3 mb-0">Selamat datang di Aplikasi Amal Yaumi</p>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <div class="card bg-primary-dark dashnum-card dashnum-card-small text-white overflow-hidden">
@@ -36,10 +42,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-    </div>
-
     </div>
 @endsection
