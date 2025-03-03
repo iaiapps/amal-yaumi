@@ -68,6 +68,7 @@ class UserController extends Controller
     // reset password
     public function reset(User $user)
     {
+        // dd($user);
         $user->update([
             'password' => Hash::make('password1234')
         ]);

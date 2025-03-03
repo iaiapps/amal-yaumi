@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Models\Mutabaah;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,8 @@ class MutabaahController extends Controller
      */
     public function create()
     {
-        return view('mutabaah.create');
+        $students = Student::all();
+        return view('mutabaah.create', compact('students'));
     }
 
     /**
@@ -47,7 +49,8 @@ class MutabaahController extends Controller
      */
     public function edit(Mutabaah $mutabaah)
     {
-        return view('mutabaah.edit', compact('mutabaah'));
+        $students = Student::all();
+        return view('mutabaah.edit', compact('mutabaah', 'students'));
     }
 
     /**

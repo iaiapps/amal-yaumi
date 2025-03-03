@@ -13,8 +13,20 @@ return new class extends Migration
     {
         Schema::create('mutabaahs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('jenis');
+            $table->foreignId('student_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->date('tanggal');
+            $table->string('puasa');
+            $table->string('subuh');
+            $table->string('dhuhur');
+            $table->string('ashar');
+            $table->string('magrib');
+            $table->string('isya');
+            $table->string('dhuha');
+            $table->string('tarawih');
+            $table->string('tahajud');
+            $table->string('tilawah');
+            $table->string('infaq');
+            $table->string('birrul');
             $table->timestamps();
         });
     }

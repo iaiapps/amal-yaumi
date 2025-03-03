@@ -17,7 +17,7 @@
                     <tr class="bg-primary-subtle">
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Jenis Mutabaah</th>
+                        <th>Tanggal</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -25,8 +25,8 @@
                     @foreach ($mutabaahs as $mutabaah)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $mutabaah->nama }}</td>
-                            <td>{{ $mutabaah->jenis }}</td>
+                            <td>{{ $mutabaah->student->nama }}</td>
+                            <td>{{ $mutabaah->tanggal }}</td>
                             <td>
                                 <a href="{{ route('mutabaah.edit', $mutabaah->id) }}"
                                     class="btn btn-sm btn-warning">edit</a>
