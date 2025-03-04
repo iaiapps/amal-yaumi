@@ -12,35 +12,70 @@
             <a href="{{ route('mutabaah.create') }}" class="btn btn-primary">tambah mutabaah</a>
         </div>
         <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr class="bg-primary-subtle">
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Tanggal</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($mutabaahs as $mutabaah)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $mutabaah->student->nama }}</td>
-                            <td>{{ $mutabaah->tanggal }}</td>
-                            <td>
-                                <a href="{{ route('mutabaah.edit', $mutabaah->id) }}"
-                                    class="btn btn-sm btn-warning">edit</a>
-                                <form action="{{ route('mutabaah.destroy', $mutabaah->id) }}" method="post"
-                                    class="d-inline-block" onclick="return alert('apakah kamu yakin menghapus data?')">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-sm btn-danger">delete</button>
-                                </form>
-                            </td>
+            <div class="table-responsive">
+                @php
+                    $period = \Carbon\CarbonPeriod::create('2025-03-01', '2025-03-31');
+
+                @endphp
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr class="bg-primary-subtle">
+                            <th rowspan="2">No</th>
+                            <th rowspan="2">Nama siswa</th>
+                            <th colspan="31" class="text-center">Pengisian</th>
+                            {{-- <th rowspan="2">Action</th> --}}
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        <tr>
+                            @for ($i = 1; $i <= 31; $i++)
+                                <th>{{ $i }}</th>
+                            @endfor
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        @foreach ($students as $student)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $student->nama }}</td>
+
+                                @foreach ($period as $date)
+                                    @php
+                                        $mutabaah = $student->mutabaah
+                                            ->where('tanggal', $date->isoFormat('YYYY-MM-DD'))
+                                            ->first();
+                                    @endphp
+                                    <td>
+                                        @if ($mutabaah == null)
+                                            -
+                                        @else
+                                            {{ \Carbon\Carbon::parse($mutabaah->tanggal)->isoFormat('DD/MM/YYYY') }}
+                                            <span>
+                                                <div class="btn-group">
+                                                    <a href="{{ route('mutabaah.show', $mutabaah->id) }}"
+                                                        class="btn btn-sm btn-primary"><i class="ti ti-info-circle"></i></a>
+                                                    <a href="{{ route('mutabaah.edit', $mutabaah->id) }}"
+                                                        class="btn btn-sm btn-warning"> <i class="ti ti-edit"></i></a>
+                                                    <form action="{{ route('mutabaah.destroy', $mutabaah->id) }}"
+                                                        method="post" class="d-inline-block"
+                                                        onclick="return alert('apakah kamu yakin menghapus data?')">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-danger"><i
+                                                                class="ti ti-trash"></i> </button>
+                                                    </form>
+                                                </div>
+                                            </span>
+                                        @endif
+                                    </td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+
     </div>
 @endsection

@@ -1,9 +1,138 @@
 @extends('layouts.app')
-@section('title', 'Edit Mutabaah')
+@section('title', 'Detail Mutabaah')
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('mutabaah.update', $mutabaah->id) }}" method="post">
+            <p>Tanggal {{ \Carbon\Carbon::parse($mutabaah->tanggal)->isoFormat('DD-MMMM-YYYY') }}</p>
+            <table class="table tablestriped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Kegiatan</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Puasa</td>
+                        <td>{{ $mutabaah->puasa }}</td>
+                    </tr>
+                    <tr>
+                        <td>Solat Subuh</td>
+                        <td>
+                            @if ($mutabaah->subuh == 1)
+                                Berjamaah
+                            @elseif($mutabaah->subuh == 2)
+                                Sendirian
+                            @elseif($mutabaah->subuh == 3)
+                                Tidak Sholat
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solat Dhuhur</td>
+                        <td>
+                            @if ($mutabaah->dhuhur == 1)
+                                Berjamaah
+                            @elseif($mutabaah->dhuhur == 2)
+                                Sendirian
+                            @elseif($mutabaah->dhuhur == 3)
+                                Tidak Sholat
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solat Ashar</td>
+                        <td>
+                            @if ($mutabaah->ashar == 1)
+                                Berjamaah
+                            @elseif($mutabaah->ashar == 2)
+                                Sendirian
+                            @elseif($mutabaah->ashar == 3)
+                                Tidak Sholat
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solat Magrib</td>
+                        <td>
+                            @if ($mutabaah->magrib == 1)
+                                Berjamaah
+                            @elseif($mutabaah->magrib == 2)
+                                Sendirian
+                            @elseif($mutabaah->magrib == 3)
+                                Tidak Sholat
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solat Isya</td>
+                        <td>
+                            @if ($mutabaah->isya == 1)
+                                Berjamaah
+                            @elseif($mutabaah->isya == 2)
+                                Sendirian
+                            @elseif($mutabaah->isya == 3)
+                                Tidak Sholat
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solat Dhuha</td>
+                        <td>
+                            @if ($mutabaah->dhuha == 1)
+                                Berjamaah
+                            @elseif($mutabaah->dhuha == 2)
+                                Sendirian
+                            @elseif($mutabaah->dhuha == 3)
+                                Tidak Sholat
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solat Tarawih</td>
+                        <td>
+                            @if ($mutabaah->tarawih == 1)
+                                Berjamaah
+                            @elseif($mutabaah->tarawih == 2)
+                                Sendirian
+                            @elseif($mutabaah->tarawih == 3)
+                                Tidak Sholat
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solat Tahajud</td>
+                        <td>
+                            @if ($mutabaah->tahajud == 1)
+                                Berjamaah
+                            @elseif($mutabaah->tahajud == 2)
+                                Sendirian
+                            @elseif($mutabaah->tahajud == 3)
+                                Tidak Sholat
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tilawah</td>
+                        <td>
+                            {{ $mutabaah->tilawah }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Infaq</td>
+                        <td>
+                            {{ $mutabaah->infaq }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Birrul Walidain</td>
+                        <td>
+                            {{ $mutabaah->birrul }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {{-- <form action="{{ route('mutabaah.update', $mutabaah->id) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="mb-3">
@@ -184,7 +313,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">simpan data</button>
-            </form>
+            </form> --}}
         </div>
     </div>
 @endsection

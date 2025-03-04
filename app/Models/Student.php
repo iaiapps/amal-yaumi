@@ -12,4 +12,8 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function mutabaah()
+    {
+        return $this->hasMany(Mutabaah::class);
+    }
 }

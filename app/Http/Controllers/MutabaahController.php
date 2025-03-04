@@ -14,7 +14,8 @@ class MutabaahController extends Controller
     public function index()
     {
         $mutabaahs = Mutabaah::all();
-        return view('mutabaah.index', compact('mutabaahs'));
+        $students = Student::all();
+        return view('mutabaah.index', compact('mutabaahs', 'students'));
     }
 
     /**
@@ -41,7 +42,7 @@ class MutabaahController extends Controller
      */
     public function show(Mutabaah $mutabaah)
     {
-        //
+        return view('mutabaah.show', compact('mutabaah'));
     }
 
     /**

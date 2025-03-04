@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,37 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        /** @var \App\Models\User */
+
+        $user = Auth::user();
+        $id = $user->id;
+
+        // get name
+        $name = $user->name;
+
+        //get role names
+        $role = $user->getRoleNames()->first();
+
+        // get student all
+        $students = Student::all();
+        // student name
+        $student = Student::where('user_id', '=', $id)->first();
+
+        // now
+        // $now = Carbon::now();
+
+
+        switch ($role) {
+            case 'admin':
+                return view('home', compact('students', 'name'));
+                break;
+
+            case 'siswa':
+                return view('home_s', compact('student'));
+                break;
+
+            default:
+                return back();
+        }
     }
 }
