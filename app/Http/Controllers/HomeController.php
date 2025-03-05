@@ -44,6 +44,7 @@ class HomeController extends Controller
         // now
         // $now = Carbon::now();
 
+        $status = 'anda tidak terdaftar';
 
         switch ($role) {
             case 'admin':
@@ -55,7 +56,7 @@ class HomeController extends Controller
                 break;
 
             default:
-                return back();
+                return view('auth.login', compact('status'));
         }
     }
 }

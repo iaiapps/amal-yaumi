@@ -19,7 +19,7 @@
                         </div>
                         <div class="ms-2">
                             <p class="fs-4 mb-0">Total Siswa</p>
-                            <h4 class="text-white fs-2 mb-0">02</h4>
+                            <h4 class="text-white fs-2 mb-0">{{ $students->count() }}</h4>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="ms-2">
                             <p class="fs-4 mb-0">Total Mutabaah</p>
-                            <h4 class="text-white fs-2 mb-0">02</h4>
+                            <h4 class="text-white fs-2 mb-0">6</h4>
                         </div>
                     </div>
                 </div>

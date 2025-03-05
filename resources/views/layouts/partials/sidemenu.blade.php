@@ -78,7 +78,7 @@
                             <i class="ti ti-apps"></i>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('mutabaah.index') }}" class="pc-link">
+                            <a href="{{ route('amal.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-list-numbers"></i></span>
                                 <span class="pc-mtext">Mutabaah</span>
                             </a>

@@ -32,11 +32,12 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+
         $id = User::create([
             'name' => $request->nama,
             'email' => $request->nis . '@gmail.com',
-            'password' => Hash::make('password1234')
-        ])->id;
+            'password' => Hash::make('password1234'),
+        ])->assignRole('siswa')->id;
 
         $data['user_id'] = $id;
         Student::create($data);

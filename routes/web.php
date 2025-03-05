@@ -21,4 +21,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('mutabaah', MutabaahController::class);
         Route::resource('answer', AnswerController::class);
     });
+
+    Route::middleware('role:siswa')->group(function () {
+        Route::get('amalyaumi', [MutabaahController::class, 'amalCreate'])->name('amal.create');
+        Route::post('amalyaumi', [MutabaahController::class, 'amalStore'])->name('amal.store');
+
+        Route::get('amalindex', [MutabaahController::class, 'amalIndex'])->name('amal.index');
+    });
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Mutabaah;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MutabaahController extends Controller
 {
@@ -71,5 +72,25 @@ class MutabaahController extends Controller
     {
         $mutabaah->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus data');
+    }
+
+    // handle from user //
+    public function amalIndex()
+    {
+        $user = Auth::user();
+        $student = $user->student;
+        $mutabaahs = Mutabaah::all();
+        // $students = Student::all();
+        return view('mutabaah.index_s', compact('mutabaahs', 'student'));
+    }
+    public function amalCreate()
+    {
+        return view('mutabaah.create');
+    }
+    public function amalStore(Request $request)
+    {
+        $data = $request->all();
+        Mutabaah::create($data);
+        return redirect()->route('home')->with('success', 'Berhasil menambah data');
     }
 }

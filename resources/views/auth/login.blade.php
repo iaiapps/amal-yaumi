@@ -6,6 +6,17 @@
             <div class="auth-form">
                 <div class="card my-5">
                     <div class="card-body">
+                        @if (isset($status))
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    {{-- <button type="submit" class="ms-2 btn btn-danger">logout</button> --}}
+                                    <strong>{{ $status }}</strong>
+                                    <button type="submit" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </form>
+                            </div>
+                        @endif
                         <a href="#" class="d-flex justify-content-center">
                             <img src="{{ asset('berry/dist/assets/images/logo-dark.svg') }}" alt="image"
                                 class="img-fluid brand-logo" />
@@ -13,7 +24,7 @@
                         <div class="row">
                             <div class="d-flex justify-content-center">
                                 <div class="auth-header">
-                                    <h2 class="text-secondary mt-5"><b>Hallo, Selamat Datang</b></h2>
+                                    <h2 class="text-secondary mt-5"><b>Selamat Datang di Aplikasi Amal Yaumi</b></h2>
                                     <p class=" mt-2 text-center">Silahkan masukkan email/username dan kata sandi untuk
                                         melanjutkan
                                     </p>
