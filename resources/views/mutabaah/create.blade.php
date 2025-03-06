@@ -11,7 +11,6 @@
         } elseif ($role == 'admin') {
             $url = route('mutabaah.store');
         }
-
     @endphp
     <div class="card">
         <div class="card-body">

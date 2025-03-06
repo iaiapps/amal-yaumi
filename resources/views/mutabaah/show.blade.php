@@ -3,7 +3,8 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <p>Tanggal {{ \Carbon\Carbon::parse($mutabaah->tanggal)->isoFormat('DD-MMMM-YYYY') }}</p>
+            <p>Tanggal {{ \Carbon\Carbon::parse($mutabaah->tanggal)->isoFormat('DD MMMM YYYY') }}</p>
+            <p>{{ $mutabaah->student->nama }}</p>
             <table class="table tablestriped table-bordered">
                 <thead>
                     <tr>

@@ -23,9 +23,13 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:siswa')->group(function () {
-        Route::get('amalyaumi', [MutabaahController::class, 'amalCreate'])->name('amal.create');
+        // catatan, sebenarnya ini bisa pakai controller-resource cuman beda handle di view. memakai 'if'. Dibedakan dengan role
+        Route::get('amalyaumi', [MutabaahController::class, 'amalIndex'])->name('amal.index');
+        Route::get('amalyaumi/create', [MutabaahController::class, 'amalCreate'])->name('amal.create');
         Route::post('amalyaumi', [MutabaahController::class, 'amalStore'])->name('amal.store');
-
-        Route::get('amalindex', [MutabaahController::class, 'amalIndex'])->name('amal.index');
+        Route::get('amalyaumi/{mutabaah}/edit', [MutabaahController::class, 'amalEdit'])->name('amal.edit');
+        Route::get('amalyaumi/{mutabaah}', [MutabaahController::class, 'amalShow'])->name('amal.show');
+        Route::put('amalyaumi/{mutabaah}', [MutabaahController::class, 'amalUpdate'])->name('amal.update');
+        Route::delete('amalyaumi/{mutabaah}', [MutabaahController::class, 'amalDestroy'])->name('amal.destroy');
     });
 });

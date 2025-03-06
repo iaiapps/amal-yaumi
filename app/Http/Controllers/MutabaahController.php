@@ -91,6 +91,26 @@ class MutabaahController extends Controller
     {
         $data = $request->all();
         Mutabaah::create($data);
-        return redirect()->route('home')->with('success', 'Berhasil menambah data');
+        return redirect()->route('amal.index')->with('success', 'Berhasil menambah data');
+    }
+    public function amalShow(Mutabaah $mutabaah)
+    {
+        return view('mutabaah.show', compact('mutabaah'));
+    }
+
+    public function amalEdit(Mutabaah $mutabaah)
+    {
+        return view('mutabaah.edit', compact('mutabaah'));
+    }
+    public function amalUpdate(Request $request, Mutabaah $mutabaah)
+    {
+        $data = $request->all();
+        $mutabaah->update($data);
+        return redirect()->route('amalyaumi.index')->with('success', 'Berhasil update data');
+    }
+    public function amalDestroy(Mutabaah $mutabaah)
+    {
+        $mutabaah->delete();
+        return redirect()->back()->with('success', 'Berhasil menghapus data');
     }
 }

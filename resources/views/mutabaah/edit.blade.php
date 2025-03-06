@@ -1,9 +1,20 @@
 @extends('layouts.app')
 @section('title', 'Edit Mutabaah')
 @section('content')
+
+    @php
+        $user = Auth::user();
+        $role = $user->getRoleNames()->first();
+
+        if ($role == 'siswa') {
+            $url = route('amal.update', $mutabaah->id);
+        } elseif ($role == 'admin') {
+            $url = route('mutabaah.update', $mutabaah->id);
+        }
+    @endphp
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('mutabaah.update', $mutabaah->id) }}" method="post">
+            <form action="{{ $url }}" method="post">
                 @csrf
                 @method('put')
                 <div class="mb-3">
@@ -11,14 +22,18 @@
                     <input id="tanggal" type="date" class="form-control" name="tanggal" value="{{ $mutabaah->tanggal }}"
                         required>
                 </div>
-                <div class="mb-3">
-                    <label for="nama_siswa" class="form-label">Nama siswa</label>
-                    <select class="form-select" name="student_id" id="nama_siswa" required>
-                        @foreach ($students as $student)
-                            <option value="{{ $student->id }}">{{ $student->nama }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                @if ($role == 'siswa')
+                    <input type="text" value="{{ $user->student->id }}" name="student_id" readonly hidden>
+                @elseif ($role == 'admin')
+                    <div class="mb-3">
+                        <label for="nama_siswa" class="form-label">Nama siswa</label>
+                        <select class="form-select" name="student_id" id="nama_siswa" required>
+                            @foreach ($students as $student)
+                                <option value="{{ $student->id }}">{{ $student->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
                 <div class="mb-3">
                     <label for="puasa" class="form-label">Puasa</label>
                     <select class="form-select" name="puasa" id="puasa" required>
