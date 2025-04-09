@@ -56,7 +56,8 @@ class HomeController extends Controller
                 break;
 
             default:
-                return view('auth.login', compact('status'));
+                dd('berhasil login');
+                // return view('auth.login', compact('status'));
         }
     }
 }

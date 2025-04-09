@@ -79,8 +79,7 @@ class MutabaahController extends Controller
     {
         $user = Auth::user();
         $student = $user->student;
-        $mutabaahs = Mutabaah::all();
-        // $students = Student::all();
+        $mutabaahs = Mutabaah::where('student_id', $student->id)->get();
         return view('mutabaah.index_s', compact('mutabaahs', 'student'));
     }
     public function amalCreate()

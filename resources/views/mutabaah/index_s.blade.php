@@ -15,8 +15,10 @@
         <div class="card-body">
             <div class="table-responsive">
                 @php
-                    $period = \Carbon\CarbonPeriod::create('2025-03-01', '2025-03-31');
+                    $period = \Carbon\CarbonPeriod::between(now()->startOfMonth(), now()->endOfMonth());
+                    // dd($period);
                 @endphp
+                <p class="fs-4">Mutabaah Bulan {{ \Carbon\Carbon::now()->isoFormat('MMMM YYYY') }}</p>
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr class="bg-primary-subtle">
