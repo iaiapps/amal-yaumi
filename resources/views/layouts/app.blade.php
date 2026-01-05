@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="{{ asset('assets/fonts/tabler-icons.min.css') }} " />
 
     <!-- [Feather Icons] https://feathericons.com -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/feather.css') }} " /> --}}
+    <link rel="stylesheet" href="{{ asset('assets/fonts/feather.css') }} " />
 
     <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
     {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome.css') }} " /> --}}
@@ -41,8 +41,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} " id="main-style-link" />
     <link rel="stylesheet" href="{{ asset('assets/css/style-preset.css') }} " />
 
-    <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 
     @stack('css')
 

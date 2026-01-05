@@ -17,14 +17,14 @@
                                 </form>
                             </div>
                         @endif
-                        <a href="#" class="d-flex justify-content-center">
-                            <img src="{{ asset('berry/dist/assets/images/logo-dark.svg') }}" alt="image"
-                                class="img-fluid brand-logo" />
-                        </a>
+                        {{-- <a href="#" class="d-flex justify-content-center">
+                            <img src="{{ asset('/assets/images/logo.svg') }}" alt="image" class="img-fluid brand-logo" />
+                        </a> --}}
                         <div class="row">
                             <div class="d-flex justify-content-center">
                                 <div class="auth-header">
-                                    <h2 class="text-secondary mt-5"><b>Selamat Datang di Aplikasi Amal Yaumi</b></h2>
+                                    <h2 class="text-secondary mt-2 text-center"><b>Selamat Datang di Aplikasi Amal Yaumi</b>
+                                    </h2>
                                     <p class=" mt-2 text-center">Silahkan masukkan email/username dan kata sandi untuk
                                         melanjutkan
                                     </p>
