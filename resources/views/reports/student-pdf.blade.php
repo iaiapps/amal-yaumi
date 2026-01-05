@@ -18,9 +18,7 @@
 </head>
 <body>
     <div class="header">
-        <h2>{{ $school->nama ?? 'SEKOLAH' }}</h2>
-        <p>{{ $school->alamat ?? '' }}</p>
-        <h3>LAPORAN MUTABAAH AMAL YAUMI</h3>
+        <h2>LAPORAN MUTABAAH AMAL YAUMI</h2>
     </div>
 
     <div class="info">
@@ -53,41 +51,23 @@
             <tr>
                 <th>No</th>
                 <th>Tanggal</th>
-                <th>Puasa</th>
-                <th>Subuh</th>
-                <th>Dhuhur</th>
-                <th>Ashar</th>
-                <th>Magrib</th>
-                <th>Isya</th>
-                <th>Dhuha</th>
-                <th>Tarawih</th>
-                <th>Tahajud</th>
-                <th>Tilawah</th>
-                <th>Infaq</th>
-                <th>Birrul</th>
+                @foreach($items as $item)
+                <th>{{ $item->nama }}</th>
+                @endforeach
             </tr>
         </thead>
         <tbody>
             @forelse($mutabaahs as $m)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ \Carbon\Carbon::parse($m->tanggal)->format('d/m/Y') }}</td>
-                <td>{{ $m->puasa }}</td>
-                <td>{{ $m->subuh }}</td>
-                <td>{{ $m->dhuhur }}</td>
-                <td>{{ $m->ashar }}</td>
-                <td>{{ $m->magrib }}</td>
-                <td>{{ $m->isya }}</td>
-                <td>{{ $m->dhuha }}</td>
-                <td>{{ $m->tarawih }}</td>
-                <td>{{ $m->tahajud }}</td>
-                <td>{{ $m->tilawah }}</td>
-                <td>{{ $m->infaq }}</td>
-                <td>{{ $m->birrul }}</td>
+                <td>{{ $m->tanggal->format('d/m/Y') }}</td>
+                @foreach($items as $item)
+                <td>{{ $m->data[$item->id] ?? '-' }}</td>
+                @endforeach
             </tr>
             @empty
             <tr>
-                <td colspan="14">Tidak ada data mutabaah pada periode ini</td>
+                <td colspan="{{ count($items) + 2 }}" style="text-align: center;">Tidak ada data mutabaah pada periode ini</td>
             </tr>
             @endforelse
         </tbody>
@@ -96,8 +76,8 @@
     <div class="footer">
         <p>{{ now()->format('d F Y') }}</p>
         <br><br><br>
-        <p>{{ $school->kepala_sekolah ?? '_______________' }}</p>
-        <p>Kepala Sekolah</p>
+        <p>{{ $student->teacher->nama ?? '_______________' }}</p>
+        <p>Guru Pembimbing</p>
     </div>
 </body>
 </html>

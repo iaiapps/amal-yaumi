@@ -19,7 +19,12 @@
                 </div>
                 <div class="mb-3">
                     <label for="kelas" class="form-label">Kelas</label>
-                    <input id="kelas" type="text" class="form-control" name="kelas" required>
+                    <select id="kelas" class="form-select" name="kelas" required>
+                        <option value="">Pilih Kelas</option>
+                        @foreach($kelas as $k)
+                        <option value="{{ $k->nama }}">{{ $k->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <button type="submit" class="btn btn-primary">simpan data</button>

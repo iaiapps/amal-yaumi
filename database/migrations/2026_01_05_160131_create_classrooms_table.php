@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('profile_photo')->nullable()->after('password');
+        Schema::create('classrooms', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama')->unique();
+            $table->string('tingkat');
+            $table->integer('kapasitas')->default(30);
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('profile_photo');
-        });
+        Schema::dropIfExists('classrooms');
     }
 };

@@ -15,19 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
-            $table->string('puasa');
-            $table->string('subuh');
-            $table->string('dhuhur');
-            $table->string('ashar');
-            $table->string('magrib');
-            $table->string('isya');
-            $table->string('dhuha');
-            $table->string('tarawih');
-            $table->string('tahajud');
-            $table->string('tilawah');
-            $table->string('infaq');
-            $table->string('birrul');
+            $table->json('data'); // Dynamic data based on mutabaah_items
             $table->timestamps();
+            
+            // Indexes
+            $table->index('student_id');
+            $table->index('tanggal');
+            $table->index(['student_id', 'tanggal']);
         });
     }
 

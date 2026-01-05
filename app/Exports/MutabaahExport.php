@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Mutabaah;
+use App\Models\MutabaahItem;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -11,11 +12,13 @@ class MutabaahExport implements FromCollection, WithHeadings, WithMapping
 {
     protected $startDate;
     protected $endDate;
+    protected $items;
 
     public function __construct($startDate, $endDate)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+        $this->items = MutabaahItem::active()->get();
     }
 
     public function collection()
@@ -28,24 +31,13 @@ class MutabaahExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return [
-            'No',
-            'Tanggal',
-            'Nama Siswa',
-            'Kelas',
-            'Puasa',
-            'Subuh',
-            'Dhuhur',
-            'Ashar',
-            'Magrib',
-            'Isya',
-            'Dhuha',
-            'Tarawih',
-            'Tahajud',
-            'Tilawah',
-            'Infaq',
-            'Birrul Walidain'
-        ];
+        $headers = ['No', 'Tanggal', 'Nama Siswa', 'Kelas'];
+        
+        foreach ($this->items as $item) {
+            $headers[] = $item->nama;
+        }
+        
+        return $headers;
     }
 
     public function map($mutabaah): array
@@ -53,23 +45,17 @@ class MutabaahExport implements FromCollection, WithHeadings, WithMapping
         static $no = 0;
         $no++;
         
-        return [
+        $row = [
             $no,
             \Carbon\Carbon::parse($mutabaah->tanggal)->format('d-m-Y'),
             $mutabaah->student->nama,
             $mutabaah->student->kelas,
-            $mutabaah->puasa,
-            $mutabaah->subuh,
-            $mutabaah->dhuhur,
-            $mutabaah->ashar,
-            $mutabaah->magrib,
-            $mutabaah->isya,
-            $mutabaah->dhuha,
-            $mutabaah->tarawih,
-            $mutabaah->tahajud,
-            $mutabaah->tilawah,
-            $mutabaah->infaq,
-            $mutabaah->birrul
         ];
+
+        foreach ($this->items as $item) {
+            $row[] = $mutabaah->data[$item->id] ?? '-';
+        }
+        
+        return $row;
     }
 }

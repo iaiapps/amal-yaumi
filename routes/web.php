@@ -7,30 +7,46 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MutabaahController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SchoolController;
-use App\Http\Controllers\TeacherController;
+// use App\Http\Controllers\SchoolController;
+// use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\MutabaahItemController;
+
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('home');
+    }
+    return view('landing');
+})->name('landing');
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // Profile (untuk semua user yang login)
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
+    Route::put('change-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
     // admin
     Route::middleware('role:admin')->group(function () {
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('reset/{user}', [UserController::class, 'reset'])->name('user.reset');
 
-        Route::get('school/edit', [SchoolController::class, 'edit'])->name('school.edit');
-        Route::put('school', [SchoolController::class, 'update'])->name('school.update');
+        // Route::get('school/edit', [SchoolController::class, 'edit'])->name('school.edit');
+        // Route::put('school', [SchoolController::class, 'update'])->name('school.update');
 
+        // Route::resource('teacher', TeacherController::class);
+
+        Route::resource('classroom', ClassroomController::class);
         Route::resource('student', StudentController::class);
         Route::resource('mutabaah', MutabaahController::class);
+        Route::resource('mutabaah-item', MutabaahItemController::class);
+        Route::post('mutabaah-item/{mutabaahItem}/toggle', [MutabaahItemController::class, 'toggle'])->name('mutabaah-item.toggle');
         Route::resource('answer', AnswerController::class);
 
         // Reports

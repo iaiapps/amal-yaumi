@@ -37,15 +37,27 @@
                             <i class="ti ti-apps"></i>
                         </li>
                         <li class="pc-item">
+                            <a href="{{ route('classroom.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-sitemap"></i></span>
+                                <span class="pc-mtext">Kelas</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
                             <a href="{{ route('student.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-school"></i></span>
                                 <span class="pc-mtext">Siswa</span>
                             </a>
                         </li>
-                        <li class="pc-item">
+                        {{-- <li class="pc-item">
                             <a href="{{ route('mutabaah.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-list-numbers"></i></span>
                                 <span class="pc-mtext">Mutabaah</span>
+                            </a>
+                        </li> --}}
+                        <li class="pc-item">
+                            <a href="{{ route('mutabaah-item.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-list-check"></i></span>
+                                <span class="pc-mtext">Item Mutabaah</span>
                             </a>
                         </li>
                         <li class="pc-item">
@@ -82,23 +94,45 @@
                                 <span class="pc-mtext">Profile</span>
                             </a>
                         </li>
-                        <li class="pc-item">
+                        {{-- <li class="pc-item">
+                            <a href="{{ route('teacher.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-users"></i></span>
+                                <span class="pc-mtext">Data Guru</span>
+                            </a>
+                        </li> --}}
+                        {{-- <li class="pc-item">
                             <a href="{{ route('school.edit') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-building"></i></span>
                                 <span class="pc-mtext">Profil Sekolah</span>
                             </a>
-                        </li>
+                        </li> --}}
                     @break
 
                     @case('siswa')
                         <li class="pc-item pc-caption">
-                            <label>Component</label>
+                            <label>Menu</label>
                             <i class="ti ti-apps"></i>
                         </li>
                         <li class="pc-item">
                             <a href="{{ route('amal.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-list-numbers"></i></span>
                                 <span class="pc-mtext">Mutabaah</span>
+                            </a>
+                        </li>
+                        <li class="pc-item pc-caption">
+                            <label>Pengaturan</label>
+                            <i class="ti ti-settings"></i>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('profile.edit') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-user"></i></span>
+                                <span class="pc-mtext">Profil</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('profile.change-password') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-lock"></i></span>
+                                <span class="pc-mtext">Ganti Password</span>
                             </a>
                         </li>
                     @break

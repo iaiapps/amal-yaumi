@@ -17,9 +17,7 @@
 </head>
 <body>
     <div class="header">
-        <h2>{{ $school->nama ?? 'SEKOLAH' }}</h2>
-        <p>{{ $school->alamat ?? '' }}</p>
-        <h3>LAPORAN MUTABAAH SEMUA SISWA</h3>
+        <h2>LAPORAN MUTABAAH SEMUA SISWA</h2>
     </div>
 
     <div class="info">
@@ -92,8 +90,8 @@
     <div class="footer">
         <p>{{ now()->format('d F Y') }}</p>
         <br><br>
-        <p>{{ $school->kepala_sekolah ?? '_______________' }}</p>
-        <p>Kepala Sekolah</p>
+        <p>{{ auth()->user()->name }}</p>
+        <p>Admin</p>
     </div>
 </body>
 </html>

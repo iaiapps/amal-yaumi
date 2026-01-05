@@ -23,7 +23,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+        $kelas = \App\Models\Classroom::all();
+        return view('student.create', compact('kelas'));
     }
 
     /**
@@ -57,7 +58,8 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        return view('student.edit', compact('student'));
+        $kelas = \App\Models\Classroom::all();
+        return view('student.edit', compact('student', 'kelas'));
     }
 
     /**

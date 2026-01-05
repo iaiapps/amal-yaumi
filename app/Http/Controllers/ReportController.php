@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Mutabaah;
-use App\Models\School;
+// use App\Models\School;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,8 +22,8 @@ class ReportController extends Controller
 
     public function studentPdf($id, Request $request)
     {
-        $student = Student::findOrFail($id);
-        $school = School::first();
+        $student = Student::with('teacher')->findOrFail($id);
+        $items = \App\Models\MutabaahItem::active()->get();
         
         $startDate = $request->start_date ?? now()->startOfMonth()->format('Y-m-d');
         $endDate = $request->end_date ?? now()->endOfMonth()->format('Y-m-d');
@@ -33,14 +33,13 @@ class ReportController extends Controller
             ->orderBy('tanggal', 'desc')
             ->get();
 
-        $pdf = Pdf::loadView('reports.student-pdf', compact('student', 'mutabaahs', 'school', 'startDate', 'endDate'));
+        $pdf = Pdf::loadView('reports.student-pdf', compact('student', 'mutabaahs', 'startDate', 'endDate', 'items'));
         
         return $pdf->download('laporan-' . $student->nama . '-' . now()->format('Y-m-d') . '.pdf');
     }
 
     public function allPdf(Request $request)
     {
-        $school = School::first();
         $startDate = $request->start_date ?? now()->startOfMonth()->format('Y-m-d');
         $endDate = $request->end_date ?? now()->endOfMonth()->format('Y-m-d');
         
@@ -48,7 +47,7 @@ class ReportController extends Controller
             $q->whereBetween('tanggal', [$startDate, $endDate]);
         }])->get();
 
-        $pdf = Pdf::loadView('reports.all-pdf', compact('students', 'school', 'startDate', 'endDate'));
+        $pdf = Pdf::loadView('reports.all-pdf', compact('students', 'startDate', 'endDate'));
         $pdf->setPaper('a4', 'landscape');
         
         return $pdf->download('laporan-semua-siswa-' . now()->format('Y-m-d') . '.pdf');

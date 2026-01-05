@@ -2,204 +2,78 @@
 @section('title', 'Edit Mutabaah')
 @section('content')
 
-    @php
-        $user = Auth::user();
-        $role = $user->getRoleNames()->first();
+@php
+    $user = Auth::user();
+    $role = $user->getRoleNames()->first();
+    $url = $role == 'siswa' ? route('amal.update', $mutabaah->id) : route('mutabaah.update', $mutabaah->id);
+@endphp
 
-        if ($role == 'siswa') {
-            $url = route('amal.update', $mutabaah->id);
-        } elseif ($role == 'admin') {
-            $url = route('mutabaah.update', $mutabaah->id);
-        }
-    @endphp
-    <div class="card">
-        <div class="card-body">
-            <form action="{{ $url }}" method="post">
-                @csrf
-                @method('put')
-                <div class="mb-3">
-                    <label for="tanggal" class="form-label">Tanggal Mutabaah</label>
-                    <input id="tanggal" type="date" class="form-control" name="tanggal" value="{{ $mutabaah->tanggal }}"
-                        required>
-                </div>
-                @if ($role == 'siswa')
-                    <input type="text" value="{{ $user->student->id }}" name="student_id" readonly hidden>
-                @elseif ($role == 'admin')
-                    <div class="mb-3">
-                        <label for="nama_siswa" class="form-label">Nama siswa</label>
-                        <select class="form-select" name="student_id" id="nama_siswa" required>
-                            @foreach ($students as $student)
-                                <option value="{{ $student->id }}">{{ $student->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                @endif
-                <div class="mb-3">
-                    <label for="puasa" class="form-label">Puasa</label>
-                    <select class="form-select" name="puasa" id="puasa" required>
-                        <option value="iya">Iya</option>
-                        <option value="tidak">Tidak</option>
-                    </select>
-                </div>
-                <div class="border border-1 border-warning rounded mb-3 p-3">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>Jenis Sholat</td>
-                                <td>Berjamaah</td>
-                                <td>Sendirian</td>
-                                <td>Tidak Sholat</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Sholat Subuh</td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="1" name="subuh"
-                                        id="subuh" {{ $mutabaah->subuh == 1 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="2" name="subuh"
-                                        id="subuh" {{ $mutabaah->subuh == 2 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="3" name="subuh"
-                                        id="subuh" {{ $mutabaah->subuh == 3 ? 'checked' : '' }}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sholat Dhuhur</td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="1" name="dhuhur"
-                                        id="dhuhur" {{ $mutabaah->duhur == 1 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="2" name="dhuhur"
-                                        id="dhuhur" {{ $mutabaah->duhur == 2 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="3" name="dhuhur"
-                                        id="dhuhur" {{ $mutabaah->duhur == 3 ? 'checked' : '' }}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sholat Ashar</td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="1" name="ashar"
-                                        id="ashar" {{ $mutabaah->ashar == 1 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="2" name="ashar"
-                                        id="ashar" {{ $mutabaah->ashar == 2 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="3" name="ashar"
-                                        id="ashar" {{ $mutabaah->ashar == 3 ? 'checked' : '' }}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sholat Magrib</td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="1" name="magrib"
-                                        id="magrib" {{ $mutabaah->magrib == 1 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="2" name="magrib"
-                                        id="magrib" {{ $mutabaah->magrib == 2 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="3" name="magrib"
-                                        id="magrib" {{ $mutabaah->magrib == 3 ? 'checked' : '' }}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sholat Isya'</td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="1" name="isya"
-                                        id="isya" {{ $mutabaah->isya == 1 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="2" name="isya"
-                                        id="isya" {{ $mutabaah->isya == 2 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="3" name="isya"
-                                        id="isya" {{ $mutabaah->isya == 3 ? 'checked' : '' }}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <hr>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Solat Dhuha</td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="1" name="dhuha"
-                                        id="dhuha" {{ $mutabaah->dhuha == 1 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="2" name="dhuha"
-                                        id="dhuha" {{ $mutabaah->dhuha == 2 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="3" name="dhuha"
-                                        id="dhuha" {{ $mutabaah->dhuha == 3 ? 'checked' : '' }}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sholat Tarawih</td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="1" name="tarawih"
-                                        id="tarawih" {{ $mutabaah->tarawih == 1 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="2" name="tarawih"
-                                        id="tarawih" {{ $mutabaah->tarawih == 2 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="3" name="tarawih"
-                                        id="tarawih" {{ $mutabaah->tarawih == 3 ? 'checked' : '' }}>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Sholat Tahajud</td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="1" name="tahajud"
-                                        id="tahajud" {{ $mutabaah->tahajud == 1 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="2" name="tahajud"
-                                        id="tahajud" {{ $mutabaah->tahajud == 2 ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    <input class="form-check-input" type="radio" value="3" name="tahajud"
-                                        id="tahajud" {{ $mutabaah->tahajud == 3 ? 'checked' : '' }}>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mb-3">
-                    <label for="tilawah" class="form-label">Tilawah Qur'an</label>
-                    <input id="tilawah" type="text" class="form-control" name="tilawah" required
-                        placeholder="Tuliskan berapa halaman/lembar/juz" value="{{ $mutabaah->tilawah }}">
-                </div>
-                <div class="mb-3">
-                    <label for="infaq" class="form-label">Sedekah/Infaq</label>
-                    <select class="form-select" name="infaq" id="infaq" required>
-                        <option value="iya">Iya</option>
-                        <option value="tidak">Tidak</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="birrul" class="form-label">Birrul Walidain</label>
-                    <input id="birrul" type="text" class="form-control" name="birrul" required
-                        placeholder="Tuliskan jenis Birrul Walidainnya" value="{{ $mutabaah->birrul }}">
-                </div>
-
-                <button type="submit" class="btn btn-primary">simpan data</button>
-            </form>
-        </div>
+<div class="card">
+    <div class="card-header">
+        <h5>Edit Mutabaah</h5>
     </div>
+    <div class="card-body">
+        <form action="{{ $url }}" method="POST">
+            @csrf
+            @method('PUT')
+            
+            <div class="mb-3">
+                <label class="form-label">Tanggal <span class="text-danger">*</span></label>
+                <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal', $mutabaah->tanggal->format('Y-m-d')) }}" required>
+            </div>
+
+            @if($role == 'admin')
+            <div class="mb-3">
+                <label class="form-label">Nama Siswa <span class="text-danger">*</span></label>
+                <select name="student_id" class="form-select" required>
+                    <option value="">Pilih Siswa</option>
+                    @foreach($students as $student)
+                    <option value="{{ $student->id }}" {{ $mutabaah->student_id == $student->id ? 'selected' : '' }}>
+                        {{ $student->nama }} - {{ $student->kelas }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            @endif
+
+            @foreach($items->groupBy('kategori') as $kategori => $groupItems)
+            <div class="card mb-3">
+                <div class="card-header">
+                    <strong>
+                        @if($kategori == 'sholat_wajib') Sholat Wajib
+                        @elseif($kategori == 'sholat_sunnah') Sholat Sunnah
+                        @else Lainnya
+                        @endif
+                    </strong>
+                </div>
+                <div class="card-body">
+                    @foreach($groupItems as $item)
+                    <div class="mb-3">
+                        <label class="form-label">{{ $item->nama }}</label>
+                        
+                        @if($item->tipe == 'ya_tidak')
+                        <select name="data[{{ $item->id }}]" class="form-select" required>
+                            <option value="">Pilih</option>
+                            <option value="Ya" {{ ($mutabaah->data[$item->id] ?? '') == 'Ya' ? 'selected' : '' }}>Ya</option>
+                            <option value="Tidak" {{ ($mutabaah->data[$item->id] ?? '') == 'Tidak' ? 'selected' : '' }}>Tidak</option>
+                        </select>
+                        
+                        @elseif($item->tipe == 'angka')
+                        <input type="number" name="data[{{ $item->id }}]" class="form-control" value="{{ $mutabaah->data[$item->id] ?? '' }}" placeholder="Masukkan angka" required>
+                        
+                        @else
+                        <input type="text" name="data[{{ $item->id }}]" class="form-control" value="{{ $mutabaah->data[$item->id] ?? '' }}" placeholder="Masukkan text" required>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endforeach
+
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{{ $role == 'siswa' ? route('amal.index') : route('mutabaah.index') }}" class="btn btn-secondary">Batal</a>
+        </form>
+    </div>
+</div>
+
 @endsection

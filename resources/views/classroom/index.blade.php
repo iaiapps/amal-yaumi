@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('title', 'Mutabaah Saya')
+@section('title', 'Data Kelas')
 @section('content')
 
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Mutabaah Saya</h5>
-        <a href="{{ route('amal.create') }}" class="btn btn-primary btn-sm">
-            <i class="ti ti-plus"></i> Isi Mutabaah
+        <h5>Data Kelas</h5>
+        <a href="{{ route('classroom.create') }}" class="btn btn-primary btn-sm">
+            <i class="ti ti-plus"></i> Tambah Kelas
         </a>
     </div>
     <div class="card-body">
@@ -19,25 +19,30 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Total Item</th>
+                        <th>Nama Kelas</th>
+                        <th>Tingkat</th>
+                        <th>Kapasitas</th>
+                        <th>Jumlah Siswa</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($mutabaahs as $mutabaah)
+                    @forelse($kelas as $k)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $mutabaah->tanggal->format('d M Y') }}</td>
-                        <td><span class="badge bg-primary">{{ count($mutabaah->data) }} item</span></td>
+                        <td><strong>{{ $k->nama }}</strong></td>
+                        <td>{{ $k->tingkat }}</td>
+                        <td>{{ $k->kapasitas }}</td>
                         <td>
-                            <a href="{{ route('amal.show', $mutabaah) }}" class="btn btn-sm btn-info">
-                                <i class="ti ti-eye"></i>
-                            </a>
-                            <a href="{{ route('amal.edit', $mutabaah) }}" class="btn btn-sm btn-warning">
+                            <span class="badge bg-{{ $k->students_count >= $k->kapasitas ? 'danger' : 'success' }}">
+                                {{ $k->students_count }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{{ route('classroom.edit', $k) }}" class="btn btn-sm btn-warning">
                                 <i class="ti ti-edit"></i>
                             </a>
-                            <form action="{{ route('amal.destroy', $mutabaah) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus data ini?')">
+                            <form action="{{ route('classroom.destroy', $k) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus kelas ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -48,7 +53,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center">Belum ada data mutabaah</td>
+                        <td colspan="6" class="text-center">Belum ada data kelas</td>
                     </tr>
                     @endforelse
                 </tbody>

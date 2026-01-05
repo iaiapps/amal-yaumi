@@ -1,83 +1,64 @@
 @extends('layouts.app')
 @section('title', 'Data Mutabaah')
 @section('content')
-    @session('success')
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endsession
-    <div class="card">
-        <div class="ms-4 mt-4">
-            <a href="{{ route('mutabaah.create') }}" class="btn btn-primary">tambah mutabaah</a>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                @php
-                    $period = \Carbon\CarbonPeriod::between(now()->startOfMonth(), now()->endOfMonth());
 
-                @endphp
-                <p class="fs-4">Mutabaah Bulan {{ \Carbon\Carbon::now()->isoFormat('MMMM YYYY') }}</p>
-
-                <table class="table table-bordered table-sm">
-                    <thead>
-                        <tr class="bg-primary-subtle">
-                            <th rowspan="2">No</th>
-                            <th rowspan="2">Nama siswa</th>
-                            <th colspan="31" class="text-center">Pengisian</th>
-                            {{-- <th rowspan="2">Action</th> --}}
-                        </tr>
-                        <tr>
-                            @for ($i = 1; $i <= 31; $i++)
-                                <th>{{ $i }}</th>
-                            @endfor
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-                        @foreach ($students as $student)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $student->nama }}</td>
-
-                                @foreach ($period as $date)
-                                    @php
-                                        $mutabaah = $student->mutabaah
-                                            ->where('tanggal', $date->isoFormat('YYYY-MM-DD'))
-                                            ->first();
-                                    @endphp
-                                    <td>
-                                        @if ($mutabaah == null)
-                                            -
-                                        @else
-                                            {{ \Carbon\Carbon::parse($mutabaah->tanggal)->isoFormat('DD/MM/YYYY') }}
-                                            <span>
-                                                <div class="btn-group">
-                                                    <a href="{{ route('mutabaah.show', $mutabaah->id) }}"
-                                                        class="btn btn-sm btn-primary"><i class="ti ti-info-circle"></i></a>
-                                                    <a href="{{ route('mutabaah.edit', $mutabaah->id) }}"
-                                                        class="btn btn-sm btn-warning"> <i class="ti ti-edit"></i></a>
-                                                    <form action="{{ route('mutabaah.destroy', $mutabaah->id) }}"
-                                                        method="post" class="d-inline-block"
-                                                        onclick="return alert('apakah kamu yakin menghapus data?')">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-sm btn-danger"><i
-                                                                class="ti ti-trash"></i> </button>
-                                                    </form>
-                                                </div>
-                                            </span>
-                                        @endif
-                                    </td>
-                                @endforeach
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>Data Mutabaah</h5>
+        <a href="{{ route('mutabaah.create') }}" class="btn btn-primary btn-sm">
+            <i class="ti ti-plus"></i> Tambah Mutabaah
+        </a>
     </div>
+    <div class="card-body">
+        @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Nama Siswa</th>
+                        <th>Kelas</th>
+                        <th>Total Item</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($mutabaahs as $mutabaah)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $mutabaah->tanggal->format('d M Y') }}</td>
+                        <td>{{ $mutabaah->student->nama }}</td>
+                        <td>{{ $mutabaah->student->kelas }}</td>
+                        <td><span class="badge bg-primary">{{ count($mutabaah->data) }} item</span></td>
+                        <td>
+                            <a href="{{ route('mutabaah.show', $mutabaah) }}" class="btn btn-sm btn-info">
+                                <i class="ti ti-eye"></i>
+                            </a>
+                            <a href="{{ route('mutabaah.edit', $mutabaah) }}" class="btn btn-sm btn-warning">
+                                <i class="ti ti-edit"></i>
+                            </a>
+                            <form action="{{ route('mutabaah.destroy', $mutabaah) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus data ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="ti ti-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Belum ada data mutabaah</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 @endsection

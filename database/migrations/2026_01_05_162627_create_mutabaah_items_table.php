@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('mutabaah_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->string('nama');
-            $table->string('nis');
-            $table->string('jk');
-            $table->string('kelas');
-            $table->string('photo')->nullable();
+            $table->string('kategori'); // sholat_wajib, sholat_sunnah, lainnya
+            $table->string('tipe')->default('ya_tidak'); // ya_tidak, angka, text
+            $table->integer('urutan')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('mutabaah_items');
     }
 };
