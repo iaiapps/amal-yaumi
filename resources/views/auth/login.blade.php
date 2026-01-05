@@ -17,9 +17,11 @@
                                 </form>
                             </div>
                         @endif
-                        {{-- <a href="#" class="d-flex justify-content-center">
-                            <img src="{{ asset('/assets/images/logo.svg') }}" alt="image" class="img-fluid brand-logo" />
-                        </a> --}}
+                        <a href="#" class="d-flex justify-content-center">
+                            <img src="{{ asset('/assets/images/favicon.svg') }}" alt="image"
+                                class="img-fluid brand-logo" />
+                        </a>
+                        <br>
                         <div class="row">
                             <div class="d-flex justify-content-center">
                                 <div class="auth-header">

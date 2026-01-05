@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Teacher extends Model
 {
     protected $guarded = ['id'];
 
@@ -13,13 +13,8 @@ class Student extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function teacher()
+    public function students()
     {
-        return $this->belongsTo(Teacher::class);
-    }
-
-    public function mutabaah()
-    {
-        return $this->hasMany(Mutabaah::class);
+        return $this->hasMany(Student::class);
     }
 }

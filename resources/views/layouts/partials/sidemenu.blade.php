@@ -48,6 +48,18 @@
                                 <span class="pc-mtext">Mutabaah</span>
                             </a>
                         </li>
+                        <li class="pc-item">
+                            <a href="{{ route('reports.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-file-analytics"></i></span>
+                                <span class="pc-mtext">Laporan</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('import.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-file-upload"></i></span>
+                                <span class="pc-mtext">Import Data</span>
+                            </a>
+                        </li>
                         {{-- <li class="pc-item">
                             <a href="../elements/icon-tabler.html" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-message-2"></i></span>
@@ -65,9 +77,15 @@
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="#" class="pc-link">
-                                <span class="pc-micon"><i class="ti ti-settings"></i></span>
-                                <span class="pc-mtext">Setting</span>
+                            <a href="{{ route('profile.edit') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-user"></i></span>
+                                <span class="pc-mtext">Profile</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('school.edit') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-building"></i></span>
+                                <span class="pc-mtext">Profil Sekolah</span>
                             </a>
                         </li>
                     @break

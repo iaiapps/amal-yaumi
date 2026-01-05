@@ -7,19 +7,43 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MutabaahController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ProfileController;
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    // Profile (untuk semua user yang login)
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // admin
     Route::middleware('role:admin')->group(function () {
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('reset/{user}', [UserController::class, 'reset'])->name('user.reset');
 
+        Route::get('school/edit', [SchoolController::class, 'edit'])->name('school.edit');
+        Route::put('school', [SchoolController::class, 'update'])->name('school.update');
+
         Route::resource('student', StudentController::class);
         Route::resource('mutabaah', MutabaahController::class);
         Route::resource('answer', AnswerController::class);
+
+        // Reports
+        Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('reports/student/{id}/pdf', [ReportController::class, 'studentPdf'])->name('reports.student.pdf');
+        Route::get('reports/all/pdf', [ReportController::class, 'allPdf'])->name('reports.all.pdf');
+        Route::get('reports/students/export', [ReportController::class, 'exportStudents'])->name('reports.students.export');
+        Route::get('reports/mutabaah/export', [ReportController::class, 'exportMutabaah'])->name('reports.mutabaah.export');
+
+        // Import
+        Route::get('import', [ImportController::class, 'index'])->name('import.index');
+        Route::get('import/template', [ImportController::class, 'template'])->name('import.template');
+        Route::post('import', [ImportController::class, 'import'])->name('import.store');
     });
 
     Route::middleware('role:siswa')->group(function () {

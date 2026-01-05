@@ -25,39 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /** @var \App\Models\User */
-
         $user = Auth::user();
-        $id = $user->id;
-
-        // get name
-        $name = $user->name;
-
-        //get role names
         $role = $user->getRoleNames()->first();
 
-        // get student all
-        $students = Student::all();
-        // student name
-        $student = Student::where('user_id', '=', $id)->first();
-
-        // now
-        // $now = Carbon::now();
-
-        $status = 'anda tidak terdaftar';
-
-        switch ($role) {
-            case 'admin':
-                return view('home', compact('students', 'name'));
-                break;
-
-            case 'siswa':
-                return view('home_s', compact('student'));
-                break;
-
-            default:
-                dd('berhasil login');
-                // return view('auth.login', compact('status'));
+        if ($role === 'admin') {
+            return app(DashboardController::class)->admin();
+        } elseif ($role === 'siswa') {
+            return app(DashboardController::class)->student();
         }
+
+        return redirect()->route('login');
     }
 }
