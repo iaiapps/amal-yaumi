@@ -16,18 +16,18 @@ class MutabaahItemSeeder extends Seeder
             ['nama' => 'Ashar', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 3],
             ['nama' => 'Magrib', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 4],
             ['nama' => 'Isya', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 5],
-            
+
             // Sholat Sunnah
             ['nama' => 'Dhuha', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 6],
             ['nama' => 'Tarawih', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 7],
             ['nama' => 'Tahajud', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 8],
-            
+
             // Lainnya
             ['nama' => 'Puasa', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 9],
             ['nama' => 'Tilawah', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 10],
             ['nama' => 'Infaq', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 11],
             ['nama' => 'Birrul Walidain', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 12],
-            ['nama' => 'Sedekah', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 13],
+
         ];
 
         foreach ($items as $item) {

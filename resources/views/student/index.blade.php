@@ -9,8 +9,10 @@
     @endsession
     <div class="card">
         <div class="ms-4 mt-4">
-            <a href="{{ route('student.create') }}" class="btn btn-primary">tambah siswa</a>
+            <a href="{{ route('student.create') }}" class="btn btn-primary btn-sm"> <i class="ti ti-plus"></i> tambah
+                siswa</a>
         </div>
+        <hr>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped">

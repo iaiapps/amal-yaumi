@@ -31,27 +31,27 @@ class ClassroomController extends Controller
         return redirect()->route('classroom.index')->with('success', 'Kelas berhasil ditambahkan');
     }
 
-    public function edit(Kelas $kela)
+    public function edit(Classroom $classroom)
     {
-        return view('classroom.edit', compact('kela'));
+        return view('classroom.edit', compact('classroom'));
     }
 
-    public function update(Request $request, Classroom $kela)
+    public function update(Request $request, Classroom $classroom)
     {
         $request->validate([
-            'nama' => 'required|string|unique:classrooms,nama,' . $kela->id,
+            'nama' => 'required|string|unique:classrooms,nama,' . $classroom->id,
             'tingkat' => 'required|string',
             'kapasitas' => 'required|integer|min:1',
         ]);
 
-        $kela->update($request->all());
+        $classroom->update($request->all());
 
         return redirect()->route('classroom.index')->with('success', 'Kelas berhasil diperbarui');
     }
 
-    public function destroy(Classroom $kela)
+    public function destroy(Classroom $classroom)
     {
-        $kela->delete();
+        $classroom->delete();
         return redirect()->route('classroom.index')->with('success', 'Kelas berhasil dihapus');
     }
 }
