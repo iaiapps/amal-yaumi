@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center flex-column flex-sm-row">
                         <div>
                             <h3 class="text-muted mb-0">Selamat datang, {{ auth()->user()->name }}!</h3>
                         </div>
@@ -18,6 +18,22 @@
                                 <i class="ti ti-list"></i> Lihat Mutabaah
                             </a>
                         </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex">
+                        <div class="p-3 border profil me-2 d-flex justify-content-center align-items-center"> <i
+                                class="ti ti-user display-4"></i> </div>
+                        <table class="table table-bordered mb-0">
+                            <tr>
+                                <td>Nama Guru</td>
+                                <td>{{ $teacher->nama ?? 'belum diisi' }}</td>
+                            </tr>
+                            <tr>
+                                <td>No Handphone</td>
+                                <td>{{ $teacher->telp ?? 'belum diisi' }}</td>
+
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -243,6 +259,12 @@
 
 @push('css')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .profil {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 @endpush
 
 @push('js')

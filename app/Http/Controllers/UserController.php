@@ -72,6 +72,6 @@ class UserController extends Controller
         $user->update([
             'password' => Hash::make('password1234')
         ]);
-        return redirect()->back()->with('success', 'Berhasil reset password!');
+        return redirect()->back()->with('success', 'Berhasil reset password!, password default "password1234", tanpa kutip');
     }
 }
