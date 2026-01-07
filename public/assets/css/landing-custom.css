@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --zinc-50: #fafafa;
+    --zinc-100: #f4f4f5;
+    --zinc-200: #e4e4e7;
+    --zinc-300: #d4d4d8;
+    --zinc-400: #a1a1aa;
+    --zinc-500: #71717a;
+    --zinc-600: #52525b;
+    --zinc-700: #3f3f46;
+    --zinc-800: #27272a;
+    --zinc-900: #18181b;
+    --zinc-950: #09090b;
+
+    --border-color: var(--zinc-200);
+
+    /* Link to Berry Theme Variables */
+    --brand-primary: var(--bs-primary);
+    --brand-dark: var(--bs-primary-dark, #059669); /* Fallback to emerald dark */
+    --brand-soft: var(--bs-primary-light, #ecfdf5); /* Fallback to emerald soft */
+    --brand-secondary: var(--bs-secondary);
+    
+    /* Berry Design Tokens */
+    --border-radius-sm: 8px;
+    --border-radius-lg: 12px;
+    --card-shadow: 0 2px 14px 0 rgba(32, 40, 45, 0.08);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--zinc-950);
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Sections */
+section {
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background System */
+.bg-mesh {
+    background-color: #ffffff;
+    background-image: 
+        radial-gradient(at 0% 0%, hsla(161, 71%, 95%, 1) 0, transparent 50%), 
+        radial-gradient(at 50% 0%, hsla(161, 71%, 90%, 1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(161, 71%, 95%, 1) 0, transparent 50%);
+}
+
+.bg-mesh-bottom {
+    background-image: 
+        radial-gradient(at 0% 100%, hsla(161, 71%, 95%, 1) 0, transparent 50%), 
+        radial-gradient(at 50% 100%, hsla(161, 71%, 90%, 1) 0, transparent 50%), 
+        radial-gradient(at 100% 100%, hsla(161, 71%, 95%, 1) 0, transparent 50%);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.fw-extra-bold { font-weight: 800; }
+.text-primary { color: var(--brand-primary) !important; }
+.bg-primary { background-color: var(--brand-primary) !important; }
+.border-primary { border-color: var(--brand-primary) !important; }
+
+.text-muted {
+    color: var(--zinc-500) !important;
+}
+
+/* Layout Helpers */
+.max-w-700 { max-width: 700px; }
+.max-w-800 { max-width: 800px; }
+.bg-zinc-50 { background-color: var(--zinc-50); }
+
+/* Buttons */
+.btn-modern {
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    border-radius: var(--border-radius-sm);
+    transition: all 0.2s ease;
+}
+
+.btn-modern-primary {
+    background-color: var(--brand-primary);
+    color: #ffffff;
+    border: 1px solid var(--brand-primary);
+}
+
+.btn-modern-primary:hover {
+    filter: brightness(0.9);
+    color: #ffffff;
+}
+
+.btn-modern-outline {
+    background-color: transparent;
+    color: var(--zinc-950);
+    border: 1px solid var(--zinc-200);
+}
+
+.btn-modern-outline:hover {
+    background-color: var(--zinc-100);
+    border-color: var(--zinc-300);
+}
+
+/* Cards */
+.card-modern {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-modern:hover {
+    transform: translateY(-8px);
+    border-color: var(--brand-primary);
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.12);
+}
+
+.card-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background-color: var(--brand-soft);
+    color: var(--brand-primary);
+    margin-bottom: 1.5rem;
+}
+
+/* Hero Section */
+.hero-section {
+    padding: 160px 0 120px;
+    background-color: transparent;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--zinc-950);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--zinc-500);
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+@media (max-width: 991.98px) {
+    .hero-title { font-size: 2.75rem; }
+}
+
+/* Stats */
+.stat-item {
+    padding: 3rem 0;
+}
+
+.stat-value {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--brand-primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--zinc-500);
+}
+
+.accordion-item.card-modern {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.accordion-button {
+    background: transparent !important;
+    border-radius: 24px !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--brand-primary);
+    box-shadow: none;
+}
+
+/* Helpers */
+.shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.skew-y-3 {
+    transform: rotate(2deg);
+}
+
+.fs-huge {
+    font-size: 5rem;
+}
+
+/* Badge Styles */
+.badge-item {
+    padding: 1rem;
+    border-radius: 16px;
+    background: var(--zinc-50);
+    border: 1px solid var(--zinc-100);
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.badge-item:hover {
+    background: #ffffff;
+    box-shadow: var(--card-shadow);
+    transform: scale(1.05);
+}
+
+.badge-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Streak Counter */
+.streak-card {
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-dark));
+    color: #ffffff;
+    padding: 1.5rem;
+    border-radius: var(--border-radius-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.streak-card::after {
+    content: '🔥';
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    font-size: 4rem;
+    opacity: 0.2;
+}
+
+.avtar.avtar-xl {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.avtar.bg-primary {
+    background-color: var(--brand-primary) !important;
+}
+
+/* Footer */
+footer {
+    border-top: 1px solid var(--zinc-200);
+    padding: 4rem 0 0;
+}
