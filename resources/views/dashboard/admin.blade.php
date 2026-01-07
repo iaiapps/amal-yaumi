@@ -46,18 +46,18 @@
             <div class="col-12">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <div class="d-flex align-items-start">
-                        <i class="ti ti-alert-triangle me-2" style="font-size: 1.5rem;"></i>
+                        {{-- <i class="ti ti-alert-triangle me-2" style="font-size: 1.5rem;"></i> --}}
                         <div class="flex-grow-1">
-                            <h5 class="alert-heading mb-2">⚠️ {{ $inactiveStudents->count() }} Siswa Perlu Perhatian</h5>
+                            <h5 class="alert-heading mb-2">{{ $inactiveStudents->count() }} Siswa Perlu Perhatian</h5>
                             <p class="mb-2">Siswa berikut tidak mengisi mutabaah dalam 3 hari terakhir:</p>
                             <ul class="mb-0">
                                 @foreach ($inactiveStudents->take(5) as $student)
                                     <li>
                                         <strong>{{ $student->nama }}</strong> ({{ $student->kelas }})
-                                        <a href="{{ route('student.show', $student->id) }}"
+                                        {{-- <a href="{{ route('student.show', $student->id) }}"
                                             class="btn btn-sm btn-outline-warning ms-2">
                                             <i class="ti ti-eye"></i> Lihat
-                                        </a>
+                                        </a> --}}
                                     </li>
                                 @endforeach
                             </ul>
@@ -228,19 +228,19 @@
                                     <tr>
                                         <td>
                                             @if ($loop->iteration == 1)
-                                                <span class="badge bg-warning">🥇</span>
+                                                <span>🥇</span>
                                             @elseif($loop->iteration == 2)
-                                                <span class="badge bg-secondary">🥈</span>
+                                                <span>🥈</span>
                                             @elseif($loop->iteration == 3)
-                                                <span class="badge bg-danger">🥉</span>
+                                                <span>🥉</span>
                                             @else
                                                 <span class="badge bg-light text-dark">#{{ $loop->iteration }}</span>
                                             @endif
                                         </td>
                                         <td>{{ $student->nama }}</td>
                                         <td>{{ $student->kelas }}</td>
-                                        <td><span class="badge bg-primary">{{ $student->total_mutabaah }}</span></td>
-                                        <td><span class="badge bg-success">🔥 {{ $student->streak }}</span></td>
+                                        <td><span>{{ $student->total_mutabaah }}</span></td>
+                                        <td><span>🔥 {{ $student->streak }}</span></td>
                                     </tr>
                                 @empty
                                     <tr>

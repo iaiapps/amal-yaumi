@@ -9,9 +9,6 @@
     @endphp
 
     <div class="card">
-        <div class="card-header">
-            <h5>Tambah Mutabaah</h5>
-        </div>
         <div class="card-body">
             <form action="{{ $url }}" method="POST" id="mutabaahForm">
                 @csrf
@@ -38,7 +35,7 @@
                 <div class="card mb-3 bg-light">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h6 class="mb-0">📊 Progress Pengisian</h6>
+                            <h6 class="mb-0">Progress Pengisian</h6>
                             <span class="badge bg-primary" id="progressBadge">0/{{ $items->count() }}</span>
                         </div>
                         <div class="progress" style="height: 20px;">
@@ -51,35 +48,19 @@
                 </div>
 
                 {{-- Quick Entry Buttons --}}
-                <div class="alert alert-info mb-3">
+                <div class="alert alert-primary mb-3">
                     <div class="d-flex justify-content-between align-items-center">
-                        <span><i class="ti ti-bolt"></i> <strong>Quick Entry:</strong></span>
+                        <span> <strong>Tombol cepat :</strong></span>
                         <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-success" onclick="checkAllYa()">
-                                <i class="ti ti-check"></i> Centang Semua
+                            <button type="button" class="btn btn-primary" onclick="checkAllYa()">
+                                Centang
                             </button>
-                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
-                                <i class="ti ti-refresh"></i> Reset
+                            <button type="button" class="btn btn-warning" onclick="resetForm()">
+                                Reset
                             </button>
                         </div>
                     </div>
                 </div>
-
-                @php
-                    $icons = [
-                        'Subuh' => '🌅',
-                        'Dhuhur' => '☀️',
-                        'Ashar' => '🌤️',
-                        'Magrib' => '🌆',
-                        'Isya' => '🌙',
-                        'Dhuha' => '☀️',
-                        'Tarawih' => '🕌',
-                        'Tahajud' => '🌃',
-                        'Tilawah' => '📖',
-                        'Infaq' => '💰',
-                        'Birrul Walidain' => '👨‍👩‍👦',
-                    ];
-                @endphp
 
                 @foreach ($items->groupBy('kategori') as $kategori => $groupItems)
                     <div class="card mb-3 shadow-sm">
@@ -91,11 +72,11 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <strong>
                                     @if ($kategori == 'sholat_wajib')
-                                        🕌 Sholat Wajib
+                                        Sholat Wajib
                                     @elseif($kategori == 'sholat_sunnah')
-                                        🤲 Sholat Sunnah
+                                        Sholat Sunnah
                                     @else
-                                        📖 Ibadah Lainnya
+                                        Ibadah Lainnya
                                     @endif
                                 </strong>
                                 <span class="badge bg-light text-dark category-counter" data-category="{{ $kategori }}">
@@ -164,7 +145,7 @@
 
             // Count filled inputs
             const filledInputs = Array.from(document.querySelectorAll('.habit-input')).filter(input => input.value
-            .trim() !== '').length;
+                .trim() !== '').length;
 
             const completed = checkedBoxes + filledInputs;
             const percentage = Math.round((completed / totalItems) * 100);
