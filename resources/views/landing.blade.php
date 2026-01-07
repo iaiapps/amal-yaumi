@@ -16,24 +16,19 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 sticky-top"
         style="backdrop-filter: blur(10px); background-color: rgba(255,255,255,0.8) !important;">
         <div class="container">
-            <a class="navbar-brand fw-extra-bold fs-4 d-flex align-items-center" href="#">
+            <a class="navbar-brand fw-extra-bold fs-5 d-flex align-items-center" href="#">
                 <img src="{{ asset('assets/images/favicon.svg') }}" width="32" height="32" class="me-2" alt="Logo">
-                Amal Yaumi
+                Portal Amal Yaumi
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="ti ti-menu-2 fs-2"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center gap-2 fw-bold">
-                    <li class="nav-item"><a class="nav-link px-3" href="#features">Fitur</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#how-it-works">Cara Kerja</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="#faq">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#info">Informasi</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="#tutorial">Panduan</a></li>
                     <li class="nav-item ms-lg-3">
-                        <a href="{{ route('login') }}" class="btn btn-modern btn-modern-outline">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('login') }}"
-                            class="btn btn-modern btn-modern-primary px-4 shadow-primary">Daftar Sekarang</a>
+                        <a href="{{ route('login') }}" class="btn btn-modern btn-modern-primary px-4 shadow-primary">Login Portal</a>
                     </li>
                 </ul>
             </div>
@@ -47,19 +42,17 @@
                 <div class="col-lg-7 position-relative">
                     <span
                         class="badge bg-light-primary text-primary mb-3 px-3 py-2 rounded-pill fw-bold border border-primary border-opacity-25"
-                        style="letter-spacing: 0.5px;">PLATFORM TRACKING TERBAIK</span>
-                    <h1 class="hero-title fw-extra-bold">Mutabaah Digital <br><span class="text-primary">Masa
-                            Kini</span> Untuk Generasi Robbani</h1>
-                    <p class="hero-subtitle mx-auto mx-lg-0 mb-4 fs-5 opacity-90">Solusi monitoring ibadah harian yang
-                        didesain modern, intuitif, dan penuh motivasi untuk membantu siswa tetap istiqomah.</p>
+                        style="letter-spacing: 0.5px;">PORTAL INTERNAL SISWA & GURU</span>
+                    <h1 class="hero-title fw-extra-bold">Selamat Datang di <br><span class="text-primary">Portal Mutabaah</span> Digital</h1>
+                    <p class="hero-subtitle mx-auto mx-lg-0 mb-4 fs-5 opacity-90">Media monitoring ibadah harian untuk mendukung istiqomah dan perkembangan karakter seluruh siswa.</p>
                     <div
                         class="d-flex flex-column flex-sm-row gap-3 mt-4 justify-content-center justify-content-lg-start">
                         <a href="{{ route('login') }}"
                             class="btn btn-modern btn-modern-primary btn-lg px-5 py-3 shadow-lg fs-5 fw-bold">
-                            Mulai Demo Gratis
+                            Masuk ke Dashboard
                         </a>
-                        <a href="#features" class="btn btn-modern btn-modern-outline btn-lg px-5 py-3 fs-5 fw-bold">
-                            Pelajari Fitur
+                        <a href="#info" class="btn btn-modern btn-modern-outline btn-lg px-5 py-3 fs-5 fw-bold">
+                            Lihat Informasi
                         </a>
                     </div>
                 </div>
@@ -113,14 +106,13 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="bg-mesh-bottom">
+    <!-- Information Section -->
+    <section id="info" class="bg-mesh-bottom">
         <div class="container">
             <div class="text-center mb-5 max-w-700 mx-auto">
-                <h2 class="display-6 fw-extra-bold mb-3">Teknologi <span
-                        class="text-primary border-bottom border-4 border-primary">Smart Monitoring</span></h2>
-                <p class="text-muted fs-5 fw-medium">Lebih dari sekadar checklist biasa, kami menghadirkan dashboard
-                    interaktif untuk pertumbuhan karakter siswa.</p>
+                <h2 class="display-6 fw-extra-bold mb-3">Informasi <span
+                        class="text-primary border-bottom border-4 border-primary">Penting</span></h2>
+                <p class="text-muted fs-5 fw-medium">Berikut adalah informasi utama mengenai penggunaan Portal Mutabaah Digital.</p>
             </div>
             <div class="row g-4 text-start">
                 <div class="col-md-4">
@@ -128,11 +120,10 @@
                         style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);">
                         <div class="card-icon bg-primary text-white shadow-primary"
                             style="width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;">
-                            <i class="ti ti-chart-bar fs-3"></i>
+                            <i class="ti ti-clock fs-3"></i>
                         </div>
-                        <h5 class="fw-bold mt-4">Visualisasi Data</h5>
-                        <p class="text-muted small fw-medium">Lihat progress ibadah dalam grafik tren 30 hari yang
-                            informatif bagi guru dan orang tua.</p>
+                        <h5 class="fw-bold mt-4">Waktu Pengisian</h5>
+                        <p class="text-muted small fw-medium">Pastikan mengisi mutabaah harian sebelum pukul 21:00 WIB agar tercatat secara otomatis ke sistem.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -140,11 +131,10 @@
                         style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);">
                         <div class="card-icon bg-primary text-white shadow-primary"
                             style="width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;">
-                            <i class="ti ti-trophy fs-3"></i>
+                            <i class="ti ti-target fs-3"></i>
                         </div>
-                        <h5 class="fw-bold mt-4">Leaderboard Sehat</h5>
-                        <p class="text-muted small fw-medium">Bangun kompetisi positif antar siswa dengan sistem
-                            peringkat berdasarkan konsistensi.</p>
+                        <h5 class="fw-bold mt-4">Target Ibadah</h5>
+                        <p class="text-muted small fw-medium">Fokus pada kualitas sholat wajib tepat waktu dan amalan sunnah harian sesuai arahan pembimbing.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -152,34 +142,31 @@
                         style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);">
                         <div class="card-icon bg-primary text-white shadow-primary"
                             style="width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;">
-                            <i class="ti ti-file-export fs-3"></i>
+                            <i class="ti ti-info-circle fs-3"></i>
                         </div>
-                        <h5 class="fw-bold mt-4">Report Instan</h5>
-                        <p class="text-muted small fw-medium">Download laporan bulanan format PDF & Excel dalam hitungan
-                            detik untuk administrasi.</p>
+                        <h5 class="fw-bold mt-4">Butuh Bantuan?</h5>
+                        <p class="text-muted small fw-medium">Jika mengalami kendala teknis saat login atau pengisian, silakan hubungi tim IT/Admin sekolah.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How it Works Section -->
-    <section id="how-it-works" class="py-5 bg-mesh">
+    <!-- Tutorial Section -->
+    <section id="tutorial" class="py-5 bg-mesh">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="display-6 fw-extra-bold">Alur Penggunaan <span
-                        class="text-primary border-bottom border-4 border-primary">3 Langkah Mudah</span></h2>
-                <p class="text-muted mt-3 fw-medium">Sistem yang dirancang simpel agar tidak membebani rutinitas harian
-                    Anda.</p>
+                <h2 class="display-6 fw-extra-bold">Panduan <span
+                        class="text-primary border-bottom border-4 border-primary">Pengisian</span></h2>
+                <p class="text-muted mt-3 fw-medium">Ikuti langkah berikut untuk mengisi laporan mutabaah Anda.</p>
             </div>
             <div class="row text-center mt-5">
                 <div class="col-md-4 mb-4">
                     <div class="card-modern border-0 shadow-sm py-5" style="background: rgba(255,255,255,0.4);">
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">1</div>
-                        <h5 class="fw-bold">Konfigurasi Awal</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Admin/Guru mengatur jadwal dan jenis ibadah yang
-                            ingin dipantau.</p>
+                        <h5 class="fw-bold">Login Portal</h5>
+                        <p class="text-muted px-lg-4 small fw-medium">Gunakan email dan password yang telah didaftarkan oleh sekolah.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -187,18 +174,16 @@
                         style="background: rgba(255,255,255,0.8); transform: scale(1.05); z-index: 10;">
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">2</div>
-                        <h5 class="fw-bold">Pengisian Harian</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Siswa mengisi checklist ibadah setiap hari melalui
-                            akun masing-masing.</p>
+                        <h5 class="fw-bold">Isi Checklist</h5>
+                        <p class="text-muted px-lg-4 small fw-medium">Pilih tanggal dan centang amalan yang telah Anda laksanakan hari ini.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card-modern border-0 shadow-sm py-5" style="background: rgba(255,255,255,0.4);">
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">3</div>
-                        <h5 class="fw-bold">Monitoring & Evaluasi</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Pihak sekolah memantau progress dan memberikan
-                            apresiasi secara periodik.</p>
+                        <h5 class="fw-bold">Pantau Perkembangan</h5>
+                        <p class="text-muted px-lg-4 small fw-medium">Lihat statistik, streak, dan badges yang Anda dapatkan di dashboard.</p>
                     </div>
                 </div>
             </div>
@@ -276,12 +261,11 @@
     <!-- Final CTA -->
     <section class="py-5">
         <div class="container text-center">
-            <h2 class="display-5 fw-bold mb-4">Siap Menciptakan <span class="text-primary">Perubahan Lebih Baik?</span>
+            <h2 class="display-5 fw-bold mb-4">Siap Melanjutkan <span class="text-primary">Amalan Hari Ini?</span>
             </h2>
-            <p class="fs-5 mb-5 text-muted">Ayo bergabung dengan berbagai institusi yang telah menggunakan Amal Yaumi.
-            </p>
+            <p class="fs-5 mb-5 text-muted">Akses dashboard Anda sekarang untuk melihat statistik dan target harian.</p>
             <a href="{{ route('login') }}" class="btn btn-modern btn-modern-primary btn-lg px-5 py-3 shadow-lg">
-                Daftar Sekarang Secara Gratis
+                Masuk ke Dashboard
             </a>
         </div>
     </section>
@@ -290,19 +274,11 @@
     <footer class="text-center pt-5">
         <div class="container">
             <div class="row align-items-center border-top pt-4">
-                <div class="col-md-6 text-md-start mb-3 mb-md-0">
-                    <p class="mb-0 text-muted fw-bold">&copy; {{ date('Y') }} Amal Yaumi. Build for istiqomah.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="d-flex justify-content-md-end gap-3 justify-content-center">
-                        <a href="#" class="text-muted"><i class="ti ti-brand-instagram fs-3"></i></a>
-                        <a href="#" class="text-muted"><i class="ti ti-brand-twitter fs-3"></i></a>
-                        <a href="#" class="text-muted"><i class="ti ti-mail fs-3"></i></a>
-                    </div>
+                <div class="col-md-12">
+                    <p class="mb-0 text-muted fw-bold">&copy; {{ date('Y') }} Portal Amal Yaumi. Build for istiqomah.</p>
                 </div>
             </div>
-            <p class="mt-4 mb-0 pb-4 text-muted small">Project developed with <i class="ti ti-heart text-danger"></i>
-                for Ummah.</p>
+            <p class="mt-4 mb-0 pb-4 text-muted small">Media monitoring ibadah internal sekolah.</p>
         </div>
     </footer>
 

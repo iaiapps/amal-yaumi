@@ -107,7 +107,7 @@ class DashboardController extends Controller
         $student = auth()->user()->student;
 
         if (!$student) {
-            return redirect()->route('home');
+            abort(403, 'Profil siswa tidak ditemukan. Silakan hubungi admin sekolah Anda.');
         }
 
         // Total mutabaah bulan ini
