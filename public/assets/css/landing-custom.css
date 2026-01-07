@@ -16,9 +16,9 @@
     --border-color: var(--zinc-200);
 
     /* Link to Berry Theme Variables */
-    --brand-primary: var(--bs-primary);
-    --brand-dark: var(--bs-primary-dark, #059669); /* Fallback to emerald dark */
-    --brand-soft: var(--bs-primary-light, #ecfdf5); /* Fallback to emerald soft */
+    --brand-primary: #16595a;
+    --brand-dark: var(--bs-primary-dark, #16595a); /* Fallback to emerald dark */
+    --brand-soft: var(--bs-primary-light, #e4f6f6); /* Fallback to emerald soft */
     --brand-secondary: var(--bs-secondary);
     
     /* Berry Design Tokens */
@@ -93,7 +93,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-modern-primary:hover {
     filter: brightness(0.9);
-    color: #ffffff;
+    color: #16595a;
+    border: 1px solid var(--brand-primary);
 }
 
 .btn-modern-outline {

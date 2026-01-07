@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    {{-- <link rel="dns-prefetch" href="//fonts.bunny.net">
+    {{--
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
 
 
@@ -19,7 +20,7 @@
     <link rel="icon" href="{{ asset('assets/images/favicon.svg') }} " type="image/x-icon" />
 
     <!-- [Google Font] Family -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
         id="main-font-link" />
 
     <!-- [Tabler Icons] https://tablericons.com -->
@@ -40,8 +41,18 @@
     @include('layouts.partials.loader')
     @yield('content')
 
+    <script src="{{ asset('assets/js/plugins/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/fonts/custom-font.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
+    <script src="{{ asset('assets/js/theme.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/feather.min.js') }}"></script>
+
+    <script>
+        layout_change('light');
+        font_change('Inter');
+        preset_change('preset-4');
+    </script>
 
     @stack('script')
 </body>

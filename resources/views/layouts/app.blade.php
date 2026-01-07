@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    {{-- <link rel="dns-prefetch" href="//fonts.bunny.net">
+    {{--
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
 
 
@@ -19,11 +20,12 @@
     <link rel="icon" href="{{ asset('assets/images/favicon.svg') }} " type="image/x-icon" />
 
     <!-- [Google Font] Family -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
         id="main-font-link" />
 
     <!-- [phosphor Icons] https://phosphoricons.com/ -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/phosphor/duotone/style.css') }}" /> --}}
+    {{--
+    <link rel="stylesheet" href="{{ asset('assets/fonts/phosphor/duotone/style.css') }}" /> --}}
 
     <!-- [Tabler Icons] https://tablericons.com -->
     <link rel="stylesheet" href="{{ asset('assets/fonts/tabler-icons.min.css') }} " />
@@ -32,10 +34,12 @@
     <link rel="stylesheet" href="{{ asset('assets/fonts/feather.css') }} " />
 
     <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome.css') }} " /> --}}
+    {{--
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome.css') }} " /> --}}
 
     <!-- [Material Icons] https://fonts.google.com/icons -->
-    {{-- <link rel="stylesheet" href="{{ asset('assets/fonts/material.css') }} " /> --}}
+    {{--
+    <link rel="stylesheet" href="{{ asset('assets/fonts/material.css') }} " /> --}}
 
     <!-- [Template CSS Files] -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }} " id="main-style-link" />
@@ -75,7 +79,7 @@
     </script>
 
     <script>
-        font_change('Roboto');
+        font_change('Inter');
     </script>
 
     <script>
@@ -91,7 +95,7 @@
     </script>
 
     <script>
-        preset_change('preset-1');
+        preset_change('preset-4');
     </script>
 
     @stack('script')

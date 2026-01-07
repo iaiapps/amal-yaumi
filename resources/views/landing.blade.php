@@ -28,7 +28,8 @@
                     <li class="nav-item"><a class="nav-link px-3" href="#info">Informasi</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="#tutorial">Panduan</a></li>
                     <li class="nav-item ms-lg-3">
-                        <a href="{{ route('login') }}" class="btn btn-modern btn-modern-primary px-4 shadow-primary">Login Portal</a>
+                        <a href="{{ route('login') }}"
+                            class="btn btn-modern btn-modern-primary px-4 shadow-primary">Login Portal</a>
                     </li>
                 </ul>
             </div>
@@ -43,8 +44,10 @@
                     <span
                         class="badge bg-light-primary text-primary mb-3 px-3 py-2 rounded-pill fw-bold border border-primary border-opacity-25"
                         style="letter-spacing: 0.5px;">PORTAL INTERNAL SISWA & GURU</span>
-                    <h1 class="hero-title fw-extra-bold">Selamat Datang di <br><span class="text-primary">Portal Mutabaah</span> Digital</h1>
-                    <p class="hero-subtitle mx-auto mx-lg-0 mb-4 fs-5 opacity-90">Media monitoring ibadah harian untuk mendukung istiqomah dan perkembangan karakter seluruh siswa.</p>
+                    <h1 class="hero-title fw-extra-bold">Selamat Datang di <br><span class="text-primary">Portal
+                            Mutabaah</span> Digital</h1>
+                    <p class="hero-subtitle mx-auto mx-lg-0 mb-4 fs-5 opacity-90">Media monitoring ibadah harian untuk
+                        mendukung istiqomah dan perkembangan karakter seluruh siswa.</p>
                     <div
                         class="d-flex flex-column flex-sm-row gap-3 mt-4 justify-content-center justify-content-lg-start">
                         <a href="{{ route('login') }}"
@@ -112,7 +115,8 @@
             <div class="text-center mb-5 max-w-700 mx-auto">
                 <h2 class="display-6 fw-extra-bold mb-3">Informasi <span
                         class="text-primary border-bottom border-4 border-primary">Penting</span></h2>
-                <p class="text-muted fs-5 fw-medium">Berikut adalah informasi utama mengenai penggunaan Portal Mutabaah Digital.</p>
+                <p class="text-muted fs-5 fw-medium">Berikut adalah informasi utama mengenai penggunaan Portal Mutabaah
+                    Digital.</p>
             </div>
             <div class="row g-4 text-start">
                 <div class="col-md-4">
@@ -123,7 +127,8 @@
                             <i class="ti ti-clock fs-3"></i>
                         </div>
                         <h5 class="fw-bold mt-4">Waktu Pengisian</h5>
-                        <p class="text-muted small fw-medium">Pastikan mengisi mutabaah harian sebelum pukul 21:00 WIB agar tercatat secara otomatis ke sistem.</p>
+                        <p class="text-muted small fw-medium">Pastikan mengisi mutabaah harian sebelum pukul 21:00 WIB
+                            agar tercatat secara otomatis ke sistem.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -134,7 +139,8 @@
                             <i class="ti ti-target fs-3"></i>
                         </div>
                         <h5 class="fw-bold mt-4">Target Ibadah</h5>
-                        <p class="text-muted small fw-medium">Fokus pada kualitas sholat wajib tepat waktu dan amalan sunnah harian sesuai arahan pembimbing.</p>
+                        <p class="text-muted small fw-medium">Fokus pada kualitas sholat wajib tepat waktu dan amalan
+                            sunnah harian sesuai arahan pembimbing.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -145,7 +151,8 @@
                             <i class="ti ti-info-circle fs-3"></i>
                         </div>
                         <h5 class="fw-bold mt-4">Butuh Bantuan?</h5>
-                        <p class="text-muted small fw-medium">Jika mengalami kendala teknis saat login atau pengisian, silakan hubungi tim IT/Admin sekolah.</p>
+                        <p class="text-muted small fw-medium">Jika mengalami kendala teknis saat login atau pengisian,
+                            silakan hubungi tim IT/Admin sekolah.</p>
                     </div>
                 </div>
             </div>
@@ -166,7 +173,8 @@
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">1</div>
                         <h5 class="fw-bold">Login Portal</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Gunakan email dan password yang telah didaftarkan oleh sekolah.</p>
+                        <p class="text-muted px-lg-4 small fw-medium">Gunakan email dan password yang telah didaftarkan
+                            oleh sekolah.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -175,7 +183,8 @@
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">2</div>
                         <h5 class="fw-bold">Isi Checklist</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Pilih tanggal dan centang amalan yang telah Anda laksanakan hari ini.</p>
+                        <p class="text-muted px-lg-4 small fw-medium">Pilih tanggal dan centang amalan yang telah Anda
+                            laksanakan hari ini.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -183,7 +192,8 @@
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">3</div>
                         <h5 class="fw-bold">Pantau Perkembangan</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Lihat statistik, streak, dan badges yang Anda dapatkan di dashboard.</p>
+                        <p class="text-muted px-lg-4 small fw-medium">Lihat statistik, streak, dan badges yang Anda
+                            dapatkan di dashboard.</p>
                     </div>
                 </div>
             </div>
@@ -275,7 +285,8 @@
         <div class="container">
             <div class="row align-items-center border-top pt-4">
                 <div class="col-md-12">
-                    <p class="mb-0 text-muted fw-bold">&copy; {{ date('Y') }} Portal Amal Yaumi. Build for istiqomah.</p>
+                    <p class="mb-0 text-muted fw-bold">&copy; {{ date('Y') }} Portal Amal Yaumi. Build for istiqomah.
+                    </p>
                 </div>
             </div>
             <p class="mt-4 mb-0 pb-4 text-muted small">Media monitoring ibadah internal sekolah.</p>

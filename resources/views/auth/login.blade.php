@@ -12,22 +12,20 @@
                                     @csrf
                                     {{-- <button type="submit" class="ms-2 btn btn-danger">logout</button> --}}
                                     <strong>{{ $status }}</strong>
-                                    <button type="submit" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
+                                    <button type="submit" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </form>
                             </div>
                         @endif
                         <a href="#" class="d-flex justify-content-center">
-                            <img src="{{ asset('/assets/images/favicon.svg') }}" alt="image"
-                                class="img-fluid brand-logo" />
+                            <img src="{{ asset('/assets/images/favicon.svg') }}" alt="image" class="img-fluid brand-logo" />
                         </a>
                         <br>
                         <div class="row">
                             <div class="d-flex justify-content-center">
                                 <div class="auth-header">
-                                    <h2 class="text-secondary mt-2 text-center"><b>Selamat Datang di Aplikasi Amal Yaumi</b>
+                                    <h2 class="text-primary mt-2 text-center"><b>Selamat Datang di Portal Mutabaah</b>
                                     </h2>
-                                    <p class=" mt-2 text-center">Silahkan masukkan email/username dan kata sandi untuk
+                                    <p class=" mt-2 text-center">Silakan masukkan email/username dan kata sandi untuk
                                         melanjutkan
                                     </p>
                                 </div>
@@ -38,9 +36,9 @@
                             @csrf
 
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
-                                    id="email" placeholder="Email address / Username" />
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                                    value="{{ old('email') }}" required autocomplete="email" autofocus id="email"
+                                    placeholder="Email address / Username" />
                                 <label for="email">Email address / Username</label>
 
                                 @error('email')
@@ -63,7 +61,7 @@
                             </div>
 
                             <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-secondary">Masuk</button>
+                                <button type="submit" class="btn btn-primary shadow">Masuk ke Portal</button>
                             </div>
                         </form>
                     </div>
