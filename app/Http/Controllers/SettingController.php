@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\School;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class SchoolController extends Controller
+class SettingController extends Controller
 {
     public function edit()
     {
-        $school = School::first();
-        return view('admin.setting.index', compact('school'));
+        $setting = Setting::first();
+        return view('admin.setting.index', compact('setting'));
     }
 
     public function update(Request $request)
@@ -26,20 +26,21 @@ class SchoolController extends Controller
             'nip_kepala' => 'nullable|string|max:50',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'max_class_per_teacher' => 'required|integer|min:1',
+            'max_students_per_class' => 'required|integer|min:1',
         ]);
 
-        $school = School::first();
+        $setting = Setting::first();
         $data = $request->except('logo');
 
         if ($request->hasFile('logo')) {
-            if ($school->logo) {
-                Storage::disk('public')->delete($school->logo);
+            if ($setting->logo) {
+                Storage::disk('public')->delete($setting->logo);
             }
             $data['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
-        $school->update($data);
+        $setting->update($data);
 
-        return redirect()->route('setting.index')->with('success', 'Pengaturan berhasil diperbarui');
+        return redirect()->route('admin.setting.index')->with('success', 'Pengaturan berhasil diperbarui');
     }
 }

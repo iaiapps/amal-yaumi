@@ -31,8 +31,8 @@ Route::middleware('auth')->group(function () {
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('reset/{user}', [UserController::class, 'reset'])->name('user.reset');
 
-        Route::get('setting', [\App\Http\Controllers\SchoolController::class, 'edit'])->name('setting.index');
-        Route::put('setting', [\App\Http\Controllers\SchoolController::class, 'update'])->name('setting.update');
+        Route::get('setting', [\App\Http\Controllers\SettingController::class, 'edit'])->name('setting.index');
+        Route::put('setting', [\App\Http\Controllers\SettingController::class, 'update'])->name('setting.update');
 
         Route::resource('classroom', ClassroomController::class)->only(['index', 'show']);
         Route::resource('student', StudentController::class)->only(['index']);

@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\School;
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 
-class SchoolSeeder extends Seeder
+class SettingSeeder extends Seeder
 {
     public function run(): void
     {
-        School::create([
+        Setting::create([
             'nama' => 'Amal Yaumi School',
             'alamat' => 'Jl. Contoh No. 123',
             'telp' => '021-12345678',
@@ -18,6 +18,7 @@ class SchoolSeeder extends Seeder
             'kepala_sekolah' => 'Nama Kepala Sekolah',
             'nip_kepala' => '123456789',
             'max_class_per_teacher' => 5,
+            'max_students_per_class' => 30,
         ]);
     }
 }

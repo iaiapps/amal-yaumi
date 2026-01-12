@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
-use App\Models\School;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +30,8 @@ class ClassroomController extends Controller
             return $q->where('teacher_id', $teacherId);
         })->withCount('students')->get();
 
-        $school = School::first();
-        $maxClasses = $school ? $school->max_class_per_teacher : 5;
+        $setting = Setting::first();
+        $maxClasses = $setting ? $setting->max_class_per_teacher : 5;
 
         return view($role . '.classroom.index', compact('kelas', 'role', 'maxClasses'));
     }
@@ -49,8 +49,8 @@ class ClassroomController extends Controller
 
         $teacherId = $this->getTeacherId();
         $myClassCount = Classroom::where('teacher_id', $teacherId)->count();
-        $school = School::first();
-        $maxClasses = $school ? $school->max_class_per_teacher : 5;
+        $setting = Setting::first();
+        $maxClasses = $setting ? $setting->max_class_per_teacher : 5;
 
         if ($myClassCount >= $maxClasses) {
             return redirect()->route($role . '.classroom.index')->with('error', 'Batas pembuatan kelas sudah tercapai (Maks: ' . $maxClasses . ' kelas).');
@@ -72,8 +72,8 @@ class ClassroomController extends Controller
 
         $teacherId = $this->getTeacherId();
         $myClassCount = Classroom::where('teacher_id', $teacherId)->count();
-        $school = School::first();
-        $maxClasses = $school ? $school->max_class_per_teacher : 5;
+        $setting = School::first();
+        $maxClasses = $setting ? $setting->max_class_per_teacher : 5;
 
         if ($myClassCount >= $maxClasses) {
             return redirect()->route($role . '.classroom.index')->with('error', 'Batas pembuatan kelas sudah tercapai.');
