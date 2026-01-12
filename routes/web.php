@@ -26,6 +26,12 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    // Profile
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('profile/password', [ProfileController::class, 'changePassword'])->name('profile.password');
+    Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
+
     // admin
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('user', [UserController::class, 'index'])->name('user.index');

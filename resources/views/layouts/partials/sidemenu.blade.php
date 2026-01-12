@@ -145,7 +145,7 @@
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('profile.change-password') }}" class="pc-link">
+                            <a href="{{ route('profile.password') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-lock"></i></span>
                                 <span class="pc-mtext">Ganti Password</span>
                             </a>

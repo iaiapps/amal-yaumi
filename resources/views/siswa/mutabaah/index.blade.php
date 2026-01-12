@@ -4,7 +4,7 @@
 
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <a href="{{ route('amal.create') }}" class="btn btn-primary btn-sm">
+            <a href="{{ route('siswa.amal.create') }}" class="btn btn-primary btn-sm">
                 <i class="ti ti-plus"></i> Isi Mutabaah
             </a>
         </div>
