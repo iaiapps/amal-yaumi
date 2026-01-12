@@ -7,7 +7,7 @@
         <h5>Edit Item Mutabaah</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('mutabaah-item.update', $mutabaah_item) }}" method="POST">
+        <form action="{{ route('guru.mutabaah-item.update', $mutabaah_item) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -53,7 +53,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Update</button>
-            <a href="{{ route('mutabaah-item.index') }}" class="btn btn-secondary">Batal</a>
+            <a href="{{ route('guru.mutabaah-item.index') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 </div>
