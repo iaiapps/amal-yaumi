@@ -36,7 +36,7 @@ class MutabaahController extends Controller
         // Handle checkbox: unchecked = "Tidak", checked = "Ya"
         $allItems = MutabaahItem::active()->pluck('id');
         $data = [];
-        
+
         foreach ($allItems as $itemId) {
             if (isset($request->data[$itemId])) {
                 $data[$itemId] = $request->data[$itemId];
@@ -48,7 +48,7 @@ class MutabaahController extends Controller
                 }
             }
         }
-        
+
         $validated['data'] = $data;
 
         Mutabaah::create($validated);
@@ -113,7 +113,7 @@ class MutabaahController extends Controller
         // Handle checkbox: unchecked = "Tidak", checked = "Ya"
         $allItems = MutabaahItem::active()->pluck('id');
         $data = [];
-        
+
         foreach ($allItems as $itemId) {
             if (isset($request->data[$itemId])) {
                 $data[$itemId] = $request->data[$itemId];
@@ -125,7 +125,7 @@ class MutabaahController extends Controller
                 }
             }
         }
-        
+
         $validated['data'] = $data;
         $validated['student_id'] = Auth::user()->student->id;
 
@@ -161,5 +161,55 @@ class MutabaahController extends Controller
     {
         $mutabaah->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus data');
+    }
+
+    // Calendar Methods
+    public function calendar(Request $request)
+    {
+        $month = $request->query('month', now()->format('Y-m'));
+        $students = Student::with(['mutabaah' => function($q) use ($month) {
+            $q->whereYear('tanggal', date('Y', strtotime($month)))
+              ->whereMonth('tanggal', date('m', strtotime($month)));
+        }])->orderBy('nama')->get();
+
+        $startDate = \Carbon\Carbon::parse($month . '-01');
+        $endDate = $startDate->copy()->endOfMonth();
+        $daysInMonth = $startDate->daysInMonth;
+
+        return view('mutabaah.calendar', compact('students', 'month', 'startDate', 'endDate', 'daysInMonth'));
+    }
+
+    public function studentCalendar(Student $student, Request $request)
+    {
+        $month = $request->query('month', now()->format('Y-m'));
+        $startDate = \Carbon\Carbon::parse($month . '-01');
+        $endDate = $startDate->copy()->endOfMonth();
+        
+        $mutabaahs = Mutabaah::where('student_id', $student->id)
+            ->whereBetween('tanggal', [$startDate, $endDate])
+            ->get()
+            ->keyBy(function($item) {
+                return $item->tanggal->format('Y-m-d');
+            });
+
+        $items = MutabaahItem::active()->get();
+        $calendarData = [];
+        
+        for ($date = $startDate->copy(); $date <= $endDate; $date->addDay()) {
+            $dateStr = $date->format('Y-m-d');
+            $mutabaah = $mutabaahs->get($dateStr);
+            
+            $calendarData[] = [
+                'date' => $dateStr,
+                'day' => $date->format('d'),
+                'dayName' => $date->format('D'),
+                'mutabaah' => $mutabaah,
+                'itemCount' => $mutabaah ? count($mutabaah->data) : 0,
+                'isFuture' => $date->isFuture(),
+                'isToday' => $date->isToday(),
+            ];
+        }
+
+        return view('mutabaah.student-calendar', compact('student', 'month', 'calendarData', 'items', 'startDate'));
     }
 }

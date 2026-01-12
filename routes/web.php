@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('classroom', ClassroomController::class);
         Route::resource('student', StudentController::class);
         Route::resource('mutabaah', MutabaahController::class);
+        Route::get('mutabaah-calendar', [MutabaahController::class, 'calendar'])->name('mutabaah.calendar');
+        Route::get('mutabaah-calendar/{student}', [MutabaahController::class, 'studentCalendar'])->name('mutabaah.student-calendar');
         Route::resource('mutabaah-item', MutabaahItemController::class);
         Route::post('mutabaah-item/{mutabaahItem}/toggle', [MutabaahItemController::class, 'toggle'])->name('mutabaah-item.toggle');
         Route::resource('answer', AnswerController::class);

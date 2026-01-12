@@ -13,7 +13,7 @@
                         </div>
                         <div>
                             <a href="{{ route('amal.create') }}" class="btn btn-primary btn-sm">
-                                <i class="ti ti-plus"></i> Isi Mutabaah Hari Ini
+                                <i class="ti ti-plus"></i> Isi Mutabaah
                             </a>
                         </div>
                     </div>

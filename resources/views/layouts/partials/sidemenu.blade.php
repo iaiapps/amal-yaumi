@@ -48,12 +48,18 @@
                                 <span class="pc-mtext">Siswa</span>
                             </a>
                         </li>
-                        {{-- <li class="pc-item">
-                            <a href="{{ route('mutabaah.index') }}" class="pc-link">
-                                <span class="pc-micon"><i class="ti ti-list-numbers"></i></span>
+                        <li class="pc-item">
+                            <a href="{{ route('mutabaah.calendar') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-calendar"></i></span>
                                 <span class="pc-mtext">Mutabaah</span>
                             </a>
-                        </li> --}}
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('mutabaah.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-list-numbers"></i></span>
+                                <span class="pc-mtext">Log Mutabaah</span>
+                            </a>
+                        </li>
                         <li class="pc-item">
                             <a href="{{ route('mutabaah-item.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-list-check"></i></span>
