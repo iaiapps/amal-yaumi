@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('student.update', $student->id) }}" method="post">
+            <form action="{{ route('guru.student.update', $student->id) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="mb-3">

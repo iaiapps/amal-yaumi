@@ -100,7 +100,7 @@
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('admin.import.index') }}" class="pc-link">
+                            <a href="{{ route('guru.import.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-file-upload"></i></span>
                                 <span class="pc-mtext">Import Siswa</span>
                             </a>

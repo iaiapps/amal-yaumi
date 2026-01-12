@@ -44,7 +44,7 @@
                         @forelse($students as $student)
                             <tr class="py-1">
                                 <td>
-                                    <a href="{{ route('mutabaah.student-calendar', ['student' => $student->id, 'month' => $month]) }}"
+                                    <a href="{{ route('guru.mutabaah.student-calendar', ['student' => $student->id, 'month' => $month]) }}"
                                         class="text-decoration-none fw-bold">
                                         {{ $student->nama }}
                                     </a>
@@ -123,7 +123,7 @@
     <script>
         function changeMonth() {
             const month = document.getElementById('monthPicker').value;
-            window.location.href = "{{ route('mutabaah.calendar') }}?month=" + month;
+            window.location.href = "{{ route('guru.mutabaah.calendar') }}?month=" + month;
         }
 
         document.querySelectorAll('.mutabaah-cell').forEach(cell => {

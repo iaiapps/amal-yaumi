@@ -10,7 +10,7 @@
                         <div class="card-body">
                             <h6 class="card-title"><i class="ti ti-file-spreadsheet"></i> Export Data Siswa</h6>
                             <p class="card-text text-muted">Export semua data siswa ke format Excel</p>
-                            <a href="{{ route('reports.students.export') }}" class="btn btn-success btn-sm">
+                            <a href="{{ route('guru.reports.students.export') }}" class="btn btn-success btn-sm">
                                 <i class="ti ti-download"></i> Download Excel
                             </a>
                         </div>
@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <h6 class="card-title"><i class="ti ti-file-text"></i> Export Data Mutabaah</h6>
                             <p class="card-text text-muted">Export data mutabaah dengan filter tanggal</p>
-                            <form action="{{ route('reports.mutabaah.export') }}" method="GET" class="d-inline">
+                            <form action="{{ route('guru.reports.mutabaah.export') }}" method="GET" class="d-inline">
                                 <div class="row g-2 mb-2">
                                     <div class="col-md-6">
                                         <input type="date" name="start_date" class="form-control form-control-sm"
@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <h6 class="card-title"><i class="ti ti-file-pdf"></i> Laporan PDF Semua Siswa</h6>
                             <p class="card-text text-muted">Generate laporan PDF untuk semua siswa</p>
-                            <form action="{{ route('reports.all.pdf') }}" method="GET" class="d-inline">
+                            <form action="{{ route('guru.reports.all.pdf') }}" method="GET" class="d-inline">
                                 <div class="row g-2 mb-2">
                                     <div class="col-md-3">
                                         <input type="date" name="start_date" class="form-control form-control-sm"
@@ -94,7 +94,7 @@
                                 <td>{{ $student->nis }}</td>
                                 <td>{{ $student->kelas }}</td>
                                 <td>
-                                    <form action="{{ route('reports.student.pdf', $student->id) }}" method="GET"
+                                    <form action="{{ route('guru.reports.student.pdf', $student->id) }}" method="GET"
                                         class="d-inline">
                                         <input type="date" name="start_date"
                                             class="form-control form-control-sm d-inline-block" style="width: 140px;"

@@ -49,17 +49,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('mutabaah-item', MutabaahItemController::class)->only(['index']);
         Route::resource('answer', AnswerController::class);
 
-        // Reports
-        Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
-        Route::get('reports/student/{id}/pdf', [ReportController::class, 'studentPdf'])->name('reports.student.pdf');
-        Route::get('reports/all/pdf', [ReportController::class, 'allPdf'])->name('reports.all.pdf');
-        Route::get('reports/students/export', [ReportController::class, 'exportStudents'])->name('reports.students.export');
-        Route::get('reports/mutabaah/export', [ReportController::class, 'exportMutabaah'])->name('reports.mutabaah.export');
 
-        // Import
-        Route::get('import', [ImportController::class, 'index'])->name('import.index');
-        Route::get('import/template', [ImportController::class, 'template'])->name('import.template');
-        Route::post('import', [ImportController::class, 'import'])->name('import.store');
+
     });
 
     // guru
@@ -70,7 +61,17 @@ Route::middleware('auth')->group(function () {
         Route::post('mutabaah-item/{mutabaah_item}/toggle', [MutabaahItemController::class, 'toggle'])->name('mutabaah-item.toggle');
         Route::get('mutabaah-calendar', [MutabaahController::class, 'calendar'])->name('mutabaah.calendar');
         Route::get('mutabaah-calendar/{student}', [MutabaahController::class, 'studentCalendar'])->name('mutabaah.student-calendar');
+        // Reports
         Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('reports/student/{id}/pdf', [ReportController::class, 'studentPdf'])->name('reports.student.pdf');
+        Route::get('reports/all/pdf', [ReportController::class, 'allPdf'])->name('reports.all.pdf');
+        Route::get('reports/students/export', [ReportController::class, 'exportStudents'])->name('reports.students.export');
+        Route::get('reports/mutabaah/export', [ReportController::class, 'exportMutabaah'])->name('reports.mutabaah.export');
+        // Import
+        Route::get('import', [ImportController::class, 'index'])->name('import.index');
+        Route::get('import/template', [ImportController::class, 'template'])->name('import.template');
+        Route::post('import', [ImportController::class, 'import'])->name('import.store');
+
     });
 
     Route::middleware('role:siswa')->prefix('siswa')->name('siswa.')->group(function () {

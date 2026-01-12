@@ -34,12 +34,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <a href="{{ route('import.template') }}" class="btn btn-success btn-sm">
+                        <a href="{{ route('guru.import.template') }}" class="btn btn-success btn-sm">
                             <i class="ti ti-download"></i> Download Template
                         </a>
                     </div>
                     <hr>
-                    <form action="{{ route('import.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('guru.import.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Pilih File Excel</label>
@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3 ">
             <div class="card">
                 <div class="card-body">
                     <h5>Format Template</h5>
@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    <div class="card">
+    <div class="card mb-4">
         <div class="card-header">
             <h5>Riwayat Import</h5>
         </div>
@@ -187,5 +187,5 @@
             </div>
         </div>
     </div>
-
+<div style="color:#eef2f6">iai</div>
 @endsection

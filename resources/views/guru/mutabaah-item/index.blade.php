@@ -6,7 +6,7 @@
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5>Kelola Item Mutabaah</h5>
         @if($role == 'guru')
-        <a href="{{ route('mutabaah-item.create') }}" class="btn btn-primary btn-sm">
+        <a href="{{ route('guru.mutabaah-item.create') }}" class="btn btn-primary btn-sm">
             <i class="ti ti-plus"></i> Tambah Item
         </a>
         @endif
@@ -53,7 +53,7 @@
                         <td>{{ ucfirst(str_replace('_', '/', $item->tipe)) }}</td>
                         <td>
                             @if($role == 'guru')
-                            <form action="{{ route('mutabaah-item.toggle', $item) }}" method="POST" class="d-inline">
+                            <form action="{{ route('guru.mutabaah-item.toggle', $item) }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-{{ $item->is_active ? 'success' : 'secondary' }}">
                                     {{ $item->is_active ? 'Aktif' : 'Nonaktif' }}
@@ -67,10 +67,10 @@
                         </td>
                         @if($role == 'guru')
                         <td>
-                            <a href="{{ route('mutabaah-item.edit', $item) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('guru.mutabaah-item.edit', $item) }}" class="btn btn-sm btn-warning">
                                 <i class="ti ti-edit"></i>
                             </a>
-                            <form action="{{ route('mutabaah-item.destroy', $item) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus item ini?')">
+                            <form action="{{ route('guru.mutabaah-item.destroy', $item) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus item ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">

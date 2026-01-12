@@ -7,7 +7,7 @@
         <h5>Tambah Item Mutabaah</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('mutabaah-item.store') }}" method="POST">
+        <form action="{{ route('guru.mutabaah-item.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -52,7 +52,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="{{ route('mutabaah-item.index') }}" class="btn btn-secondary">Batal</a>
+            <a href="{{ route('guru.mutabaah-item.index') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 </div>

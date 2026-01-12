@@ -13,7 +13,7 @@ class ImportController extends Controller
     public function index()
     {
         $imports = Import::with('user')->orderBy('created_at', 'desc')->get();
-        return view('admin.import.index', compact('imports'));
+        return view('guru.import.index', compact('imports'));
     }
 
     public function template()
@@ -58,7 +58,7 @@ class ImportController extends Controller
                 'errors' => json_encode($import->getErrors()),
             ]);
 
-            return redirect()->route('import.index')->with('success', 'Import berhasil! ' . $import->getSuccessCount() . ' data berhasil diimport.');
+            return redirect()->route('guru.import.index')->with('success', 'Import berhasil! ' . $import->getSuccessCount() . ' data berhasil diimport.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Import gagal: ' . $e->getMessage());
         }

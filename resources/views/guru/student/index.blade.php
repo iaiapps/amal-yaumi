@@ -35,9 +35,9 @@
                                 <td>{{ $student->jk }}</td>
                                 <td>{{ $student->kelas }}</td>
                                 <td>
-                                    <a href="{{ route('student.edit', $student->id) }}"
+                                    <a href="{{ route('guru.student.edit', $student->id) }}"
                                         class="btn btn-sm btn-warning">edit</a>
-                                    <form action="{{ route('student.destroy', $student->id) }}" method="post"
+                                    <form action="{{ route('guru.student.destroy', $student->id) }}" method="post"
                                         class="d-inline-block" onclick="return alert('apakah kamu yakin menghapus data?')">
                                         @csrf
                                         @method('delete')
