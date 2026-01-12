@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teacher_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('set null');
             $table->string('nama')->unique();
             $table->string('tingkat');
             $table->integer('kapasitas')->default(30);

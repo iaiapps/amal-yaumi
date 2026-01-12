@@ -12,6 +12,11 @@ class MutabaahItem extends Model
         'is_active' => 'boolean',
     ];
 
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true)->orderBy('urutan');

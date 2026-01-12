@@ -13,8 +13,18 @@ class Teacher extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function classrooms()
+    {
+        return $this->hasMany(Classroom::class);
+    }
+
+    public function mutabaahItems()
+    {
+        return $this->hasMany(MutabaahItem::class);
+    }
+
     public function students()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasManyThrough(Student::class, Classroom::class, 'teacher_id', 'kelas', 'id', 'nama');
     }
 }

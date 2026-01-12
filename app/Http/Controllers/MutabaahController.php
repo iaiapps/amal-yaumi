@@ -5,11 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Mutabaah;
 use App\Models\MutabaahItem;
+use App\Models\Classroom;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MutabaahController extends Controller
 {
+    /**
+     * Get items specifically for the teacher of the student
+     */
+    private function getItemsForStudent($student)
+    {
+        // Temukan kelas siswa
+        $classroom = Classroom::where('nama', $student->kelas)->first();
+        if (!$classroom || !$classroom->teacher_id) {
+            return collect();
+        }
+
+        // Temukan item mutabaah milik guru di kelas tersebut
+        return MutabaahItem::where('teacher_id', $classroom->teacher_id)
+            ->where('is_active', true)
+            ->orderBy('urutan')
+            ->get();
+    }
+
     // Admin Methods
     public function index()
     {
@@ -20,7 +40,7 @@ class MutabaahController extends Controller
     public function create(Request $request)
     {
         $students = Student::all();
-        $items = MutabaahItem::active()->get();
+        $items = MutabaahItem::where('is_active', true)->orderBy('urutan')->get();
         $defaultDate = $request->query('date', date('Y-m-d'));
         return view('mutabaah.create', compact('students', 'items', 'defaultDate'));
     }
@@ -33,24 +53,21 @@ class MutabaahController extends Controller
             'data' => 'nullable|array',
         ]);
 
-        // Handle checkbox: unchecked = "Tidak", checked = "Ya"
-        $allItems = MutabaahItem::active()->pluck('id');
+        $student = Student::find($request->student_id);
+        $items = $this->getItemsForStudent($student);
+        
         $data = [];
-
-        foreach ($allItems as $itemId) {
-            if (isset($request->data[$itemId])) {
-                $data[$itemId] = $request->data[$itemId];
+        foreach ($items as $item) {
+            if (isset($request->data[$item->id])) {
+                $data[$item->id] = $request->data[$item->id];
             } else {
-                // Checkbox unchecked or empty input
-                $item = MutabaahItem::find($itemId);
-                if ($item && $item->tipe == 'ya_tidak') {
-                    $data[$itemId] = 'Tidak';
+                if ($item->tipe == 'ya_tidak') {
+                    $data[$item->id] = 'Tidak';
                 }
             }
         }
 
         $validated['data'] = $data;
-
         Mutabaah::create($validated);
 
         return redirect()->route('mutabaah.index')->with('success', 'Berhasil menambah data');
@@ -58,14 +75,14 @@ class MutabaahController extends Controller
 
     public function show(Mutabaah $mutabaah)
     {
-        $items = MutabaahItem::active()->get();
+        $items = $this->getItemsForStudent($mutabaah->student);
         return view('mutabaah.show', compact('mutabaah', 'items'));
     }
 
     public function edit(Mutabaah $mutabaah)
     {
         $students = Student::all();
-        $items = MutabaahItem::active()->get();
+        $items = $this->getItemsForStudent($mutabaah->student);
         return view('mutabaah.edit', compact('mutabaah', 'students', 'items'));
     }
 
@@ -78,7 +95,6 @@ class MutabaahController extends Controller
         ]);
 
         $mutabaah->update($validated);
-
         return redirect()->route('mutabaah.index')->with('success', 'Berhasil update data');
     }
 
@@ -98,7 +114,8 @@ class MutabaahController extends Controller
 
     public function amalCreate(Request $request)
     {
-        $items = MutabaahItem::active()->get();
+        $student = Auth::user()->student;
+        $items = $this->getItemsForStudent($student);
         $defaultDate = $request->query('date', date('Y-m-d'));
         return view('mutabaah.create', compact('items', 'defaultDate'));
     }
@@ -110,27 +127,24 @@ class MutabaahController extends Controller
             'data' => 'nullable|array',
         ]);
 
-        // Handle checkbox: unchecked = "Tidak", checked = "Ya"
-        $allItems = MutabaahItem::active()->pluck('id');
+        $student = Auth::user()->student;
+        $items = $this->getItemsForStudent($student);
+        
         $data = [];
-
-        foreach ($allItems as $itemId) {
-            if (isset($request->data[$itemId])) {
-                $data[$itemId] = $request->data[$itemId];
+        foreach ($items as $item) {
+            if (isset($request->data[$item->id])) {
+                $data[$item->id] = $request->data[$item->id];
             } else {
-                // Checkbox unchecked or empty input
-                $item = MutabaahItem::find($itemId);
-                if ($item && $item->tipe == 'ya_tidak') {
-                    $data[$itemId] = 'Tidak';
+                if ($item->tipe == 'ya_tidak') {
+                    $data[$item->id] = 'Tidak';
                 }
             }
         }
 
         $validated['data'] = $data;
-        $validated['student_id'] = Auth::user()->student->id;
+        $validated['student_id'] = $student->id;
 
         Mutabaah::create($validated);
-
         return redirect()->route('amal.index')->with('success', 'Berhasil menambah data');
     }
 
@@ -141,7 +155,8 @@ class MutabaahController extends Controller
 
     public function amalEdit(Mutabaah $mutabaah)
     {
-        $items = MutabaahItem::active()->get();
+        $student = Auth::user()->student;
+        $items = $this->getItemsForStudent($student);
         return view('mutabaah.edit', compact('mutabaah', 'items'));
     }
 
@@ -153,7 +168,6 @@ class MutabaahController extends Controller
         ]);
 
         $mutabaah->update($validated);
-
         return redirect()->route('amal.index')->with('success', 'Berhasil update data');
     }
 
@@ -192,7 +206,7 @@ class MutabaahController extends Controller
                 return $item->tanggal->format('Y-m-d');
             });
 
-        $items = MutabaahItem::active()->get();
+        $items = $this->getItemsForStudent($student);
         $calendarData = [];
         
         for ($date = $startDate->copy(); $date <= $endDate; $date->addDay()) {

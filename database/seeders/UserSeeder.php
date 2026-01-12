@@ -17,15 +17,44 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('passwordadmin1234')
+            'password' => Hash::make('password')
         ]);
         $admin->assignRole('admin');
 
-        $siswa = User::create([
-            'name' => 'Siswa',
-            'email' => 'siswa@gmail.com',
-            'password' => Hash::make('password1234')
+        $guruUser = User::create([
+            'name' => 'Guru Dummy',
+            'email' => 'guru@gmail.com',
+            'password' => Hash::make('password')
         ]);
-        $siswa->assignRole('siswa');
+        $guruUser->assignRole('guru');
+
+        $guru = \App\Models\Teacher::create([
+            'user_id' => $guruUser->id,
+            'nama' => 'Guru Dummy',
+            'nip' => '12345678',
+            'jk' => 'L',
+        ]);
+
+        $kelas = \App\Models\Classroom::create([
+            'teacher_id' => $guru->id,
+            'nama' => 'X-A',
+            'tingkat' => '10',
+            'kapasitas' => 30,
+        ]);
+
+        $siswaUser = User::create([
+            'name' => 'Siswa Dummy',
+            'email' => 'siswa@gmail.com',
+            'password' => Hash::make('password')
+        ]);
+        $siswaUser->assignRole('siswa');
+
+        \App\Models\Student::create([
+            'user_id' => $siswaUser->id,
+            'nama' => 'Siswa Dummy',
+            'nis' => '20240001',
+            'jk' => 'L',
+            'kelas' => 'X-A',
+        ]);
     }
 }

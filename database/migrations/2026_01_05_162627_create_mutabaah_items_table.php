@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('mutabaah_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teacher_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('nama');
             $table->string('kategori'); // sholat_wajib, sholat_sunnah, lainnya
             $table->string('tipe')->default('ya_tidak'); // ya_tidak, angka, text

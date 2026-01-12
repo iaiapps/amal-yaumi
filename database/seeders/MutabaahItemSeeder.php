@@ -9,25 +9,27 @@ class MutabaahItemSeeder extends Seeder
 {
     public function run(): void
     {
+        $guru = \App\Models\Teacher::first();
+        $teacherId = $guru ? $guru->id : null;
+
         $items = [
-            // Sholat Wajib
-            ['nama' => 'Subuh', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 1],
-            ['nama' => 'Dhuhur', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 2],
-            ['nama' => 'Ashar', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 3],
-            ['nama' => 'Magrib', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 4],
-            ['nama' => 'Isya', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 5],
+            // Sholat Fardhu
+            ['nama' => 'Subuh', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 1, 'teacher_id' => $teacherId],
+            ['nama' => 'Dhuhur', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 2, 'teacher_id' => $teacherId],
+            ['nama' => 'Ashar', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 3, 'teacher_id' => $teacherId],
+            ['nama' => 'Magrib', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 4, 'teacher_id' => $teacherId],
+            ['nama' => 'Isya', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 5, 'teacher_id' => $teacherId],
 
             // Sholat Sunnah
-            ['nama' => 'Dhuha', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 6],
-            ['nama' => 'Tarawih', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 7],
-            ['nama' => 'Tahajud', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 8],
+            ['nama' => 'Dhuha', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 6, 'teacher_id' => $teacherId],
+            ['nama' => 'Tahajud', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 7, 'teacher_id' => $teacherId],
 
-            // Lainnya
-            ['nama' => 'Puasa', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 9],
-            ['nama' => 'Tilawah', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 10],
-            ['nama' => 'Infaq', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 11],
-            ['nama' => 'Birrul Walidain', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 12],
+            // Tilawah
+            ['nama' => 'Tilawah', 'kategori' => 'lainnya', 'tipe' => 'angka', 'urutan' => 8, 'teacher_id' => $teacherId],
 
+            // Dzikir Pagi Petang
+            ['nama' => 'Dzikir Pagi', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 9, 'teacher_id' => $teacherId],
+            ['nama' => 'Dzikir Petang', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 10, 'teacher_id' => $teacherId],
         ];
 
         foreach ($items as $item) {

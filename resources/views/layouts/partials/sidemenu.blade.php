@@ -20,7 +20,7 @@
         </div> --}}
         <div class="navbar-content">
             <ul class="pc-navbar">
-                <li class="pc-item pc-caption">
+                {{-- <li class="pc-item pc-caption">
                     <label>Dashboard</label>
                     <i class="ti ti-dashboard"></i>
                 </li>
@@ -28,36 +28,65 @@
                     <a href="{{ route('home') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-smart-home"></i></span>
                         <span class="pc-mtext">Home</span></a>
-                </li>
+                </li> --}}
 
                 @switch($role)
                     @case('admin')
                         <li class="pc-item pc-caption">
-                            <label>Component</label>
+                            <label>Monitoring</label>
+                            <i class="ti ti-chart-bar"></i>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('home') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                                <span class="pc-mtext">Dashboard Admin</span>
+                            </a>
+                        </li>
+                        <li class="pc-item pc-caption">
+                            <label>Master Data</label>
                             <i class="ti ti-apps"></i>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('user.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-users"></i></span>
+                                <span class="pc-mtext">Data Guru</span>
+                            </a>
                         </li>
                         <li class="pc-item">
                             <a href="{{ route('classroom.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-sitemap"></i></span>
-                                <span class="pc-mtext">Kelas</span>
+                                <span class="pc-mtext">Semua Kelas</span>
                             </a>
                         </li>
                         <li class="pc-item">
                             <a href="{{ route('student.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-school"></i></span>
-                                <span class="pc-mtext">Siswa</span>
+                                <span class="pc-mtext">Semua Siswa</span>
+                            </a>
+                        </li>
+                    @break
+
+                    @case('guru')
+                        <li class="pc-item pc-caption">
+                            <label>Menu Guru</label>
+                            <i class="ti ti-apps"></i>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('classroom.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-sitemap"></i></span>
+                                <span class="pc-mtext">Kelas Saya</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('student.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-school"></i></span>
+                                <span class="pc-mtext">Siswa Saya</span>
                             </a>
                         </li>
                         <li class="pc-item">
                             <a href="{{ route('mutabaah.calendar') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-calendar"></i></span>
-                                <span class="pc-mtext">Mutabaah</span>
-                            </a>
-                        </li>
-                        <li class="pc-item">
-                            <a href="{{ route('mutabaah.index') }}" class="pc-link">
-                                <span class="pc-micon"><i class="ti ti-list-numbers"></i></span>
-                                <span class="pc-mtext">Log Mutabaah</span>
+                                <span class="pc-mtext">Monitoring Mutabaah</span>
                             </a>
                         </li>
                         <li class="pc-item">
@@ -78,22 +107,13 @@
                                 <span class="pc-mtext">Import Data</span>
                             </a>
                         </li>
-                        {{-- <li class="pc-item">
-                            <a href="../elements/icon-tabler.html" class="pc-link">
-                                <span class="pc-micon"><i class="ti ti-message-2"></i></span>
-                                <span class="pc-mtext">Jawaban</span>
-                            </a>
-                        </li> --}}
-                        <li class="pc-item pc-caption">
-                            <label>Others</label>
-                            <i class="ti ti-apps"></i>
-                        </li>
                         <li class="pc-item">
-                            <a href="{{ route('user.index') }}" class="pc-link">
-                                <span class="pc-micon"><i class="ti ti-users"></i></span>
-                                <span class="pc-mtext">Master User</span>
+                            <a href="{{ route('import.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-file-upload"></i></span>
+                                <span class="pc-mtext">Import Data</span>
                             </a>
                         </li>
+
                         <li class="pc-item">
                             <a href="{{ route('profile.edit') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-user"></i></span>
@@ -118,6 +138,12 @@
                         <li class="pc-item pc-caption">
                             <label>Menu</label>
                             <i class="ti ti-apps"></i>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('home') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                                <span class="pc-mtext">Dashboard</span>
+                            </a>
                         </li>
                         <li class="pc-item">
                             <a href="{{ route('amal.index') }}" class="pc-link">
