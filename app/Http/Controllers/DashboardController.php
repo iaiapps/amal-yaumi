@@ -130,7 +130,53 @@ class DashboardController extends Controller
             return $class;
         });
 
-        return view('guru.dashboard', compact('teacher', 'classrooms', 'totalStudents', 'todayMutabaah', 'classStats'));
+        // Guru Dashboard Logic Enhanced
+        $trendData = [];
+        for ($i = 13; $i >= 0; $i--) {
+            $date = Carbon::today()->subDays($i);
+            $count = Mutabaah::whereIn('student_id', function ($query) use ($classNames) {
+                $query->select('id')->from('students')->whereIn('kelas', $classNames);
+            })->whereDate('tanggal', $date)->count();
+
+            $rate = $totalStudents > 0 ? round(($count / $totalStudents) * 100, 1) : 0;
+            $trendData[] = ['date' => $date->format('d M'), 'rate' => $rate];
+        }
+
+        // Recent Activities
+        $recentActivities = Mutabaah::whereIn('student_id', function ($query) use ($classNames) {
+            $query->select('id')->from('students')->whereIn('kelas', $classNames);
+        })
+            ->with(['student'])
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        // Top Students (by completion in current month)
+        $topStudents = Student::whereIn('kelas', $classNames)
+            ->withCount([
+                'mutabaah' => function ($q) {
+                    $q->whereMonth('tanggal', now()->month)
+                        ->whereYear('tanggal', now()->year);
+                }
+            ])
+            ->orderByDesc('mutabaah_count')
+            ->limit(5)
+            ->get()
+            ->map(function ($student) {
+                $student->streak = $this->calculateStreak($student->id);
+                return $student;
+            });
+
+        return view('guru.dashboard', compact(
+            'teacher',
+            'classrooms',
+            'totalStudents',
+            'todayMutabaah',
+            'classStats',
+            'trendData',
+            'recentActivities',
+            'topStudents'
+        ));
     }
 
     public function student()
