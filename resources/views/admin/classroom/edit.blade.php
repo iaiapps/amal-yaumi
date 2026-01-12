@@ -1,16 +1,17 @@
 @extends('layouts.app')
-@section('title', 'Tambah Kelas')
+@section('title', 'Edit Kelas')
 @section('content')
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('classroom.store') }}" method="POST">
+            <form action="{{ route('guru.classroom.update', $classroom) }}" method="POST">
                 @csrf
+                @method('PUT')
 
                 <div class="mb-3">
                     <label class="form-label">Nama Kelas <span class="text-danger">*</span></label>
                     <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                        value="{{ old('nama') }}" placeholder="Contoh: X-A" required>
+                        value="{{ old('nama', $classroom->nama) }}" required>
                     @error('nama')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -41,14 +42,14 @@
                 <div class="mb-3">
                     <label class="form-label">Kapasitas <span class="text-danger">*</span></label>
                     <input type="number" name="kapasitas" class="form-control @error('kapasitas') is-invalid @enderror"
-                        value="{{ old('kapasitas', 30) }}" min="1" required>
+                        value="{{ old('kapasitas', $classroom->kapasitas) }}" min="1" required>
                     @error('kapasitas')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ route('classroom.index') }}" class="btn btn-secondary">Batal</a>
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{{ route('guru.classroom.index') }}" class="btn btn-secondary">Batal</a>
             </form>
         </div>
     </div>

@@ -13,12 +13,12 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::with('user')->get();
-        return view('teacher.index', compact('teachers'));
+        return view('admin.teacher.index', compact('teachers'));
     }
 
     public function create()
     {
-        return view('teacher.create');
+        return view('admin.teacher.create');
     }
 
     public function store(Request $request)
@@ -54,7 +54,7 @@ class TeacherController extends Controller
 
     public function edit(Teacher $teacher)
     {
-        return view('teacher.edit', compact('teacher'));
+        return view('admin.teacher.edit', compact('teacher'));
     }
 
     public function update(Request $request, Teacher $teacher)

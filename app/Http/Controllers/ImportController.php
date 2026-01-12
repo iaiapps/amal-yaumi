@@ -13,7 +13,7 @@ class ImportController extends Controller
     public function index()
     {
         $imports = Import::with('user')->orderBy('created_at', 'desc')->get();
-        return view('import.index', compact('imports'));
+        return view('admin.import.index', compact('imports'));
     }
 
     public function template()
@@ -44,7 +44,7 @@ class ImportController extends Controller
         try {
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
-            
+
             $import = new StudentsImport();
             Excel::import($import, $file);
 

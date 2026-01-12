@@ -4,7 +4,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('classroom.update', $classroom) }}" method="POST">
+            <form action="{{ route('guru.classroom.update', $classroom) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -49,7 +49,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('classroom.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('guru.classroom.index') }}" class="btn btn-secondary">Batal</a>
             </form>
         </div>
     </div>

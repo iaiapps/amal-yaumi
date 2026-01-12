@@ -26,26 +26,20 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // Profile (untuk semua user yang login)
-    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
-    Route::put('change-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
-
     // admin
-    Route::middleware('role:admin')->group(function () {
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('reset/{user}', [UserController::class, 'reset'])->name('user.reset');
 
         Route::get('setting', [\App\Http\Controllers\SchoolController::class, 'edit'])->name('setting.index');
         Route::put('setting', [\App\Http\Controllers\SchoolController::class, 'update'])->name('setting.update');
 
-        Route::resource('classroom', ClassroomController::class)->only(['index']);
+        Route::resource('classroom', ClassroomController::class)->only(['index', 'show']);
         Route::resource('student', StudentController::class)->only(['index']);
         Route::resource('mutabaah', MutabaahController::class);
         Route::get('mutabaah-calendar', [MutabaahController::class, 'calendar'])->name('mutabaah.calendar');
         Route::get('mutabaah-calendar/{student}', [MutabaahController::class, 'studentCalendar'])->name('mutabaah.student-calendar');
-        
+
         Route::resource('mutabaah-item', MutabaahItemController::class)->only(['index']);
         Route::resource('answer', AnswerController::class);
 
@@ -63,7 +57,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // guru
-    Route::middleware('role:guru')->group(function () {
+    Route::middleware('role:guru')->prefix('guru')->name('guru.')->group(function () {
         Route::resource('classroom', ClassroomController::class);
         Route::resource('student', StudentController::class);
         Route::resource('mutabaah-item', MutabaahItemController::class);
@@ -73,7 +67,7 @@ Route::middleware('auth')->group(function () {
         Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
     });
 
-    Route::middleware('role:siswa')->group(function () {
+    Route::middleware('role:siswa')->prefix('siswa')->name('siswa.')->group(function () {
         // catatan, sebenarnya ini bisa pakai controller-resource cuman beda handle di view. memakai 'if'. Dibedakan dengan role
         Route::get('amalyaumi', [MutabaahController::class, 'amalIndex'])->name('amal.index');
         Route::get('amalyaumi/create', [MutabaahController::class, 'amalCreate'])->name('amal.create');

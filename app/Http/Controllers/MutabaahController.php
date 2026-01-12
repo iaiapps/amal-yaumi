@@ -34,7 +34,7 @@ class MutabaahController extends Controller
     public function index()
     {
         $mutabaahs = Mutabaah::with('student')->latest('tanggal')->get();
-        return view('mutabaah.index', compact('mutabaahs'));
+        return view('guru.mutabaah.index', compact('mutabaahs'));
     }
 
     public function create(Request $request)
@@ -42,7 +42,7 @@ class MutabaahController extends Controller
         $students = Student::all();
         $items = MutabaahItem::where('is_active', true)->orderBy('urutan')->get();
         $defaultDate = $request->query('date', date('Y-m-d'));
-        return view('mutabaah.create', compact('students', 'items', 'defaultDate'));
+        return view('guru.mutabaah.create', compact('students', 'items', 'defaultDate'));
     }
 
     public function store(Request $request)
@@ -55,7 +55,7 @@ class MutabaahController extends Controller
 
         $student = Student::find($request->student_id);
         $items = $this->getItemsForStudent($student);
-        
+
         $data = [];
         foreach ($items as $item) {
             if (isset($request->data[$item->id])) {
@@ -76,14 +76,14 @@ class MutabaahController extends Controller
     public function show(Mutabaah $mutabaah)
     {
         $items = $this->getItemsForStudent($mutabaah->student);
-        return view('mutabaah.show', compact('mutabaah', 'items'));
+        return view('guru.mutabaah.show', compact('mutabaah', 'items'));
     }
 
     public function edit(Mutabaah $mutabaah)
     {
         $students = Student::all();
         $items = $this->getItemsForStudent($mutabaah->student);
-        return view('mutabaah.edit', compact('mutabaah', 'students', 'items'));
+        return view('guru.mutabaah.edit', compact('mutabaah', 'students', 'items'));
     }
 
     public function update(Request $request, Mutabaah $mutabaah)
@@ -109,7 +109,7 @@ class MutabaahController extends Controller
     {
         $student = Auth::user()->student;
         $mutabaahs = Mutabaah::where('student_id', $student->id)->latest('tanggal')->get();
-        return view('mutabaah.index_s', compact('mutabaahs'));
+        return view('siswa.mutabaah.index', compact('mutabaahs'));
     }
 
     public function amalCreate(Request $request)
@@ -117,7 +117,7 @@ class MutabaahController extends Controller
         $student = Auth::user()->student;
         $items = $this->getItemsForStudent($student);
         $defaultDate = $request->query('date', date('Y-m-d'));
-        return view('mutabaah.create', compact('items', 'defaultDate'));
+        return view('siswa.mutabaah.create', compact('items', 'defaultDate'));
     }
 
     public function amalStore(Request $request)
@@ -129,7 +129,7 @@ class MutabaahController extends Controller
 
         $student = Auth::user()->student;
         $items = $this->getItemsForStudent($student);
-        
+
         $data = [];
         foreach ($items as $item) {
             if (isset($request->data[$item->id])) {
@@ -150,14 +150,15 @@ class MutabaahController extends Controller
 
     public function amalShow(Mutabaah $mutabaah)
     {
-        return $this->show($mutabaah);
+        $items = $this->getItemsForStudent($mutabaah->student);
+        return view('siswa.mutabaah.show', compact('mutabaah', 'items'));
     }
 
     public function amalEdit(Mutabaah $mutabaah)
     {
         $student = Auth::user()->student;
         $items = $this->getItemsForStudent($student);
-        return view('mutabaah.edit', compact('mutabaah', 'items'));
+        return view('siswa.mutabaah.edit', compact('mutabaah', 'items'));
     }
 
     public function amalUpdate(Request $request, Mutabaah $mutabaah)
@@ -181,16 +182,18 @@ class MutabaahController extends Controller
     public function calendar(Request $request)
     {
         $month = $request->query('month', now()->format('Y-m'));
-        $students = Student::with(['mutabaah' => function($q) use ($month) {
-            $q->whereYear('tanggal', date('Y', strtotime($month)))
-              ->whereMonth('tanggal', date('m', strtotime($month)));
-        }])->orderBy('nama')->get();
+        $students = Student::with([
+            'mutabaah' => function ($q) use ($month) {
+                $q->whereYear('tanggal', date('Y', strtotime($month)))
+                    ->whereMonth('tanggal', date('m', strtotime($month)));
+            }
+        ])->orderBy('nama')->get();
 
         $startDate = \Carbon\Carbon::parse($month . '-01');
         $endDate = $startDate->copy()->endOfMonth();
         $daysInMonth = $startDate->daysInMonth;
 
-        return view('mutabaah.calendar', compact('students', 'month', 'startDate', 'endDate', 'daysInMonth'));
+        return view('guru.mutabaah.calendar', compact('students', 'month', 'startDate', 'endDate', 'daysInMonth'));
     }
 
     public function studentCalendar(Student $student, Request $request)
@@ -198,21 +201,21 @@ class MutabaahController extends Controller
         $month = $request->query('month', now()->format('Y-m'));
         $startDate = \Carbon\Carbon::parse($month . '-01');
         $endDate = $startDate->copy()->endOfMonth();
-        
+
         $mutabaahs = Mutabaah::where('student_id', $student->id)
             ->whereBetween('tanggal', [$startDate, $endDate])
             ->get()
-            ->keyBy(function($item) {
+            ->keyBy(function ($item) {
                 return $item->tanggal->format('Y-m-d');
             });
 
         $items = $this->getItemsForStudent($student);
         $calendarData = [];
-        
+
         for ($date = $startDate->copy(); $date <= $endDate; $date->addDay()) {
             $dateStr = $date->format('Y-m-d');
             $mutabaah = $mutabaahs->get($dateStr);
-            
+
             $calendarData[] = [
                 'date' => $dateStr,
                 'day' => $date->format('d'),
@@ -224,6 +227,6 @@ class MutabaahController extends Controller
             ];
         }
 
-        return view('mutabaah.student-calendar', compact('student', 'month', 'calendarData', 'items', 'startDate'));
+        return view('guru.mutabaah.student-calendar', compact('student', 'month', 'calendarData', 'items', 'startDate'));
     }
 }

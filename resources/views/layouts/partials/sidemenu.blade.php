@@ -29,19 +29,19 @@
                             <i class="ti ti-apps"></i>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('user.index') }}" class="pc-link">
+                            <a href="{{ route('admin.user.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-users"></i></span>
                                 <span class="pc-mtext">Data Guru</span>
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('classroom.index') }}" class="pc-link">
+                            <a href="{{ route('admin.classroom.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-sitemap"></i></span>
                                 <span class="pc-mtext">Semua Kelas</span>
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('student.index') }}" class="pc-link">
+                            <a href="{{ route('admin.student.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-school"></i></span>
                                 <span class="pc-mtext">Semua Siswa</span>
                             </a>
@@ -51,7 +51,7 @@
                             <i class="ti ti-settings"></i>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('setting.index') }}" class="pc-link">
+                            <a href="{{ route('admin.setting.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-settings"></i></span>
                                 <span class="pc-mtext">Pengaturan</span>
                             </a>
@@ -70,37 +70,37 @@
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('classroom.index') }}" class="pc-link">
+                            <a href="{{ route('guru.classroom.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-sitemap"></i></span>
                                 <span class="pc-mtext">Kelas Saya</span>
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('student.index') }}" class="pc-link">
+                            <a href="{{ route('guru.student.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-school"></i></span>
                                 <span class="pc-mtext">Siswa Saya</span>
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('mutabaah.calendar') }}" class="pc-link">
+                            <a href="{{ route('guru.mutabaah.calendar') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-calendar"></i></span>
                                 <span class="pc-mtext">Monitoring Mutabaah</span>
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('mutabaah-item.index') }}" class="pc-link">
+                            <a href="{{ route('guru.mutabaah-item.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-list-check"></i></span>
                                 <span class="pc-mtext">Item Mutabaah</span>
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('reports.index') }}" class="pc-link">
+                            <a href="{{ route('guru.reports.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-file-analytics"></i></span>
                                 <span class="pc-mtext">Laporan</span>
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('import.index') }}" class="pc-link">
+                            <a href="{{ route('admin.import.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-file-upload"></i></span>
                                 <span class="pc-mtext">Import Siswa</span>
                             </a>
@@ -129,7 +129,7 @@
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="{{ route('amal.index') }}" class="pc-link">
+                            <a href="{{ route('siswa.amal.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-list-numbers"></i></span>
                                 <span class="pc-mtext">Mutabaah Saya</span>
                             </a>

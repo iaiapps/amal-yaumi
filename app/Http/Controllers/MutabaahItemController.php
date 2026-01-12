@@ -13,9 +13,10 @@ class MutabaahItemController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
+        if (!$user instanceof User)
+            abort(401);
         $role = $user->getRoleNames()->first();
-        
+
         if ($role == 'admin') {
             $items = MutabaahItem::with('teacher')->orderBy('teacher_id')->orderBy('urutan')->get();
         } else {
@@ -23,18 +24,19 @@ class MutabaahItemController extends Controller
             $items = MutabaahItem::where('teacher_id', $teacher->id)->orderBy('urutan')->get();
         }
 
-        return view('mutabaah-item.index', compact('items', 'role'));
+        return view('guru.mutabaah-item.index', compact('items', 'role'));
     }
 
     public function create()
     {
-        return view('mutabaah-item.create');
+        return view('guru.mutabaah-item.create');
     }
 
     public function store(Request $request)
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
+        if (!$user instanceof User)
+            abort(401);
         $teacher = $user->teacher;
 
         if (!$teacher) {
@@ -59,18 +61,20 @@ class MutabaahItemController extends Controller
     public function edit(MutabaahItem $mutabaah_item)
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
+        if (!$user instanceof User)
+            abort(401);
         if ($user->getRoleNames()->first() == 'guru' && $mutabaah_item->teacher_id != $user->teacher->id) {
             abort(403);
         }
 
-        return view('mutabaah-item.edit', compact('mutabaah_item'));
+        return view('guru.mutabaah-item.edit', compact('mutabaah_item'));
     }
 
     public function update(Request $request, MutabaahItem $mutabaah_item)
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
+        if (!$user instanceof User)
+            abort(401);
         if ($user->getRoleNames()->first() == 'guru' && $mutabaah_item->teacher_id != $user->teacher->id) {
             abort(403);
         }
@@ -90,7 +94,8 @@ class MutabaahItemController extends Controller
     public function destroy(MutabaahItem $mutabaah_item)
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
+        if (!$user instanceof User)
+            abort(401);
         if ($user->getRoleNames()->first() == 'guru' && $mutabaah_item->teacher_id != $user->teacher->id) {
             abort(403);
         }

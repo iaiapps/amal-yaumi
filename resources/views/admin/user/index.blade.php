@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('title', 'Master User')
 @section('content')
-    @session('success')
+    @if (session('success'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endsession
+    @endif
     <div class="card">
         <div class="card-body">
             <table class="table table-striped table-sm">
@@ -25,7 +25,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                <a href="{{ route('user.reset', $user->id) }}" class="btn btn-sm btn-primary">reset</a>
+                                <a href="{{ route('admin.user.reset', $user->id) }}" class="btn btn-sm btn-primary">reset</a>
                             </td>
                         </tr>
                     @endforeach

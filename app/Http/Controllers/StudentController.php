@@ -14,7 +14,8 @@ class StudentController extends Controller
     private function getTeacherId()
     {
         $user = Auth::user();
-        if (!$user instanceof User) return null;
+        if (!$user instanceof User)
+            return null;
         return $user->getRoleNames()->first() == 'guru' ? $user->teacher->id : null;
     }
 
@@ -24,11 +25,11 @@ class StudentController extends Controller
         $role = $user instanceof User ? $user->getRoleNames()->first() : 'admin';
         $teacherId = $this->getTeacherId();
 
-        $students = Student::when($role == 'guru', function($q) use ($teacherId) {
+        $students = Student::when($role == 'guru', function ($q) use ($teacherId) {
             return $q->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
         })->get();
 
-        return view('student.index', compact('students', 'role'));
+        return view($role . '.student.index', compact('students', 'role'));
     }
 
     public function create()
@@ -37,11 +38,11 @@ class StudentController extends Controller
         $role = $user instanceof User ? $user->getRoleNames()->first() : 'admin';
         $teacherId = $this->getTeacherId();
 
-        $kelas = Classroom::when($role == 'guru', function($q) use ($teacherId) {
+        $kelas = Classroom::when($role == 'guru', function ($q) use ($teacherId) {
             return $q->where('teacher_id', $teacherId);
         })->get();
 
-        return view('student.create', compact('kelas'));
+        return view('guru.student.create', compact('kelas'));
     }
 
     public function store(Request $request)
@@ -69,7 +70,7 @@ class StudentController extends Controller
         $data['user_id'] = $id;
         Student::create($data);
 
-        return redirect()->route('student.index')->with('success', 'Berhasil menambah data siswa');
+        return redirect()->route('guru.student.index')->with('success', 'Berhasil menambah data siswa');
     }
 
     public function edit(Student $student)
@@ -85,11 +86,11 @@ class StudentController extends Controller
             }
         }
 
-        $kelas = Classroom::when($role == 'guru', function($q) use ($teacherId) {
+        $kelas = Classroom::when($role == 'guru', function ($q) use ($teacherId) {
             return $q->where('teacher_id', $teacherId);
         })->get();
 
-        return view('student.edit', compact('student', 'kelas'));
+        return view('guru.student.edit', compact('student', 'kelas'));
     }
 
     public function update(Request $request, Student $student)
@@ -108,7 +109,7 @@ class StudentController extends Controller
         ]);
         $student->update($data);
 
-        return redirect()->route('student.index')->with('success', 'Berhasil update data siswa');
+        return redirect()->route('guru.student.index')->with('success', 'Berhasil update data siswa');
     }
 
     public function destroy(Student $student)

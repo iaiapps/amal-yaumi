@@ -13,35 +13,38 @@ class ClassroomController extends Controller
     private function getTeacherId()
     {
         $user = Auth::user();
-        if (!$user instanceof User) return null;
+        if (!$user instanceof User)
+            return null;
         return $user->getRoleNames()->first() == 'guru' ? $user->teacher->id : null;
     }
 
     public function index()
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
+        if (!$user instanceof User)
+            abort(401);
         $role = $user->getRoleNames()->first();
         $teacherId = $this->getTeacherId();
 
-        $kelas = Classroom::when($role == 'guru', function($q) use ($teacherId) {
+        $kelas = Classroom::when($role == 'guru', function ($q) use ($teacherId) {
             return $q->where('teacher_id', $teacherId);
         })->withCount('students')->get();
 
         $school = School::first();
         $maxClasses = $school ? $school->max_class_per_teacher : 5;
 
-        return view('classroom.index', compact('kelas', 'role', 'maxClasses'));
+        return view($role . '.classroom.index', compact('kelas', 'role', 'maxClasses'));
     }
 
     public function create()
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
+        if (!$user instanceof User)
+            abort(401);
         $role = $user->getRoleNames()->first();
 
         if ($role != 'guru') {
-            return redirect()->route('classroom.index')->with('error', 'Hanya Guru yang dapat membuat kelas baru.');
+            return redirect()->route($role . '.classroom.index')->with('error', 'Hanya Guru yang dapat membuat kelas baru.');
         }
 
         $teacherId = $this->getTeacherId();
@@ -50,20 +53,21 @@ class ClassroomController extends Controller
         $maxClasses = $school ? $school->max_class_per_teacher : 5;
 
         if ($myClassCount >= $maxClasses) {
-            return redirect()->route('classroom.index')->with('error', 'Batas pembuatan kelas sudah tercapai (Maks: ' . $maxClasses . ' kelas).');
+            return redirect()->route($role . '.classroom.index')->with('error', 'Batas pembuatan kelas sudah tercapai (Maks: ' . $maxClasses . ' kelas).');
         }
 
-        return view('classroom.create');
+        return view('guru.classroom.create');
     }
 
     public function store(Request $request)
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
+        if (!$user instanceof User)
+            abort(401);
         $role = $user->getRoleNames()->first();
 
         if ($role != 'guru') {
-            return redirect()->route('classroom.index')->with('error', 'Hanya Guru yang dapat membuat kelas baru.');
+            return redirect()->route($role . '.classroom.index')->with('error', 'Hanya Guru yang dapat membuat kelas baru.');
         }
 
         $teacherId = $this->getTeacherId();
@@ -72,7 +76,7 @@ class ClassroomController extends Controller
         $maxClasses = $school ? $school->max_class_per_teacher : 5;
 
         if ($myClassCount >= $maxClasses) {
-            return redirect()->route('classroom.index')->with('error', 'Batas pembuatan kelas sudah tercapai.');
+            return redirect()->route($role . '.classroom.index')->with('error', 'Batas pembuatan kelas sudah tercapai.');
         }
 
         $request->validate([
@@ -86,7 +90,20 @@ class ClassroomController extends Controller
 
         Classroom::create($data);
 
-        return redirect()->route('classroom.index')->with('success', 'Kelas berhasil ditambahkan');
+        return redirect()->route($role . '.classroom.index')->with('success', 'Kelas berhasil ditambahkan');
+    }
+
+    public function show(Classroom $classroom)
+    {
+        $teacherId = $this->getTeacherId();
+        if ($teacherId && $classroom->teacher_id != $teacherId) {
+            abort(403, 'Anda tidak memiliki akses ke kelas ini.');
+        }
+
+        $students = $classroom->students()->orderBy('nama')->get();
+        $role = Auth::user()->getRoleNames()->first();
+
+        return view($role . '.classroom.show', compact('classroom', 'students', 'role'));
     }
 
     public function edit(Classroom $classroom)
@@ -96,7 +113,7 @@ class ClassroomController extends Controller
             abort(403, 'Anda tidak memiliki akses ke kelas ini.');
         }
 
-        return view('classroom.edit', compact('classroom'));
+        return view('guru.classroom.edit', compact('classroom'));
     }
 
     public function update(Request $request, Classroom $classroom)
@@ -114,7 +131,8 @@ class ClassroomController extends Controller
 
         $classroom->update($request->all());
 
-        return redirect()->route('classroom.index')->with('success', 'Kelas berhasil diperbarui');
+        $role = Auth::user()->getRoleNames()->first();
+        return redirect()->route($role . '.classroom.index')->with('success', 'Kelas berhasil diperbarui');
     }
 
     public function destroy(Classroom $classroom)
@@ -125,6 +143,7 @@ class ClassroomController extends Controller
         }
 
         $classroom->delete();
-        return redirect()->route('classroom.index')->with('success', 'Kelas berhasil dihapus');
+        $role = Auth::user()->getRoleNames()->first();
+        return redirect()->route($role . '.classroom.index')->with('success', 'Kelas berhasil dihapus');
     }
 }

@@ -85,30 +85,42 @@ class DashboardController extends Controller
         // Data Monitoring Guru (New Requirement)
         $teachersList = Teacher::withCount(['classrooms', 'students'])->get();
 
-        return view('dashboard.admin', compact(
-            'totalStudents', 'totalTeachers', 'totalClassrooms', 'todayMutabaah', 'totalMutabaah',
-            'inactiveStudents', 'completionRate', 'activeStudents', 'avgPerStudent',
-            'topStudents', 'trendData', 'statsByClass', 'teachersList'
+        return view('admin.dashboard', compact(
+            'totalStudents',
+            'totalTeachers',
+            'totalClassrooms',
+            'todayMutabaah',
+            'totalMutabaah',
+            'inactiveStudents',
+            'completionRate',
+            'activeStudents',
+            'avgPerStudent',
+            'topStudents',
+            'trendData',
+            'statsByClass',
+            'teachersList'
         ));
     }
 
     public function guru()
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
-        
+        if (!$user instanceof User)
+            abort(401);
+
         $teacher = $user->teacher;
-        if (!$teacher) abort(403, 'Profil guru tidak ditemukan.');
+        if (!$teacher)
+            abort(403, 'Profil guru tidak ditemukan.');
 
         $classrooms = Classroom::where('teacher_id', $teacher->id)->withCount('students')->get();
         $totalStudents = $classrooms->sum('students_count');
-        
+
         $classNames = $classrooms->pluck('nama')->toArray();
-        $todayMutabaah = Mutabaah::whereIn('student_id', function($query) use ($classNames) {
+        $todayMutabaah = Mutabaah::whereIn('student_id', function ($query) use ($classNames) {
             $query->select('id')->from('students')->whereIn('kelas', $classNames);
         })->whereDate('tanggal', today())->count();
 
-        $classStats = $classrooms->map(function($class) {
+        $classStats = $classrooms->map(function ($class) {
             $activeCount = Student::where('kelas', $class->nama)
                 ->whereHas('mutabaah', function ($q) {
                     $q->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year);
@@ -118,16 +130,18 @@ class DashboardController extends Controller
             return $class;
         });
 
-        return view('dashboard.guru', compact('teacher', 'classrooms', 'totalStudents', 'todayMutabaah', 'classStats'));
+        return view('guru.dashboard', compact('teacher', 'classrooms', 'totalStudents', 'todayMutabaah', 'classStats'));
     }
 
     public function student()
     {
         $user = Auth::user();
-        if (!$user instanceof User) abort(401);
-        
+        if (!$user instanceof User)
+            abort(401);
+
         $student = $user->student;
-        if (!$student) abort(403, 'Profil siswa tidak ditemukan.');
+        if (!$student)
+            abort(403, 'Profil siswa tidak ditemukan.');
 
         $monthlyCount = Mutabaah::where('student_id', $student->id)->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year)->count();
         $streak = $this->calculateStreak($student->id);
@@ -142,11 +156,15 @@ class DashboardController extends Controller
         for ($date = $startOfMonth->copy(); $date <= $endOfMonth; $date->addDay()) {
             $mutabaah = Mutabaah::where('student_id', $student->id)->whereDate('tanggal', $date)->first();
             $itemCount = $mutabaah ? count($mutabaah->data) : 0;
-            
-            if ($itemCount >= 10) $color = 'success';
-            elseif ($itemCount >= 5) $color = 'warning';
-            elseif ($itemCount >= 1) $color = 'orange';
-            else $color = 'secondary';
+
+            if ($itemCount >= 10)
+                $color = 'success';
+            elseif ($itemCount >= 5)
+                $color = 'warning';
+            elseif ($itemCount >= 1)
+                $color = 'orange';
+            else
+                $color = 'secondary';
 
             $calendarData[] = [
                 'date' => $date->format('Y-m-d'),
@@ -163,8 +181,15 @@ class DashboardController extends Controller
         $recentMutabaah = Mutabaah::where('student_id', $student->id)->orderBy('tanggal', 'desc')->limit(5)->get();
         $badges = $this->calculateBadges($monthlyCount, $streak, $longestStreak);
 
-        return view('dashboard.student', compact(
-            'student', 'monthlyCount', 'streak', 'longestStreak', 'progressPercentage', 'calendarData', 'recentMutabaah', 'badges'
+        return view('siswa.dashboard', compact(
+            'student',
+            'monthlyCount',
+            'streak',
+            'longestStreak',
+            'progressPercentage',
+            'calendarData',
+            'recentMutabaah',
+            'badges'
         ));
     }
 
@@ -174,7 +199,8 @@ class DashboardController extends Controller
         $date = Carbon::today();
         while (true) {
             $exists = Mutabaah::where('student_id', $studentId)->whereDate('tanggal', $date)->exists();
-            if (!$exists) break;
+            if (!$exists)
+                break;
             $streak++;
             $date->subDay();
         }
@@ -184,7 +210,8 @@ class DashboardController extends Controller
     private function calculateLongestStreak($studentId)
     {
         $mutabaahs = Mutabaah::where('student_id', $studentId)->orderBy('tanggal', 'asc')->pluck('tanggal')->map(fn($date) => $date->format('Y-m-d'))->toArray();
-        if (empty($mutabaahs)) return 0;
+        if (empty($mutabaahs))
+            return 0;
         $longestStreak = 1;
         $currentStreak = 1;
         for ($i = 1; $i < count($mutabaahs); $i++) {
@@ -203,13 +230,19 @@ class DashboardController extends Controller
     private function calculateBadges($monthlyCount, $streak, $longestStreak)
     {
         $badges = [];
-        if ($longestStreak >= 100) $badges[] = ['icon' => '👑', 'name' => 'Istiqomah Master', 'desc' => '100 hari berturut-turut'];
-        elseif ($longestStreak >= 30) $badges[] = ['icon' => '⭐', 'name' => 'Konsisten Sebulan', 'desc' => '30 hari berturut-turut'];
-        elseif ($longestStreak >= 7) $badges[] = ['icon' => '🔥', 'name' => 'Semangat Seminggu', 'desc' => '7 hari berturut-turut'];
+        if ($longestStreak >= 100)
+            $badges[] = ['icon' => '👑', 'name' => 'Istiqomah Master', 'desc' => '100 hari berturut-turut'];
+        elseif ($longestStreak >= 30)
+            $badges[] = ['icon' => '⭐', 'name' => 'Konsisten Sebulan', 'desc' => '30 hari berturut-turut'];
+        elseif ($longestStreak >= 7)
+            $badges[] = ['icon' => '🔥', 'name' => 'Semangat Seminggu', 'desc' => '7 hari berturut-turut'];
 
-        if ($monthlyCount >= now()->daysInMonth) $badges[] = ['icon' => '💯', 'name' => 'Perfect Month', 'desc' => 'Lengkap sebulan penuh'];
-        elseif ($monthlyCount >= 25) $badges[] = ['icon' => '🌟', 'name' => 'Rajin Banget', 'desc' => '25+ hari bulan ini'];
-        elseif ($monthlyCount >= 15) $badges[] = ['icon' => '✨', 'name' => 'Terus Semangat', 'desc' => '15+ hari bulan ini'];
+        if ($monthlyCount >= now()->daysInMonth)
+            $badges[] = ['icon' => '💯', 'name' => 'Perfect Month', 'desc' => 'Lengkap sebulan penuh'];
+        elseif ($monthlyCount >= 25)
+            $badges[] = ['icon' => '🌟', 'name' => 'Rajin Banget', 'desc' => '25+ hari bulan ini'];
+        elseif ($monthlyCount >= 15)
+            $badges[] = ['icon' => '✨', 'name' => 'Terus Semangat', 'desc' => '15+ hari bulan ini'];
         return $badges;
     }
 }

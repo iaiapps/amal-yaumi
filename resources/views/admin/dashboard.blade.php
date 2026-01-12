@@ -83,7 +83,7 @@
                                 <td><strong>{{ $t->nama }}</strong></td>
                                 <td class="text-center"><span class="badge bg-primary">{{ $t->classrooms_count }} Kelas</span></td>
                                 <td class="text-center"><span class="badge bg-success">{{ $t->students_count }} Siswa</span></td>
-                                <td><a href="{{ route('user.index') }}" class="btn btn-sm btn-outline-info">Detail</a></td>
+                                <td><a href="{{ route('admin.user.index') }}" class="btn btn-sm btn-outline-info">Detail</a></td>
                             </tr>
                             @endforeach
                         </tbody>

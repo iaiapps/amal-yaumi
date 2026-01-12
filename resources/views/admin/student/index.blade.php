@@ -9,8 +9,7 @@
     @endsession
     <div class="card">
         <div class="ms-4 mt-4">
-            <a href="{{ route('student.create') }}" class="btn btn-primary btn-sm"> <i class="ti ti-plus"></i> tambah
-                siswa</a>
+            {{-- Admin View: Read Only --}}
         </div>
         <hr>
         <div class="card-body">
@@ -23,7 +22,7 @@
                             <th>NIS</th>
                             <th>Jenis Kelamin</th>
                             <th>Kelas</th>
-                            <th>Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -34,16 +33,7 @@
                                 <td>{{ $student->nis }}</td>
                                 <td>{{ $student->jk }}</td>
                                 <td>{{ $student->kelas }}</td>
-                                <td>
-                                    <a href="{{ route('student.edit', $student->id) }}"
-                                        class="btn btn-sm btn-warning">edit</a>
-                                    <form action="{{ route('student.destroy', $student->id) }}" method="post"
-                                        class="d-inline-block" onclick="return alert('apakah kamu yakin menghapus data?')">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-sm btn-danger">delete</button>
-                                    </form>
-                                </td>
+
                             </tr>
                         @endforeach
                     </tbody>

@@ -11,7 +11,7 @@ class SchoolController extends Controller
     public function edit()
     {
         $school = School::first();
-        return view('setting.index', compact('school'));
+        return view('admin.setting.index', compact('school'));
     }
 
     public function update(Request $request)
