@@ -22,8 +22,6 @@ class SettingController extends Controller
             'telp' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
             'website' => 'nullable|url|max:255',
-            'kepala_sekolah' => 'nullable|string|max:255',
-            'nip_kepala' => 'nullable|string|max:50',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'max_class_per_teacher' => 'required|integer|min:1',
             'max_students_per_class' => 'required|integer|min:1',

@@ -12,7 +12,7 @@
                             </h4>
                         </div>
                         <div>
-                            <a href="{{ route('amal.create') }}" class="btn btn-primary btn-sm">
+                            <a href="{{ route('siswa.amal.create') }}" class="btn btn-primary btn-sm">
                                 <i class="ti ti-plus"></i> Isi Mutabaah
                             </a>
                         </div>
@@ -131,11 +131,11 @@
                                                 <small class="fw-bold">{{ $day['day'] }}</small>
                                                 @if (!$day['isFuture'])
                                                     @if ($day['itemCount'] > 0)
-                                                        <a href="{{ route('amal.show', $day['mutabaah']->id) }}" class="btn btn-{{ $day['color'] }} btn-sm rounded-circle mt-1" style="width: 30px; height: 30px; padding: 0; line-height: 30px;">
+                                                        <a href="{{ route('siswa.amal.show', $day['mutabaah']->id) }}" class="btn btn-{{ $day['color'] }} btn-sm rounded-circle mt-1" style="width: 30px; height: 30px; padding: 0; line-height: 30px;">
                                                             {{ $day['itemCount'] }}
                                                         </a>
                                                     @else
-                                                        <a href="{{ route('amal.create', ['date' => $day['date']]) }}" class="btn btn-outline-secondary btn-sm rounded-circle mt-1" style="width: 30px; height: 30px; padding: 0; line-height: 30px;">
+                                                        <a href="{{ route('siswa.amal.create', ['date' => $day['date']]) }}" class="btn btn-outline-secondary btn-sm rounded-circle mt-1" style="width: 30px; height: 30px; padding: 0; line-height: 30px;">
                                                             <i class="ti ti-plus"></i>
                                                         </a>
                                                     @endif
@@ -162,7 +162,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5>Mutabaah Terbaru</h5>
-                    <a href="{{ route('amal.index') }}" class="btn btn-sm btn-primary">Lihat Semua</a>
+                    <a href="{{ route('siswa.amal.index') }}" class="btn btn-sm btn-primary">Lihat Semua</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -175,7 +175,7 @@
                                     <tr>
                                         <td>{{ $m->tanggal->format('d M Y') }}</td>
                                         <td><span class="badge bg-primary">{{ count($m->data) }} item</span></td>
-                                        <td><a href="{{ route('amal.show', $m) }}" class="btn btn-sm btn-info">View</a></td>
+                                        <td><a href="{{ route('siswa.amal.show', $m) }}" class="btn btn-sm btn-info">View</a></td>
                                     </tr>
                                 @empty
                                     <tr><td colspan="3" class="text-center">Belum ada data</td></tr>

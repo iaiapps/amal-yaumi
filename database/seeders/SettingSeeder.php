@@ -15,8 +15,6 @@ class SettingSeeder extends Seeder
             'telp' => '021-12345678',
             'email' => 'info@amalyaumi.sch.id',
             'website' => 'https://amalyaumi.sch.id',
-            'kepala_sekolah' => 'Nama Kepala Sekolah',
-            'nip_kepala' => '123456789',
             'max_class_per_teacher' => 5,
             'max_students_per_class' => 30,
         ]);

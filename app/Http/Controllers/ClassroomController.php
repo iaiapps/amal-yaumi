@@ -72,7 +72,7 @@ class ClassroomController extends Controller
 
         $teacherId = $this->getTeacherId();
         $myClassCount = Classroom::where('teacher_id', $teacherId)->count();
-        $setting = School::first();
+        $setting = Setting::first();
         $maxClasses = $setting ? $setting->max_class_per_teacher : 5;
 
         if ($myClassCount >= $maxClasses) {
