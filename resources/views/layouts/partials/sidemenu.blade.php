@@ -2,7 +2,6 @@
     $user = Auth::user();
     $role = $user->getRoleNames()->first();
     $name = $user->name;
-    // dd($role);
 @endphp
 
 <nav class="pc-sidebar">
@@ -10,26 +9,9 @@
         <div class="m-header">
             <div class="avtar avtar-sm bg-primary me-3"><i class=" text-white ti ti-user"></i></div>
             <a class="mb-0 link-offset-3"> {{ $name }}</a>
-
         </div>
-        {{-- <div class="m-header">
-            <a href="../dashboard/index.html" class="b-brand text-primary">
-                <!-- ========   Change your logo from here   ============ -->
-                <img src="{{ asset('berry/dist/assets/images/logo-dark.svg') }} " alt="logo" class="logo logo-lg" />
-            </a>
-        </div> --}}
         <div class="navbar-content">
             <ul class="pc-navbar">
-                {{-- <li class="pc-item pc-caption">
-                    <label>Dashboard</label>
-                    <i class="ti ti-dashboard"></i>
-                </li>
-                <li class="pc-item">
-                    <a href="{{ route('home') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-smart-home"></i></span>
-                        <span class="pc-mtext">Home</span></a>
-                </li> --}}
-
                 @switch($role)
                     @case('admin')
                         <li class="pc-item pc-caption">
@@ -64,12 +46,28 @@
                                 <span class="pc-mtext">Semua Siswa</span>
                             </a>
                         </li>
+                        <li class="pc-item pc-caption">
+                            <label>Sistem</label>
+                            <i class="ti ti-settings"></i>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('setting.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-settings"></i></span>
+                                <span class="pc-mtext">Pengaturan</span>
+                            </a>
+                        </li>
                     @break
 
                     @case('guru')
                         <li class="pc-item pc-caption">
                             <label>Menu Guru</label>
                             <i class="ti ti-apps"></i>
+                        </li>
+                        <li class="pc-item">
+                            <a href="{{ route('home') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-dashboard"></i></span>
+                                <span class="pc-mtext">Dashboard Guru</span>
+                            </a>
                         </li>
                         <li class="pc-item">
                             <a href="{{ route('classroom.index') }}" class="pc-link">
@@ -104,34 +102,19 @@
                         <li class="pc-item">
                             <a href="{{ route('import.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-file-upload"></i></span>
-                                <span class="pc-mtext">Import Data</span>
+                                <span class="pc-mtext">Import Siswa</span>
                             </a>
                         </li>
-                        <li class="pc-item">
-                            <a href="{{ route('import.index') }}" class="pc-link">
-                                <span class="pc-micon"><i class="ti ti-file-upload"></i></span>
-                                <span class="pc-mtext">Import Data</span>
-                            </a>
+                        <li class="pc-item pc-caption">
+                            <label>Akun</label>
+                            <i class="ti ti-user"></i>
                         </li>
-
                         <li class="pc-item">
                             <a href="{{ route('profile.edit') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-user"></i></span>
-                                <span class="pc-mtext">Profile</span>
+                                <span class="pc-mtext">Profil</span>
                             </a>
                         </li>
-                        {{-- <li class="pc-item">
-                            <a href="{{ route('teacher.index') }}" class="pc-link">
-                                <span class="pc-micon"><i class="ti ti-users"></i></span>
-                                <span class="pc-mtext">Data Guru</span>
-                            </a>
-                        </li> --}}
-                        {{-- <li class="pc-item">
-                            <a href="{{ route('school.edit') }}" class="pc-link">
-                                <span class="pc-micon"><i class="ti ti-building"></i></span>
-                                <span class="pc-mtext">Profil Sekolah</span>
-                            </a>
-                        </li> --}}
                     @break
 
                     @case('siswa')
@@ -148,7 +131,7 @@
                         <li class="pc-item">
                             <a href="{{ route('amal.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-list-numbers"></i></span>
-                                <span class="pc-mtext">Mutabaah</span>
+                                <span class="pc-mtext">Mutabaah Saya</span>
                             </a>
                         </li>
                         <li class="pc-item pc-caption">
@@ -177,9 +160,8 @@
                 @endswitch
             </ul>
 
-
             <div class="w-100 text-center mt-4">
-                <div class="badge theme-version badge rounded-pill bg-light text-dark f-12"><small>versi 1.0</small>
+                <div class="badge theme-version badge rounded-pill bg-light text-dark f-12"><small>versi 1.1</small>
                 </div>
             </div>
         </div>

@@ -37,18 +37,16 @@ Route::middleware('auth')->group(function () {
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('reset/{user}', [UserController::class, 'reset'])->name('user.reset');
 
-        // Route::get('school/edit', [SchoolController::class, 'edit'])->name('school.edit');
-        // Route::put('school', [SchoolController::class, 'update'])->name('school.update');
+        Route::get('setting', [\App\Http\Controllers\SchoolController::class, 'edit'])->name('setting.index');
+        Route::put('setting', [\App\Http\Controllers\SchoolController::class, 'update'])->name('setting.update');
 
-        // Route::resource('teacher', TeacherController::class);
-
-        Route::resource('classroom', ClassroomController::class);
-        Route::resource('student', StudentController::class);
+        Route::resource('classroom', ClassroomController::class)->only(['index']);
+        Route::resource('student', StudentController::class)->only(['index']);
         Route::resource('mutabaah', MutabaahController::class);
         Route::get('mutabaah-calendar', [MutabaahController::class, 'calendar'])->name('mutabaah.calendar');
         Route::get('mutabaah-calendar/{student}', [MutabaahController::class, 'studentCalendar'])->name('mutabaah.student-calendar');
-        Route::resource('mutabaah-item', MutabaahItemController::class);
-        Route::post('mutabaah-item/{mutabaahItem}/toggle', [MutabaahItemController::class, 'toggle'])->name('mutabaah-item.toggle');
+        
+        Route::resource('mutabaah-item', MutabaahItemController::class)->only(['index']);
         Route::resource('answer', AnswerController::class);
 
         // Reports
@@ -62,6 +60,17 @@ Route::middleware('auth')->group(function () {
         Route::get('import', [ImportController::class, 'index'])->name('import.index');
         Route::get('import/template', [ImportController::class, 'template'])->name('import.template');
         Route::post('import', [ImportController::class, 'import'])->name('import.store');
+    });
+
+    // guru
+    Route::middleware('role:guru')->group(function () {
+        Route::resource('classroom', ClassroomController::class);
+        Route::resource('student', StudentController::class);
+        Route::resource('mutabaah-item', MutabaahItemController::class);
+        Route::post('mutabaah-item/{mutabaah_item}/toggle', [MutabaahItemController::class, 'toggle'])->name('mutabaah-item.toggle');
+        Route::get('mutabaah-calendar', [MutabaahController::class, 'calendar'])->name('mutabaah.calendar');
+        Route::get('mutabaah-calendar/{student}', [MutabaahController::class, 'studentCalendar'])->name('mutabaah.student-calendar');
+        Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
     });
 
     Route::middleware('role:siswa')->group(function () {

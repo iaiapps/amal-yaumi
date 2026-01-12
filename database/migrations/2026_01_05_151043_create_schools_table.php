@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('kepala_sekolah')->nullable();
             $table->string('nip_kepala')->nullable();
+            $table->integer('max_class_per_teacher')->default(5); // Default 5 kelas per guru
             $table->timestamps();
         });
     }

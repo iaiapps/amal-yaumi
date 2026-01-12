@@ -11,7 +11,7 @@ class SchoolController extends Controller
     public function edit()
     {
         $school = School::first();
-        return view('school.edit', compact('school'));
+        return view('setting.index', compact('school'));
     }
 
     public function update(Request $request)
@@ -25,6 +25,7 @@ class SchoolController extends Controller
             'kepala_sekolah' => 'nullable|string|max:255',
             'nip_kepala' => 'nullable|string|max:50',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'max_class_per_teacher' => 'required|integer|min:1',
         ]);
 
         $school = School::first();
@@ -39,6 +40,6 @@ class SchoolController extends Controller
 
         $school->update($data);
 
-        return redirect()->route('school.edit')->with('success', 'Profil sekolah berhasil diperbarui');
+        return redirect()->route('setting.index')->with('success', 'Pengaturan berhasil diperbarui');
     }
 }

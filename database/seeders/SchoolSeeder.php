@@ -10,13 +10,14 @@ class SchoolSeeder extends Seeder
     public function run(): void
     {
         School::create([
-            'nama' => 'Sekolah Islam Terpadu',
+            'nama' => 'Amal Yaumi School',
             'alamat' => 'Jl. Contoh No. 123',
             'telp' => '021-12345678',
-            'email' => 'info@sekolah.sch.id',
-            'website' => 'https://sekolah.sch.id',
+            'email' => 'info@amalyaumi.sch.id',
+            'website' => 'https://amalyaumi.sch.id',
             'kepala_sekolah' => 'Nama Kepala Sekolah',
             'nip_kepala' => '123456789',
+            'max_class_per_teacher' => 5,
         ]);
     }
 }

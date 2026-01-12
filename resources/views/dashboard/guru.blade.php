@@ -16,26 +16,22 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <div class="card bg-primary text-white">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0"><i class="ti ti-school" style="font-size: 2.5rem;"></i></div>
-                    <div class="flex-grow-1 ms-3">
-                        <h6 class="mb-0 text-white">Total Siswa Bimbingan</h6>
-                        <h2 class="mb-0 text-white">{{ $totalStudents }}</h2>
-                    </div>
+            <div class="card-body d-flex align-items-center">
+                <i class="ti ti-school" style="font-size: 2.5rem;"></i>
+                <div class="ms-3">
+                    <h6 class="text-white mb-0">Total Siswa Bimbingan</h6>
+                    <h2 class="text-white mb-0">{{ $totalStudents }}</h2>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-6 mb-3">
         <div class="card bg-success text-white">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0"><i class="ti ti-check" style="font-size: 2.5rem;"></i></div>
-                    <div class="flex-grow-1 ms-3">
-                        <h6 class="mb-0 text-white">Sudah Isi Hari Ini</h6>
-                        <h2 class="mb-0 text-white">{{ $todayMutabaah }} / {{ $totalStudents }}</h2>
-                    </div>
+            <div class="card-body d-flex align-items-center">
+                <i class="ti ti-check" style="font-size: 2.5rem;"></i>
+                <div class="ms-3">
+                    <h6 class="text-white mb-0">Sudah Isi Hari Ini</h6>
+                    <h2 class="text-white mb-0">{{ $todayMutabaah }} / {{ $totalStudents }}</h2>
                 </div>
             </div>
         </div>
@@ -56,22 +52,13 @@
                         <span>Rate Aktif Bulan Ini</span>
                         <span class="fw-bold">{{ $class->completion_rate }}%</span>
                     </div>
-                    <div class="progress" style="height: 10px;">
-                        @php
-                            $rateClass = 'danger';
-                            if($class->completion_rate >= 80) $rateClass = 'success';
-                            elseif($class->completion_rate >= 50) $rateClass = 'warning';
-                        @endphp
-                        <div class="progress-bar bg-{{ $rateClass }}" 
-                             role="progressbar" style="width: {{ $class->completion_rate }}%"></div>
-                    </div>
                 </div>
                 <div class="d-grid gap-2">
                     <a href="{{ route('student.index', ['kelas' => $class->nama]) }}" class="btn btn-sm btn-outline-primary">
                         <i class="ti ti-users"></i> Lihat Siswa
                     </a>
-                    <a href="{{ route('mutabaah-item.index', ['classroom_id' => $class->id]) }}" class="btn btn-sm btn-outline-info">
-                        <i class="ti ti-list-check"></i> Kelola Item Mutabaah
+                    <a href="{{ route('mutabaah.calendar', ['month' => now()->format('Y-m')]) }}" class="btn btn-sm btn-outline-info">
+                        <i class="ti ti-calendar"></i> Kalender Mutabaah
                     </a>
                 </div>
             </div>

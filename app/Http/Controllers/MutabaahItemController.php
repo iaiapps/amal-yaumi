@@ -12,15 +12,13 @@ class MutabaahItemController extends Controller
 {
     public function index()
     {
-        /** @var User $user */
         $user = Auth::user();
+        if (!$user instanceof User) abort(401);
         $role = $user->getRoleNames()->first();
         
         if ($role == 'admin') {
-            // Admin can see all items grouped by teacher
             $items = MutabaahItem::with('teacher')->orderBy('teacher_id')->orderBy('urutan')->get();
         } else {
-            // Guru only sees their own items
             $teacher = $user->teacher;
             $items = MutabaahItem::where('teacher_id', $teacher->id)->orderBy('urutan')->get();
         }
@@ -35,8 +33,8 @@ class MutabaahItemController extends Controller
 
     public function store(Request $request)
     {
-        /** @var User $user */
         $user = Auth::user();
+        if (!$user instanceof User) abort(401);
         $teacher = $user->teacher;
 
         if (!$teacher) {
@@ -58,13 +56,25 @@ class MutabaahItemController extends Controller
         return redirect()->route('mutabaah-item.index')->with('success', 'Item berhasil ditambahkan');
     }
 
-    public function edit(MutabaahItem $mutabaahItem)
+    public function edit(MutabaahItem $mutabaah_item)
     {
-        return view('mutabaah-item.edit', compact('mutabaahItem'));
+        $user = Auth::user();
+        if (!$user instanceof User) abort(401);
+        if ($user->getRoleNames()->first() == 'guru' && $mutabaah_item->teacher_id != $user->teacher->id) {
+            abort(403);
+        }
+
+        return view('mutabaah-item.edit', compact('mutabaah_item'));
     }
 
-    public function update(Request $request, MutabaahItem $mutabaahItem)
+    public function update(Request $request, MutabaahItem $mutabaah_item)
     {
+        $user = Auth::user();
+        if (!$user instanceof User) abort(401);
+        if ($user->getRoleNames()->first() == 'guru' && $mutabaah_item->teacher_id != $user->teacher->id) {
+            abort(403);
+        }
+
         $request->validate([
             'nama' => 'required|string|max:255',
             'kategori' => 'required|in:sholat_wajib,sholat_sunnah,lainnya',
@@ -72,20 +82,26 @@ class MutabaahItemController extends Controller
             'urutan' => 'required|integer',
         ]);
 
-        $mutabaahItem->update($request->all());
+        $mutabaah_item->update($request->all());
 
         return redirect()->route('mutabaah-item.index')->with('success', 'Item berhasil diperbarui');
     }
 
-    public function destroy(MutabaahItem $mutabaahItem)
+    public function destroy(MutabaahItem $mutabaah_item)
     {
-        $mutabaahItem->delete();
+        $user = Auth::user();
+        if (!$user instanceof User) abort(401);
+        if ($user->getRoleNames()->first() == 'guru' && $mutabaah_item->teacher_id != $user->teacher->id) {
+            abort(403);
+        }
+
+        $mutabaah_item->delete();
         return redirect()->route('mutabaah-item.index')->with('success', 'Item berhasil dihapus');
     }
 
-    public function toggle(MutabaahItem $mutabaahItem)
+    public function toggle(MutabaahItem $mutabaah_item)
     {
-        $mutabaahItem->update(['is_active' => !$mutabaahItem->is_active]);
+        $mutabaah_item->update(['is_active' => !$mutabaah_item->is_active]);
         return redirect()->back()->with('success', 'Status berhasil diubah');
     }
 }
