@@ -5,10 +5,10 @@
         style="background: rgba(255,255,255,0.85); backdrop-filter: blur(20px);">
         <div class="card-body">
             <div class="text-center mb-4">
-                <div class="avtar avtar-lg bg-primary text-white mx-auto mb-3 shadow-primary rounded-circle d-flex align-items-center justify-content-center"
-                    style="width: 64px; height: 64px;">
-                    <i class="ti ti-lock fs-2"></i>
+                <div class="mb-3">
+                    <img src="{{ asset('assets/images/logo.svg') }}" alt="icon" style="width: 64px; height: 64px;">
                 </div>
+
                 <h3 class="fw-extra-bold text-dark">Selamat Datang</h3>
                 <p class="text-muted">Masuk untuk melanjutkan ke Portal</p>
             </div>
@@ -28,8 +28,8 @@
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="ti ti-mail text-muted"></i></span>
                         <input type="email" class="form-control border-start-0 @error('email') is-invalid @enderror"
-                            name="email" value="{{ old('email') }}" required autocomplete="email" autofocus id="email"
-                            placeholder="name@example.com">
+                            name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
+                            id="email" placeholder="name@example.com">
                     </div>
                     @error('email')
                         <span class="invalid-feedback d-block mt-1" role="alert">
@@ -42,9 +42,8 @@
                     <label for="password" class="form-label fw-bold text-dark small text-uppercase">Password</label>
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="ti ti-key text-muted"></i></span>
-                        <input type="password"
-                            class="form-control border-start-0 @error('password') is-invalid @enderror" name="password"
-                            required autocomplete="current-password" id="password" placeholder="********">
+                        <input type="password" class="form-control border-start-0 @error('password') is-invalid @enderror"
+                            name="password" required autocomplete="current-password" id="password" placeholder="********">
                     </div>
                     @error('password')
                         <span class="invalid-feedback d-block mt-1" role="alert">
@@ -63,7 +62,7 @@
             {{-- Optional: Register Link if needed --}}
             <div class="text-center">
                 <p class="text-muted small">Belum punya akun? <a href="{{ route('register') }}"
-                class="fw-bold text-primary text-decoration-none">Daftar</a></p>
+                        class="fw-bold text-primary text-decoration-none">Daftar</a></p>
             </div>
         </div>
     </div>
