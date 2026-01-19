@@ -24,26 +24,44 @@
                                 <span class="pc-mtext">Dashboard Admin</span>
                             </a>
                         </li>
+                        {{-- <li class="pc-item">
+                            <a href="{{ route('admin.mutabaah.calendar') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-calendar"></i></span>
+                                <span class="pc-mtext">Monitoring Mutabaah</span>
+                            </a>
+                        </li> --}}
+                        {{-- <li class="pc-item">
+                            <a href="{{ route('admin.reports.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-file-analytics"></i></span>
+                                <span class="pc-mtext">Laporan Mutabaah</span>
+                            </a>
+                        </li> --}}
                         <li class="pc-item pc-caption">
                             <label>Master Data</label>
                             <i class="ti ti-apps"></i>
                         </li>
                         <li class="pc-item">
+                            <a href="{{ route('admin.mutabaah-item.index') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-list-check"></i></span>
+                                <span class="pc-mtext">Master Template Mutabaah</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
                             <a href="{{ route('admin.user.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-users"></i></span>
-                                <span class="pc-mtext">Data Guru</span>
+                                <span class="pc-mtext">Daftar Guru / User</span>
                             </a>
                         </li>
                         <li class="pc-item">
                             <a href="{{ route('admin.classroom.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-sitemap"></i></span>
-                                <span class="pc-mtext">Semua Kelas</span>
+                                <span class="pc-mtext">Daftar Semua Kelas</span>
                             </a>
                         </li>
                         <li class="pc-item">
                             <a href="{{ route('admin.student.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-school"></i></span>
-                                <span class="pc-mtext">Semua Siswa</span>
+                                <span class="pc-mtext">Daftar Semua Siswa</span>
                             </a>
                         </li>
                         <li class="pc-item pc-caption">

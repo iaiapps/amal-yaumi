@@ -46,8 +46,15 @@ Route::middleware('auth')->group(function () {
         Route::get('mutabaah-calendar', [MutabaahController::class, 'calendar'])->name('mutabaah.calendar');
         Route::get('mutabaah-calendar/{student}', [MutabaahController::class, 'studentCalendar'])->name('mutabaah.student-calendar');
 
-        Route::resource('mutabaah-item', MutabaahItemController::class)->only(['index']);
-        Route::resource('answer', AnswerController::class);
+        Route::resource('mutabaah-item', MutabaahItemController::class);
+        Route::post('mutabaah-item/{mutabaah_item}/toggle', [MutabaahItemController::class, 'toggle'])->name('mutabaah-item.toggle');
+        
+        // Reports for Admin
+        Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('reports/student/{id}/pdf', [ReportController::class, 'studentPdf'])->name('reports.student.pdf');
+        Route::get('reports/all/pdf', [ReportController::class, 'allPdf'])->name('reports.all.pdf');
+        Route::get('reports/students/export', [ReportController::class, 'exportStudents'])->name('reports.students.export');
+        Route::get('reports/mutabaah/export', [ReportController::class, 'exportMutabaah'])->name('reports.mutabaah.export');
 
 
 
@@ -59,6 +66,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('student', StudentController::class);
         Route::get('mutabaah-item/reorder', [MutabaahItemController::class, 'reorder'])->name('mutabaah-item.reorder');
         Route::post('mutabaah-item/reorder', [MutabaahItemController::class, 'updateOrder'])->name('mutabaah-item.reorder.update');
+        Route::get('mutabaah-item/templates', [MutabaahItemController::class, 'templates'])->name('mutabaah-item.templates');
+        Route::post('mutabaah-item/copy-template', [MutabaahItemController::class, 'copyTemplate'])->name('mutabaah-item.copy-template');
         Route::resource('mutabaah-item', MutabaahItemController::class);
         Route::post('mutabaah-item/{mutabaah_item}/toggle', [MutabaahItemController::class, 'toggle'])->name('mutabaah-item.toggle');
         Route::get('mutabaah-calendar', [MutabaahController::class, 'calendar'])->name('mutabaah.calendar');

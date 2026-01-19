@@ -2,100 +2,63 @@
 @section('title', 'Kelola Item Mutabaah')
 @section('content')
 
+@if($role == 'guru' && $items->isEmpty() && $hasTemplates)
+<div class="alert alert-primary d-flex align-items-center p-4 mb-4 border-0 shadow-sm" style="border-radius: 15px;">
+    <div class="me-3 fs-1">🚀</div>
+    <div>
+        <h5 class="alert-heading fw-bold mb-1">Mulai Lebih Cepat!</h5>
+        <p class="mb-2">Anda belum memiliki item mutabaah. Gunakan template standar dari sistem untuk langsung mulai tanpa perlu repot input satu per satu.</p>
+        <a href="{{ route('guru.mutabaah-item.templates') }}" class="btn btn-primary shadow-sm">
+            <i class="ti ti-copy me-1"></i> Lihat & Gunakan Template Sistem
+        </a>
+    </div>
+</div>
+@endif
+
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5>Kelola Item Mutabaah</h5>
-        @if($role == 'guru')
-        <div class="d-flex gap-2">
-            <a href="{{ route('guru.mutabaah-item.reorder') }}" class="btn btn-outline-primary btn-sm">
-                <i class="ti ti-sort-ascending"></i> Atur Urutan
-            </a>
-            <a href="{{ route('guru.mutabaah-item.create') }}" class="btn btn-primary btn-sm">
-                <i class="ti ti-plus"></i> Tambah Item
-            </a>
+        <div>
+            <h5 class="mb-0">Kelola Item Mutabaah</h5>
+            @if($role == 'admin')
+            <small class="text-muted">Manajemen Master Template & Item Guru</small>
+            @endif
         </div>
-        @endif
+        <div class="d-flex gap-2">
+            @if($role == 'guru')
+                <a href="{{ route('guru.mutabaah-item.templates') }}" class="btn btn-outline-primary btn-sm">
+                    <i class="ti ti-layout-grid"></i> Template Sistem
+                </a>
+                <a href="{{ route('guru.mutabaah-item.reorder') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ti ti-sort-ascending"></i> Urutan
+                </a>
+                <a href="{{ route('guru.mutabaah-item.create') }}" class="btn btn-primary btn-sm">
+                    <i class="ti ti-plus"></i> Tambah Item
+                </a>
+            @else
+                <a href="{{ route('guru.mutabaah-item.create') }}" class="btn btn-primary btn-sm">
+                    <i class="ti ti-plus"></i> Tambah Master Template
+                </a>
+            @endif
+        </div>
     </div>
+    
     <div class="card-body">
         @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
 
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th width="50">Urutan</th>
-                        @if($role == 'admin')
-                        <th>Guru Pembimbing</th>
-                        @endif
-                        <th>Nama Item</th>
-                        <th>Kategori</th>
-                        <th>Tipe Input</th>
-                        <th>Status</th>
-                        @if($role == 'guru')
-                        <th width="150">Aksi</th>
-                        @endif
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($items as $item)
-                    <tr>
-                        <td>{{ $item->urutan }}</td>
-                        @if($role == 'admin')
-                        <td>{{ $item->teacher->nama ?? 'Sistem' }}</td>
-                        @endif
-                        <td><strong>{{ $item->nama }}</strong></td>
-                        <td>
-                            @php
-                                $displayKategori = ucwords(str_replace(['_', '-'], ' ', $item->kategori));
-                                $badgeColor = match($item->kategori) {
-                                    'sholat_wajib' => 'primary',
-                                    'sholat_sunnah' => 'success',
-                                    'lainnya' => 'info',
-                                    default => 'secondary'
-                                };
-                            @endphp
-                            <span class="badge bg-{{ $badgeColor }}">{{ $displayKategori }}</span>
-                        </td>
-                        <td>{{ ucfirst(str_replace('_', '/', $item->tipe)) }}</td>
-                        <td>
-                            @if($role == 'guru')
-                            <form action="{{ route('guru.mutabaah-item.toggle', $item) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-{{ $item->is_active ? 'success' : 'secondary' }}">
-                                    {{ $item->is_active ? 'Aktif' : 'Nonaktif' }}
-                                </button>
-                            </form>
-                            @else
-                            <span class="badge bg-{{ $item->is_active ? 'success' : 'secondary' }}">
-                                {{ $item->is_active ? 'Aktif' : 'Nonaktif' }}
-                            </span>
-                            @endif
-                        </td>
-                        @if($role == 'guru')
-                        <td>
-                            <a href="{{ route('guru.mutabaah-item.edit', $item) }}" class="btn btn-sm btn-warning">
-                                <i class="ti ti-edit"></i>
-                            </a>
-                            <form action="{{ route('guru.mutabaah-item.destroy', $item) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus item ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="ti ti-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                        @endif
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="{{ $role == 'guru' ? 6 : 6 }}" class="text-center">Belum ada item mutabaah</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        @if($role == 'admin')
+            <h6 class="fw-bold text-primary mb-3">🛠️ Master Template Sistem (Global)</h6>
+            @include('guru.mutabaah-item.partials.table', ['items' => $templates, 'showGuru' => false])
+
+            <h6 class="fw-bold text-warning mt-5 mb-3">👨‍🏫 Item Spesifik Guru</h6>
+            @include('guru.mutabaah-item.partials.table', ['items' => $items, 'showGuru' => true])
+        @else
+            @include('guru.mutabaah-item.partials.table', ['items' => $items, 'showGuru' => false])
+        @endif
     </div>
 </div>
 

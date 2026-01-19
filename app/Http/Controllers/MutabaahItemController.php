@@ -18,19 +18,22 @@ class MutabaahItemController extends Controller
         $role = $user->getRoleNames()->first();
 
         if ($role == 'admin') {
-            $items = MutabaahItem::with('teacher')->orderBy('teacher_id')->orderBy('urutan')->get();
+            $templates = MutabaahItem::whereNull('teacher_id')->orderBy('urutan')->get();
+            $items = MutabaahItem::whereNotNull('teacher_id')->with('teacher')->orderBy('teacher_id')->orderBy('urutan')->get();
+            return view('guru.mutabaah-item.index', compact('templates', 'items', 'role'));
         } else {
             $teacher = $user->teacher;
             $items = MutabaahItem::where('teacher_id', $teacher->id)->orderBy('urutan')->get();
+            $hasTemplates = MutabaahItem::whereNull('teacher_id')->exists();
+            return view('guru.mutabaah-item.index', compact('items', 'role', 'hasTemplates'));
         }
-
-        return view('guru.mutabaah-item.index', compact('items', 'role'));
     }
 
     public function create()
     {
+        $role = Auth::user()->getRoleNames()->first();
         $existingCategories = MutabaahItem::pluck('kategori')->unique();
-        return view('guru.mutabaah-item.create', compact('existingCategories'));
+        return view('guru.mutabaah-item.create', compact('existingCategories', 'role'));
     }
 
     public function store(Request $request)
@@ -38,10 +41,12 @@ class MutabaahItemController extends Controller
         $user = Auth::user();
         if (!$user instanceof User)
             abort(401);
+        
+        $role = $user->getRoleNames()->first();
         $teacher = $user->teacher;
 
-        if (!$teacher) {
-            return redirect()->back()->with('error', 'Hanya Guru yang dapat mengelola item mutabaah.');
+        if ($role != 'admin' && !$teacher) {
+            return redirect()->back()->with('error', 'Hanya Guru atau Admin yang dapat mengelola item mutabaah.');
         }
 
         $request->validate([
@@ -49,10 +54,16 @@ class MutabaahItemController extends Controller
             'kategori' => 'required|string|max:255',
             'tipe' => 'required|in:ya_tidak,angka,text',
             'urutan' => 'required|integer',
+            'is_template' => 'nullable|boolean',
         ]);
 
         $data = $request->all();
-        $data['teacher_id'] = $teacher->id;
+        
+        if ($role == 'admin' && $request->is_template) {
+            $data['teacher_id'] = null;
+        } else {
+            $data['teacher_id'] = $teacher->id;
+        }
 
         MutabaahItem::create($data);
 
@@ -143,5 +154,41 @@ class MutabaahItemController extends Controller
         }
 
         return redirect()->route('guru.mutabaah-item.index')->with('success', 'Urutan berhasil diperbarui');
+    }
+
+    public function templates()
+    {
+        $templates = MutabaahItem::whereNull('teacher_id')->orderBy('urutan')->get();
+        return view('guru.mutabaah-item.templates', compact('templates'));
+    }
+
+    public function copyTemplate(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user instanceof User) abort(401);
+        $teacher = $user->teacher;
+
+        if (!$teacher) {
+            return redirect()->back()->with('error', 'Hanya Guru yang dapat menyalin template.');
+        }
+
+        $templates = MutabaahItem::whereNull('teacher_id')->get();
+        
+        if ($templates->isEmpty()) {
+            return redirect()->back()->with('error', 'Tidak ada template sistem yang tersedia.');
+        }
+
+        foreach ($templates as $template) {
+            MutabaahItem::create([
+                'teacher_id' => $teacher->id,
+                'nama' => $template->nama,
+                'kategori' => $template->kategori,
+                'tipe' => $template->tipe,
+                'urutan' => $template->urutan,
+                'is_active' => true,
+            ]);
+        }
+
+        return redirect()->route('guru.mutabaah-item.index')->with('success', 'Template sistem berhasil disalin ke akun Anda.');
     }
 }

@@ -61,6 +61,18 @@
                 @error('urutan')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
+            @if($role == 'admin')
+            <div class="mb-3">
+                <div class="form-check form-switch border p-3 rounded bg-light-primary border-primary border-opacity-10">
+                    <input type="checkbox" name="is_template" class="form-check-input ms-0 me-2" id="is_template" value="1" {{ old('is_template') ? 'checked' : '' }}>
+                    <label class="form-check-label fw-bold text-primary" for="is_template">
+                        <i class="ti ti-layout-grid me-1"></i> Jadikan Template Master (Global)
+                    </label>
+                    <small class="d-block text-muted mt-1 ms-4">Item ini akan muncul sebagai template yang bisa disalin oleh semua Guru.</small>
+                </div>
+            </div>
+            @endif
+
             <div class="mb-3">
                 <div class="form-check">
                     <input type="checkbox" name="is_active" class="form-check-input" id="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }}>
