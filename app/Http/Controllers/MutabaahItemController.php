@@ -29,7 +29,8 @@ class MutabaahItemController extends Controller
 
     public function create()
     {
-        return view('guru.mutabaah-item.create');
+        $existingCategories = MutabaahItem::pluck('kategori')->unique();
+        return view('guru.mutabaah-item.create', compact('existingCategories'));
     }
 
     public function store(Request $request)
@@ -45,7 +46,7 @@ class MutabaahItemController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:255',
-            'kategori' => 'required|in:sholat_wajib,sholat_sunnah,lainnya',
+            'kategori' => 'required|string|max:255',
             'tipe' => 'required|in:ya_tidak,angka,text',
             'urutan' => 'required|integer',
         ]);
@@ -55,7 +56,7 @@ class MutabaahItemController extends Controller
 
         MutabaahItem::create($data);
 
-        return redirect()->route('mutabaah-item.index')->with('success', 'Item berhasil ditambahkan');
+        return redirect()->route('guru.mutabaah-item.index')->with('success', 'Item berhasil ditambahkan');
     }
 
     public function edit(MutabaahItem $mutabaah_item)
@@ -67,7 +68,8 @@ class MutabaahItemController extends Controller
             abort(403);
         }
 
-        return view('guru.mutabaah-item.edit', compact('mutabaah_item'));
+        $existingCategories = MutabaahItem::pluck('kategori')->unique();
+        return view('guru.mutabaah-item.edit', compact('mutabaah_item', 'existingCategories'));
     }
 
     public function update(Request $request, MutabaahItem $mutabaah_item)
@@ -81,14 +83,14 @@ class MutabaahItemController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:255',
-            'kategori' => 'required|in:sholat_wajib,sholat_sunnah,lainnya',
+            'kategori' => 'required|string|max:255',
             'tipe' => 'required|in:ya_tidak,angka,text',
             'urutan' => 'required|integer',
         ]);
 
         $mutabaah_item->update($request->all());
 
-        return redirect()->route('mutabaah-item.index')->with('success', 'Item berhasil diperbarui');
+        return redirect()->route('guru.mutabaah-item.index')->with('success', 'Item berhasil diperbarui');
     }
 
     public function destroy(MutabaahItem $mutabaah_item)
@@ -101,12 +103,45 @@ class MutabaahItemController extends Controller
         }
 
         $mutabaah_item->delete();
-        return redirect()->route('mutabaah-item.index')->with('success', 'Item berhasil dihapus');
+        return redirect()->route('guru.mutabaah-item.index')->with('success', 'Item berhasil dihapus');
     }
 
     public function toggle(MutabaahItem $mutabaah_item)
     {
         $mutabaah_item->update(['is_active' => !$mutabaah_item->is_active]);
         return redirect()->back()->with('success', 'Status berhasil diubah');
+    }
+    public function reorder()
+    {
+        $user = Auth::user();
+        if (!$user instanceof User) abort(401);
+        $teacher = $user->teacher;
+
+        if (!$teacher) {
+            return redirect()->back()->with('error', 'Hanya Guru yang dapat mengelola item mutabaah.');
+        }
+
+        $items = MutabaahItem::where('teacher_id', $teacher->id)->orderBy('urutan')->get();
+        return view('guru.mutabaah-item.reorder', compact('items'));
+    }
+
+    public function updateOrder(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user instanceof User) abort(401);
+        $teacher = $user->teacher;
+
+        $request->validate([
+            'order' => 'required|array',
+            'order.*' => 'required|integer|min:1',
+        ]);
+
+        foreach ($request->order as $id => $order) {
+            MutabaahItem::where('id', $id)
+                ->where('teacher_id', $teacher->id)
+                ->update(['urutan' => $order]);
+        }
+
+        return redirect()->route('guru.mutabaah-item.index')->with('success', 'Urutan berhasil diperbarui');
     }
 }

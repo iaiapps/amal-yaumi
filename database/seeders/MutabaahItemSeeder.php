@@ -14,11 +14,13 @@ class MutabaahItemSeeder extends Seeder
 
         $items = [
             // Sholat Fardhu
-            ['nama' => 'SubuhBerjamaah', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 1, 'teacher_id' => $teacherId],
+            ['nama' => 'Subuh', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 1, 'teacher_id' => $teacherId],
             ['nama' => 'Dhuhur', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 2, 'teacher_id' => $teacherId],
             ['nama' => 'Ashar', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 3, 'teacher_id' => $teacherId],
             ['nama' => 'Magrib', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 4, 'teacher_id' => $teacherId],
             ['nama' => 'Isya', 'kategori' => 'sholat_wajib', 'tipe' => 'ya_tidak', 'urutan' => 5, 'teacher_id' => $teacherId],
+// Sholat Sunnah
+['nama' => 'Shalat Sunnah Dhuha', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 11, 'teacher_id' => $teacherId],
 
             // Al-Qur'an
             ['nama' => 'Membaca Iqra/Al-Quran', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 6, 'teacher_id' => $teacherId],
@@ -30,7 +32,6 @@ class MutabaahItemSeeder extends Seeder
             ['nama' => 'Membaca Buku', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 10, 'teacher_id' => $teacherId],
 
             // Adab
-            ['nama' => 'Shalat Sunnah Dhuha', 'kategori' => 'sholat_sunnah', 'tipe' => 'ya_tidak', 'urutan' => 11, 'teacher_id' => $teacherId],
             ['nama' => 'Dzikir Pagi', 'kategori' => 'lainnya', 'tipe' => 'ya_tidak', 'urutan' => 12, 'teacher_id' => $teacherId],
         ];
 

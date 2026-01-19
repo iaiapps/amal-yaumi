@@ -19,12 +19,29 @@
 
             <div class="mb-3">
                 <label class="form-label">Kategori <span class="text-danger">*</span></label>
-                <select name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
-                    <option value="">Pilih Kategori</option>
-                    <option value="sholat_wajib" {{ old('kategori', $mutabaah_item->kategori) == 'sholat_wajib' ? 'selected' : '' }}>Sholat Wajib</option>
-                    <option value="sholat_sunnah" {{ old('kategori', $mutabaah_item->kategori) == 'sholat_sunnah' ? 'selected' : '' }}>Sholat Sunnah</option>
-                    <option value="lainnya" {{ old('kategori', $mutabaah_item->kategori) == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
-                </select>
+                <input list="categoryList" name="kategori" id="kategoriInput" class="form-control @error('kategori') is-invalid @enderror" value="{{ old('kategori', $mutabaah_item->kategori) }}" placeholder="Pilih atau ketik kategori baru" required>
+                <datalist id="categoryList">
+                    @foreach($existingCategories as $cat)
+                        <option value="{{ $cat }}">{{ ucwords(str_replace(['_', '-'], ' ', $cat)) }}</option>
+                    @endforeach
+                </datalist>
+
+                @if($existingCategories->count() > 0)
+                    <div class="mt-2">
+                        <small class="text-muted d-block mb-1">Kategori Tersedia (Klik untuk memilih):</small>
+                        <div class="d-flex flex-wrap gap-1">
+                            @foreach($existingCategories as $cat)
+                                <span class="badge bg-light-primary text-primary border border-primary border-opacity-10 cursor-pointer category-suggestion" 
+                                      style="cursor: pointer;"
+                                      onclick="document.getElementById('kategoriInput').value = '{{ $cat }}'">
+                                    {{ ucwords(str_replace(['_', '-'], ' ', $cat)) }}
+                                </span>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <small class="text-muted">Pilih atau buat kategori baru.</small>
+                @endif
                 @error('kategori')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 

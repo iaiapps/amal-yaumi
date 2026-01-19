@@ -32,54 +32,51 @@
                 @endif
 
                 {{-- Progress Bar --}}
-                <div class="card mb-3 bg-light">
+                <div class="card mb-3 bg-light border">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <h6 class="mb-0">Progress Pengisian</h6>
+                            <h6 class="mb-0 fw-bold"><i class="ti ti-chart-line me-1"></i> Progress Pengisian</h6>
                             <span class="badge bg-primary" id="progressBadge">0/{{ $items->count() }}</span>
                         </div>
-                        <div class="progress" style="height: 20px;">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" id="progressBar"
+                        <div class="progress" style="height: 12px;">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated shadow-sm" id="progressBar"
                                 role="progressbar" style="width: 0%">
-                                <span id="progressText">0%</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {{-- Quick Entry Buttons --}}
-                <div class="alert alert-primary mb-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span> <strong>Tombol cepat :</strong></span>
-                        <div class="btn-group btn-group-sm">
-                            <button type="button" class="btn btn-primary" onclick="checkAllYa()">
-                                Centang
-                            </button>
-                            <button type="button" class="btn btn-warning" onclick="resetForm()">
-                                Reset
-                            </button>
-                        </div>
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="btn-group btn-group-sm shadow-sm">
+                        <button type="button" class="btn btn-outline-primary" onclick="checkAllYa()">
+                            <i class="ti ti-check me-1"></i> Centang Semua
+                        </button>
+                        <button type="button" class="btn btn-outline-warning" onclick="resetForm()">
+                            <i class="ti ti-refresh me-1"></i> Reset
+                        </button>
                     </div>
                 </div>
 
+                @php
+                    $colors = ['primary', 'success', 'info', 'warning', 'danger', 'secondary'];
+                    $colorIndex = 0;
+                @endphp
+
                 @foreach ($items->groupBy('kategori') as $kategori => $groupItems)
-                    <div class="card mb-3 shadow-sm">
-                        <div
-                            class="card-header
-                    @if ($kategori == 'sholat_wajib') bg-primary text-white
-                    @elseif($kategori == 'sholat_sunnah') bg-success text-white
-                    @else bg-info text-white @endif">
+                    @php
+                        $currentColor = $colors[$colorIndex % count($colors)];
+                        $colorIndex++;
+                        // Convert slug to Title Case
+                        $displayKategori = ucwords(str_replace(['_', '-'], ' ', $kategori));
+                    @endphp
+                    <div class="card mb-4 shadow-sm border-0 border-top border-4 border-{{ $currentColor }}">
+                        <div class="card-header bg-white py-3">
                             <div class="d-flex justify-content-between align-items-center">
-                                <strong>
-                                    @if ($kategori == 'sholat_wajib')
-                                        Sholat Wajib
-                                    @elseif($kategori == 'sholat_sunnah')
-                                        Sholat Sunnah
-                                    @else
-                                        Ibadah Lainnya
-                                    @endif
-                                </strong>
-                                <span class="badge bg-light text-dark category-counter" data-category="{{ $kategori }}">
+                                <h6 class="mb-0 fw-bold text-{{ $currentColor }}">
+                                    <i class="ti ti-bookmark me-1"></i> {{ $displayKategori }}
+                                </h6>
+                                <span class="badge bg-light-{{ $currentColor }} text-{{ $currentColor }} category-counter px-3" data-category="{{ $kategori }}">
                                     0/{{ $groupItems->count() }}
                                 </span>
                             </div>
@@ -101,21 +98,21 @@
                                         </div>
                                     @elseif($item->tipe == 'angka')
                                         <div class="col-md-6">
-                                            <label class="form-label fw-bold">
+                                            <label class="form-label fw-bold small">
                                                 {{ $item->nama }}
                                             </label>
                                             <input type="number" name="data[{{ $item->id }}]"
-                                                class="form-control form-control-lg habit-input"
+                                                class="form-control habit-input"
                                                 placeholder="Masukkan angka" data-category="{{ $kategori }}"
                                                 onchange="updateProgress()">
                                         </div>
                                     @else
                                         <div class="col-md-6">
-                                            <label class="form-label fw-bold">
+                                            <label class="form-label fw-bold small">
                                                 {{ $item->nama }}
                                             </label>
                                             <input type="text" name="data[{{ $item->id }}]"
-                                                class="form-control form-control-lg habit-input" placeholder="Masukkan text"
+                                                class="form-control habit-input" placeholder="Masukkan text"
                                                 data-category="{{ $kategori }}" onchange="updateProgress()">
                                         </div>
                                     @endif
@@ -126,9 +123,17 @@
                 @endforeach
 
 
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ $role == 'siswa' ? route('siswa.amal.index') : route('mutabaah.index') }}"
-                    class="btn btn-secondary">Batal</a>
+                <div class="card mt-4 border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">
+                                <i class="ti ti-device-floppy me-1"></i> Simpan Mutabaah
+                            </button>
+                            <a href="{{ $role == 'siswa' ? route('siswa.amal.index') : route('mutabaah.index') }}"
+                                class="btn btn-light px-4 py-2">Batal</a>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -136,8 +141,10 @@
 @endsection
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         const totalItems = {{ $items->count() }};
+        let celebrationTriggered = false;
 
         function updateProgress() {
             // Count checked checkboxes
@@ -151,21 +158,25 @@
             const percentage = Math.round((completed / totalItems) * 100);
 
             // Update progress bar
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('progressText').textContent = percentage + '%';
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
             document.getElementById('progressBadge').textContent = completed + '/' + totalItems;
 
             // Update category counters
             updateCategoryCounters();
 
-            // Celebration if all complete
-            if (completed === totalItems) {
+            // Celebration if all complete (only trigger once)
+            if (completed === totalItems && !celebrationTriggered) {
                 celebrateCompletion();
+                celebrationTriggered = true;
+            } else if (completed < totalItems) {
+                celebrationTriggered = false;
+                resetCelebrationStyle();
             }
         }
 
         function updateCategoryCounters() {
-            const categories = ['sholat_wajib', 'sholat_sunnah', 'lainnya'];
+            const categories = {!! json_encode($items->pluck('kategori')->unique()->values()) !!};
 
             categories.forEach(category => {
                 const checkboxes = document.querySelectorAll(`.habit-checkbox[data-category="${category}"]`);
@@ -180,6 +191,13 @@
                 const counter = document.querySelector(`.category-counter[data-category="${category}"]`);
                 if (counter) {
                     counter.textContent = completed + '/' + total;
+                    if (completed === total) {
+                        counter.classList.remove('bg-light-primary', 'bg-light-success', 'bg-light-info', 'bg-light-warning', 'bg-light-danger', 'bg-light-secondary');
+                        counter.classList.add('bg-success', 'text-white');
+                    } else {
+                        // Restore dynamic color if no longer complete
+                        // (CSS will handle the text color via the specific category class if we don't force bg-success)
+                    }
                 }
             });
         }
@@ -198,6 +216,41 @@
         }
 
         function celebrateCompletion() {
+            // Subtle side bursts confetti
+            var count = 200;
+            var defaults = {
+                origin: { y: 0.7 }
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, {
+                spread: 26,
+                startVelocity: 55,
+            });
+            fire(0.2, {
+                spread: 60,
+            });
+            fire(0.35, {
+                spread: 100,
+                decay: 0.91,
+                scalar: 0.8
+            });
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 25,
+                decay: 0.92,
+                scalar: 1.2
+            });
+            fire(0.1, {
+                spread: 120,
+                startVelocity: 45,
+            });
+
             // Change progress bar color
             const progressBar = document.getElementById('progressBar');
             progressBar.classList.remove('progress-bar-striped', 'progress-bar-animated');
@@ -207,7 +260,17 @@
             const badge = document.getElementById('progressBadge');
             badge.classList.remove('bg-primary');
             badge.classList.add('bg-success');
-            badge.innerHTML = '✓ Lengkap!';
+            badge.innerHTML = '<i class="ti ti-check"></i> Sempurna!';
+        }
+
+        function resetCelebrationStyle() {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.classList.add('progress-bar-striped', 'progress-bar-animated');
+            progressBar.classList.remove('bg-success');
+
+            const badge = document.getElementById('progressBadge');
+            badge.classList.remove('bg-success');
+            badge.classList.add('bg-primary');
         }
 
         // Initialize on page load

@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:guru')->prefix('guru')->name('guru.')->group(function () {
         Route::resource('classroom', ClassroomController::class);
         Route::resource('student', StudentController::class);
+        Route::get('mutabaah-item/reorder', [MutabaahItemController::class, 'reorder'])->name('mutabaah-item.reorder');
+        Route::post('mutabaah-item/reorder', [MutabaahItemController::class, 'updateOrder'])->name('mutabaah-item.reorder.update');
         Route::resource('mutabaah-item', MutabaahItemController::class);
         Route::post('mutabaah-item/{mutabaah_item}/toggle', [MutabaahItemController::class, 'toggle'])->name('mutabaah-item.toggle');
         Route::get('mutabaah-calendar', [MutabaahController::class, 'calendar'])->name('mutabaah.calendar');

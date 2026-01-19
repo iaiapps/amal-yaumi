@@ -6,9 +6,14 @@
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5>Kelola Item Mutabaah</h5>
         @if($role == 'guru')
-        <a href="{{ route('guru.mutabaah-item.create') }}" class="btn btn-primary btn-sm">
-            <i class="ti ti-plus"></i> Tambah Item
-        </a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('guru.mutabaah-item.reorder') }}" class="btn btn-outline-primary btn-sm">
+                <i class="ti ti-sort-ascending"></i> Atur Urutan
+            </a>
+            <a href="{{ route('guru.mutabaah-item.create') }}" class="btn btn-primary btn-sm">
+                <i class="ti ti-plus"></i> Tambah Item
+            </a>
+        </div>
         @endif
     </div>
     <div class="card-body">
@@ -42,13 +47,16 @@
                         @endif
                         <td><strong>{{ $item->nama }}</strong></td>
                         <td>
-                            @if($item->kategori == 'sholat_wajib')
-                            <span class="badge bg-primary">Sholat Wajib</span>
-                            @elseif($item->kategori == 'sholat_sunnah')
-                            <span class="badge bg-success">Sholat Sunnah</span>
-                            @else
-                            <span class="badge bg-info">Lainnya</span>
-                            @endif
+                            @php
+                                $displayKategori = ucwords(str_replace(['_', '-'], ' ', $item->kategori));
+                                $badgeColor = match($item->kategori) {
+                                    'sholat_wajib' => 'primary',
+                                    'sholat_sunnah' => 'success',
+                                    'lainnya' => 'info',
+                                    default => 'secondary'
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $badgeColor }}">{{ $displayKategori }}</span>
                         </td>
                         <td>{{ ucfirst(str_replace('_', '/', $item->tipe)) }}</td>
                         <td>

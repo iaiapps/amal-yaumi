@@ -30,13 +30,13 @@
                                 <td>{{ $mutabaah->tanggal->format('d M Y') }}</td>
                                 <td><span class="badge bg-primary">{{ count($mutabaah->data) }} item</span></td>
                                 <td>
-                                    <a href="{{ route('amal.show', $mutabaah) }}" class="btn btn-sm btn-info">
+                                    <a href="{{ route('siswa.amal.show', $mutabaah) }}" class="btn btn-sm btn-info">
                                         <i class="ti ti-eye"></i>
                                     </a>
-                                    <a href="{{ route('amal.edit', $mutabaah) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('siswa.amal.edit', $mutabaah) }}" class="btn btn-sm btn-warning">
                                         <i class="ti ti-edit"></i>
                                     </a>
-                                    <form action="{{ route('amal.destroy', $mutabaah) }}" method="POST" class="d-inline"
+                                    <form action="{{ route('siswa.amal.destroy', $mutabaah) }}" method="POST" class="d-inline"
                                         onsubmit="return confirm('Yakin hapus data ini?')">
                                         @csrf
                                         @method('DELETE')
