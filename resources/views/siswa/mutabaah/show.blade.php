@@ -62,7 +62,7 @@
                 @endforeach
             </div>
 
-            <a href="{{ Auth::user()->getRoleNames()->first() == 'siswa' ? route('amal.index') : route('mutabaah.index') }}"
+            <a href="{{ Auth::user()->getRoleNames()->first() == 'siswa' ? route('siswaamal.index') : route('mutabaah.index') }}"
                 class="btn btn-secondary">Kembali</a>
         </div>
     </div>

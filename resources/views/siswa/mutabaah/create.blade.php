@@ -5,7 +5,7 @@
     @php
         $user = Auth::user();
         $role = $user->getRoleNames()->first();
-        $url = $role == 'siswa' ? route('amal.store') : route('mutabaah.store');
+        $url = $role == 'siswa' ? route('siswa.amal.store') : route('mutabaah.store');
     @endphp
 
     <div class="card">
@@ -127,7 +127,7 @@
 
 
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ $role == 'siswa' ? route('amal.index') : route('mutabaah.index') }}"
+                <a href="{{ $role == 'siswa' ? route('siswa.amal.index') : route('mutabaah.index') }}"
                     class="btn btn-secondary">Batal</a>
             </form>
         </div>

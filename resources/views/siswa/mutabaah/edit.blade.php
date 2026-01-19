@@ -71,7 +71,7 @@
             @endforeach
 
             <button type="submit" class="btn btn-primary">Update</button>
-            <a href="{{ $role == 'siswa' ? route('amal.index') : route('mutabaah.index') }}" class="btn btn-secondary">Batal</a>
+            <a href="{{ $role == 'siswa' ? route('siswaamal.index') : route('mutabaah.index') }}" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 </div>

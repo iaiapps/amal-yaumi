@@ -170,7 +170,16 @@ class MutabaahController extends Controller
         $validated['student_id'] = $student->id;
 
         Mutabaah::create($validated);
-        return redirect()->route('amal.index')->with('success', 'Berhasil menambah data');
+
+        // Streak check for gamification
+        $currentStreak = (new DashboardController)->calculateStreak($student->id);
+        $milestones = [3, 7, 14, 30, 60, 90, 100, 365];
+        
+        if (in_array($currentStreak, $milestones)) {
+            session()->flash('streak_milestone', $currentStreak);
+        }
+
+        return redirect()->route('siswa.dashboard')->with('success', 'Berhasil menambah data mutabaah');
     }
 
     public function amalShow(Mutabaah $mutabaah)

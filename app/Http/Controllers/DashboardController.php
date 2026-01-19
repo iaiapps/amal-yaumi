@@ -252,6 +252,36 @@ class DashboardController extends Controller
         }
 
         $recentMutabaah = Mutabaah::where('student_id', $student->id)->orderBy('tanggal', 'desc')->limit(5)->get();
+        
+        // Gamification: Total Points (10 pts per item)
+        $allMutabaah = Mutabaah::where('student_id', $student->id)->get();
+        $totalPoints = 0;
+        foreach ($allMutabaah as $m) {
+            $totalPoints += count($m->data) * 10;
+        }
+
+        // Gamification: Class Rank (based on monthly completion)
+        $classRank = Student::where('kelas', $student->kelas)
+            ->withCount([
+                'mutabaah' => function($q) {
+                    $q->whereMonth('tanggal', now()->month)
+                      ->whereYear('tanggal', now()->year);
+                }
+            ])
+            ->get()
+            ->sortByDesc('mutabaah_count')
+            ->values();
+        
+        $myRank = $classRank->search(fn($s) => $s->id === $student->id) + 1;
+        $totalInClass = $classRank->count();
+        
+        // Take top 5 for leaderboard display
+        $leaderboard = $classRank->take(5);
+
+        // Simulated Level (e.g., Level 1 every 500 points)
+        $level = floor($totalPoints / 500) + 1;
+        $xpProgress = ($totalPoints % 500) / 5; // Percentage to next level
+
         $badges = $this->calculateBadges($monthlyCount, $streak, $longestStreak);
 
         return view('siswa.dashboard', compact(
@@ -262,7 +292,13 @@ class DashboardController extends Controller
             'progressPercentage',
             'calendarData',
             'recentMutabaah',
-            'badges'
+            'badges',
+            'totalPoints',
+            'myRank',
+            'totalInClass',
+            'leaderboard',
+            'level',
+            'xpProgress'
         ));
     }
 
