@@ -130,29 +130,53 @@ class DashboardController extends Controller
             return $class;
         });
 
-        // Guru Dashboard Logic Enhanced
+        // Trends for last 14 days
         $trendData = [];
         for ($i = 13; $i >= 0; $i--) {
-            $date = Carbon::today()->subDays($i);
-            $count = Mutabaah::whereIn('student_id', function ($query) use ($classNames) {
-                $query->select('id')->from('students')->whereIn('kelas', $classNames);
+            $date = now()->subDays($i)->format('Y-m-d');
+            $count = Mutabaah::whereIn('student_id', function ($query) use ($teacher) {
+                $query->select('id')->from('students')->where('teacher_id', $teacher->id);
             })->whereDate('tanggal', $date)->count();
 
-            $rate = $totalStudents > 0 ? round(($count / $totalStudents) * 100, 1) : 0;
-            $trendData[] = ['date' => $date->format('d M'), 'rate' => $rate];
+            $trendData[] = [
+                'date' => $date,
+                'count' => $count,
+                'rate' => $totalStudents > 0 ? round(($count / $totalStudents) * 100) : 0
+            ];
         }
 
         // Recent Activities
-        $recentActivities = Mutabaah::whereIn('student_id', function ($query) use ($classNames) {
-            $query->select('id')->from('students')->whereIn('kelas', $classNames);
+        $recentActivities = Mutabaah::whereIn('student_id', function ($query) use ($teacher) {
+            $query->select('id')->from('students')->where('teacher_id', $teacher->id);
         })
-            ->with(['student'])
+            ->with(['student.user'])
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
 
+        // Inactive Students (No mutabaah in last 3 days)
+        $inactiveStudents = Student::where('teacher_id', $teacher->id)
+            ->whereDoesntHave('mutabaah', function ($q) {
+                $q->whereDate('tanggal', '>=', now()->subDays(3));
+            })
+            ->with('user')
+            ->limit(5)
+            ->get();
+
+        // Submission Rate Today
+        $submissionRateToday = $totalStudents > 0 ? round(($todayMutabaah / $totalStudents) * 100) : 0;
+
+        // Total entries current month
+        $monthlyTotal = Mutabaah::whereIn('student_id', function ($query) use ($teacher) {
+            $query->select('id')->from('students')->where('teacher_id', $teacher->id);
+        })
+            ->whereMonth('tanggal', now()->month)
+            ->whereYear('tanggal', now()->year)
+            ->count();
+
         // Top Students (by completion in current month)
-        $topStudents = Student::whereIn('kelas', $classNames)
+        $topStudents = Student::where('teacher_id', $teacher->id)
+            ->with(['user'])
             ->withCount([
                 'mutabaah' => function ($q) {
                     $q->whereMonth('tanggal', now()->month)
@@ -175,7 +199,10 @@ class DashboardController extends Controller
             'classStats',
             'trendData',
             'recentActivities',
-            'topStudents'
+            'topStudents',
+            'inactiveStudents',
+            'submissionRateToday',
+            'monthlyTotal'
         ));
     }
 

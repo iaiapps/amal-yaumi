@@ -15,6 +15,12 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
     private $successCount = 0;
     private $failedCount = 0;
     private $errors = [];
+    private $teacherId;
+
+    public function __construct($teacherId = null)
+    {
+        $this->teacherId = $teacherId;
+    }
 
     public function model(array $row)
     {
@@ -28,6 +34,18 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
                 return null;
             }
 
+            // Validate class belongs to teacher
+            if ($this->teacherId) {
+                $myClassCount = \App\Models\Classroom::where('teacher_id', $this->teacherId)
+                    ->where('nama', $row['kelas'])
+                    ->count();
+                if ($myClassCount == 0) {
+                    $this->failedCount++;
+                    $this->errors[] = "Baris {$this->rowCount}: Kelas {$row['kelas']} bukan bagian dari bimbingan Anda";
+                    return null;
+                }
+            }
+
             // Create user
             $user = User::create([
                 'name' => $row['nama'],
@@ -39,6 +57,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
             // Create student
             $student = new Student([
                 'user_id' => $user->id,
+                'teacher_id' => $this->teacherId,
                 'nama' => $row['nama'],
                 'nis' => $row['nis'],
                 'jk' => strtoupper($row['jk']),

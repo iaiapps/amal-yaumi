@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Auth;
 
 class MutabaahController extends Controller
 {
+    private function getTeacherId()
+    {
+        $user = Auth::user();
+        if (!$user instanceof \App\Models\User) return null;
+        $role = $user->getRoleNames()->first();
+        if ($role !== 'guru') return null;
+        return $user->teacher->id;
+    }
     /**
      * Get items specifically for the teacher of the student
      */
@@ -30,17 +38,34 @@ class MutabaahController extends Controller
             ->get();
     }
 
-    // Admin Methods
+    // Admin/Guru Methods
     public function index()
     {
-        $mutabaahs = Mutabaah::with('student')->latest('tanggal')->get();
+        $teacherId = $this->getTeacherId();
+        $mutabaahs = Mutabaah::with('student')
+            ->when($teacherId, function($q) use ($teacherId) {
+                return $q->whereHas('student', function($sq) use ($teacherId) {
+                    $sq->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
+                });
+            })
+            ->latest('tanggal')
+            ->get();
         return view('guru.mutabaah.index', compact('mutabaahs'));
     }
 
     public function create(Request $request)
     {
-        $students = Student::all();
-        $items = MutabaahItem::where('is_active', true)->orderBy('urutan')->get();
+        $teacherId = $this->getTeacherId();
+        $students = Student::when($teacherId, function ($q) use ($teacherId) {
+            return $q->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
+        })->get();
+        
+        $items = MutabaahItem::when($teacherId, function($q) use ($teacherId) {
+            return $q->where('teacher_id', $teacherId);
+        }, function($q) {
+            return $q->where('is_active', true);
+        })->orderBy('urutan')->get();
+
         $defaultDate = $request->query('date', date('Y-m-d'));
         return view('guru.mutabaah.create', compact('students', 'items', 'defaultDate'));
     }
@@ -181,8 +206,12 @@ class MutabaahController extends Controller
     // Calendar Methods
     public function calendar(Request $request)
     {
+        $teacherId = $this->getTeacherId();
         $month = $request->query('month', now()->format('Y-m'));
-        $students = Student::with([
+        
+        $students = Student::when($teacherId, function ($q) use ($teacherId) {
+            return $q->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
+        })->with([
             'mutabaah' => function ($q) use ($month) {
                 $q->whereYear('tanggal', date('Y', strtotime($month)))
                     ->whereMonth('tanggal', date('m', strtotime($month)));
@@ -198,6 +227,14 @@ class MutabaahController extends Controller
 
     public function studentCalendar(Student $student, Request $request)
     {
+        $teacherId = $this->getTeacherId();
+        if ($teacherId) {
+            $myClassNames = Classroom::where('teacher_id', $teacherId)->pluck('nama')->toArray();
+            if (!in_array($student->kelas, $myClassNames)) {
+                abort(403, 'Anda tidak memiliki akses ke data siswa ini.');
+            }
+        }
+
         $month = $request->query('month', now()->format('Y-m'));
         $startDate = \Carbon\Carbon::parse($month . '-01');
         $endDate = $startDate->copy()->endOfMonth();

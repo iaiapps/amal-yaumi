@@ -61,7 +61,8 @@ class ImportController extends Controller
             $file = $request->file('file');
             $fileName = $file->getClientOriginalName();
 
-            $import = new StudentsImport();
+            $teacher = Auth::user()->teacher;
+            $import = new StudentsImport($teacher->id);
             Excel::import($import, $file);
 
             Import::create([
