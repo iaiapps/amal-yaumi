@@ -79,6 +79,7 @@
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            <small class="text-muted">Nama ini akan digunakan di seluruh sistem.</small>
                         </div>
 
                         <div class="mb-3">
@@ -92,23 +93,23 @@
 
                         <div class="mb-3">
                             <label class="form-label">NIS</label>
-                            <input type="text" class="form-control" value="{{ $student->nis }}" disabled>
-                            <small class="text-muted">NIS tidak bisa diubah</small>
+                            <input type="text" class="form-control bg-light" value="{{ $student->nis }}" disabled>
+                            <small class="text-muted">NIS dikelola oleh Guru/Admin.</small>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Kelas</label>
-                            <input type="text" class="form-control" value="{{ $student->kelas }}" disabled>
-                            <small class="text-muted">Kelas tidak bisa diubah</small>
+                            <input type="text" class="form-control bg-light" value="{{ $student->kelas }}" disabled>
+                            <small class="text-muted">Kelas dikelola oleh Guru/Admin.</small>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Jenis Kelamin</label>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control bg-light"
                                 value="{{ $student->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}" disabled>
                         </div>
 
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between mt-4">
                             <a href="{{ route('profile.password') }}" class="btn btn-warning">
                                 <i class="ti ti-lock"></i> Ganti Password
                             </a>

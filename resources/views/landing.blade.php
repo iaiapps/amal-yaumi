@@ -18,7 +18,7 @@
         <div class="container">
             <a class="navbar-brand fw-extra-bold fs-5 d-flex align-items-center" href="#">
                 <img src="{{ asset('assets/images/favicon.svg') }}" width="32" height="32" class="me-2" alt="Logo">
-                Portal Amal Yaumi
+                Amal Yaumi
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="ti ti-menu-2 fs-2"></span>
@@ -43,16 +43,14 @@
                 <div class="col-lg-7 position-relative">
                     <span
                         class="badge bg-light-primary text-primary mb-3 px-3 py-2 rounded-pill fw-bold border border-primary border-opacity-25"
-                        style="letter-spacing: 0.5px;">PORTAL INTERNAL SISWA & GURU</span>
-                    <h1 class="hero-title fw-extra-bold">Selamat Datang di <br><span class="text-primary">Portal
-                            Mutabaah</span> Digital</h1>
-                    <p class="hero-subtitle mx-auto mx-lg-0 mb-4 fs-5 opacity-90">Media monitoring ibadah harian untuk
-                        mendukung istiqomah dan perkembangan karakter seluruh siswa.</p>
+                        style="letter-spacing: 0.5px;">PORTAL MUTABAAH SEKOLAH</span>
+                    <h1 class="hero-title fw-extra-bold">Portal Mutabaah <br><span class="text-primary">Harian</span> Kita</h1>
+                    <p class="hero-subtitle mx-auto mx-lg-0 mb-4 fs-5 opacity-90">Tempat siswa mencatat amalan harian, guru memantau perkembangan spiritual, dan sekolah membangun generasi yang istiqomah bersama-sama.</p>
                     <div
                         class="d-flex flex-column flex-sm-row gap-3 mt-4 justify-content-center justify-content-lg-start">
                         <a href="{{ route('login') }}"
                             class="btn btn-modern btn-modern-primary btn-lg px-5 py-3 shadow-lg fs-5 fw-bold">
-                            Masuk ke Dashboard
+                            Masuk ke Portal
                         </a>
                         <a href="#info" class="btn btn-modern btn-modern-outline btn-lg px-5 py-3 fs-5 fw-bold">
                             Lihat Informasi
@@ -126,9 +124,8 @@
                             style="width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;">
                             <i class="ti ti-clock fs-3"></i>
                         </div>
-                        <h5 class="fw-bold mt-4">Waktu Pengisian</h5>
-                        <p class="text-muted small fw-medium">Pastikan mengisi mutabaah harian sebelum pukul 21:00 WIB
-                            agar tercatat secara otomatis ke sistem.</p>
+                        <h5 class="fw-bold mt-4">Batas Waktu Pengisian</h5>
+                        <p class="text-muted small fw-medium">Isilah mutabaah sebelum pukul 21:00 WIB setiap hari agar data tercatat dengan baik. Jangan sampai terlewat ya!</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -138,9 +135,8 @@
                             style="width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;">
                             <i class="ti ti-target fs-3"></i>
                         </div>
-                        <h5 class="fw-bold mt-4">Target Ibadah</h5>
-                        <p class="text-muted small fw-medium">Fokus pada kualitas sholat wajib tepat waktu dan amalan
-                            sunnah harian sesuai arahan pembimbing.</p>
+                        <h5 class="fw-bold mt-4">Yang Perlu Dicatat</h5>
+                        <p class="text-muted small fw-medium">Fokus pada sholat wajib tepat waktu dan amalan sunnah sesuai bimbingan ustadz/ustadzah di kelasmu.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -150,9 +146,8 @@
                             style="width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center;">
                             <i class="ti ti-info-circle fs-3"></i>
                         </div>
-                        <h5 class="fw-bold mt-4">Butuh Bantuan?</h5>
-                        <p class="text-muted small fw-medium">Jika mengalami kendala teknis saat login atau pengisian,
-                            silakan hubungi tim IT/Admin sekolah.</p>
+                        <h5 class="fw-bold mt-4">Ada Kendala?</h5>
+                        <p class="text-muted small fw-medium">Jika mengalami masalah saat login atau pengisian, silakan hubungi Tim IT sekolah atau wali kelasmu.</p>
                     </div>
                 </div>
             </div>
@@ -172,9 +167,8 @@
                     <div class="card-modern border-0 shadow-sm py-5" style="background: rgba(255,255,255,0.4);">
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">1</div>
-                        <h5 class="fw-bold">Login Portal</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Gunakan email dan password yang telah didaftarkan
-                            oleh sekolah.</p>
+                        <h5 class="fw-bold">Masuk ke Portal</h5>
+                        <p class="text-muted px-lg-4 small fw-medium">Gunakan email dan password yang telah didaftarkan oleh sekolah.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
@@ -182,18 +176,16 @@
                         style="background: rgba(255,255,255,0.8); transform: scale(1.05); z-index: 10;">
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">2</div>
-                        <h5 class="fw-bold">Isi Checklist</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Pilih tanggal dan centang amalan yang telah Anda
-                            laksanakan hari ini.</p>
+                        <h5 class="fw-bold">Centang Amalan Harianmu</h5>
+                        <p class="text-muted px-lg-4 small fw-medium">Pilih tanggal dan centang amalan yang telah kamu laksanakan hari ini.</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card-modern border-0 shadow-sm py-5" style="background: rgba(255,255,255,0.4);">
                         <div class="avtar avtar-xl bg-primary text-white mx-auto mb-4 fs-3 shadow-primary"
                             style="width: 80px; height: 80px; border-radius: 20px;">3</div>
-                        <h5 class="fw-bold">Pantau Perkembangan</h5>
-                        <p class="text-muted px-lg-4 small fw-medium">Lihat statistik, streak, dan badges yang Anda
-                            dapatkan di dashboard.</p>
+                        <h5 class="fw-bold">Lihat Progresmu</h5>
+                        <p class="text-muted px-lg-4 small fw-medium">Cek statistik, streak, dan pencapaianmu di dashboard pribadi.</p>
                     </div>
                 </div>
             </div>
@@ -229,8 +221,7 @@
                     </h2>
                     <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                         <div class="accordion-body text-muted px-4 pb-4 fw-medium">
-                            Ya, Amal Yaumi didesain secara responsive (Mobile Friendly). Siswa dapat mengakses melalui
-                            browser di HP dengan tampilan yang optimal.
+                            Bisa! Portal ini mobile-friendly, jadi kamu bisa mengisi mutabaah langsung dari HP kapan saja, di mana saja.
                         </div>
                     </div>
                 </div>
@@ -244,8 +235,7 @@
                     </h2>
                     <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                         <div class="accordion-body text-muted px-4 pb-4 fw-medium">
-                            Admin dapat masuk ke menu Laporan, pilih rentang waktu, dan klik tombol Export ke PDF atau
-                            Excel secara instan.
+                            Guru dapat masuk ke menu Laporan, pilih periode, lalu klik Export PDF/Excel untuk mencetak atau menyimpan data siswa.
                         </div>
                     </div>
                 </div>
@@ -259,8 +249,7 @@
                     </h2>
                     <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                         <div class="accordion-body text-muted px-4 pb-4 fw-medium">
-                            Tentu, kami menggunakan teknologi Laravel terkini dengan sistem enkripsi dan role management
-                            yang ketat untuk memastikan data tetap privat.
+                            Tenang saja. Data pribadi dan ibadah hanya bisa diakses oleh siswa itu sendiri, wali kelas, dan admin sekolah. Kami menggunakan sistem keamanan Laravel standar industri.
                         </div>
                     </div>
                 </div>
@@ -271,11 +260,11 @@
     <!-- Final CTA -->
     <section class="py-5">
         <div class="container text-center">
-            <h2 class="display-5 fw-bold mb-4">Siap Melanjutkan <span class="text-primary">Amalan Hari Ini?</span>
+            <h2 class="display-5 fw-bold mb-4">Sudah Isi <span class="text-primary">Mutabaah Hari Ini?</span>
             </h2>
-            <p class="fs-5 mb-5 text-muted">Akses dashboard Anda sekarang untuk melihat statistik dan target harian.</p>
+            <p class="fs-5 mb-5 text-muted">Login ke portal dan cek progres ibadahmu. Jangan sampai streak-mu terputus!</p>
             <a href="{{ route('login') }}" class="btn btn-modern btn-modern-primary btn-lg px-5 py-3 shadow-lg">
-                Masuk ke Dashboard
+                Masuk ke Portal
             </a>
         </div>
     </section>
@@ -285,7 +274,7 @@
         <div class="container">
             <div class="row align-items-center border-top pt-4">
                 <div class="col-md-12">
-                    <p class="mb-0 text-muted fw-bold">&copy; {{ date('Y') }} Portal Amal Yaumi. Build for istiqomah.
+                    <p class="mb-0 text-muted fw-bold">&copy; {{ date('Y') }} Portal Amal Yaumi. Dibangun untuk mendukung pembentukan karakter Islami.
                     </p>
                 </div>
             </div>

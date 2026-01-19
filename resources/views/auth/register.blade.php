@@ -66,8 +66,8 @@
                         Password</label>
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="ti ti-lock text-muted"></i></span>
-                        <input id="password-confirm" type="password" class="form-control border-start-0 
-                                    name=" password_confirmation" required autocomplete="new-password"
+                        <input id="password-confirm" type="password" class="form-control border-start-0"
+                            name="password_confirmation" required autocomplete="new-password"
                             placeholder="********">
                     </div>
                 </div>

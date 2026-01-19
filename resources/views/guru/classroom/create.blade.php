@@ -41,7 +41,7 @@
                 <div class="mb-3">
                     <label class="form-label">Kapasitas <span class="text-danger">*</span></label>
                     <input type="number" name="kapasitas" class="form-control @error('kapasitas') is-invalid @enderror"
-                        value="{{ old('kapasitas', 30) }}" min="1" required>
+                        value="{{ old('kapasitas', 30) }}" min="1" max="30" required>
                     @error('kapasitas')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

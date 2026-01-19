@@ -37,8 +37,8 @@ class UserSeeder extends Seeder
 
         $kelas = \App\Models\Classroom::create([
             'teacher_id' => $guru->id,
-            'nama' => 'X-A',
-            'tingkat' => '10',
+            'nama' => '5A',
+            'tingkat' => '5',
             'kapasitas' => 30,
         ]);
 
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
             'nama' => 'Siswa Dummy',
             'nis' => '20240001',
             'jk' => 'L',
-            'kelas' => 'X-A',
+            'kelas' => '5A',
         ]);
     }
 }

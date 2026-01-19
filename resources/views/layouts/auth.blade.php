@@ -32,7 +32,7 @@
 
 <body class="bg-mesh">
     <!-- Simple Navbar -->
-    <nav class="navbar navbar-light py-3 fixed-top">
+    {{-- <nav class="navbar navbar-light py-3 fixed-top">
         <div class="container">
             <a class="navbar-brand fw-extra-bold fs-5 d-flex align-items-center" href="{{ url('/') }}">
                 <img src="{{ asset('assets/images/favicon.svg') }}" class="me-2" alt="Logo">
@@ -42,7 +42,7 @@
                 <i class="ti ti-arrow-left me-1"></i> Kembali
             </a>
         </div>
-    </nav>
+    </nav> --}}
 
     <!-- Main Content -->
     <main class="auth-container">

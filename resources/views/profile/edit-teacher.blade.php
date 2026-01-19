@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Profile')
+@section('title', 'Profile Guru')
 @section('content')
 
     <div class="card">
@@ -32,20 +32,6 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Password Baru</label>
-                        <input type="password" name="password" class="form-control @error('password') is-invalid @enderror">
-                        <small class="text-muted">Kosongkan jika tidak ingin mengubah password</small>
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" class="form-control">
-                    </div>
-
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Foto Profile</label>
                         @if ($user->profile_photo)
@@ -65,17 +51,8 @@
 
                 <hr class="my-4">
 
-                <h6 class="mb-3">Informasi Guru (Opsional)</h6>
+                <h6 class="mb-3">Detail Profil Guru</h6>
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Nama Lengkap</label>
-                        <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-                            value="{{ old('nama', $teacher->nama ?? '') }}">
-                        @error('nama')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
                     <div class="col-md-6 mb-3">
                         <label class="form-label">NIP</label>
                         <input type="text" name="nip" class="form-control @error('nip') is-invalid @enderror"
@@ -109,7 +86,7 @@
                     </div>
 
                     <div class="col-md-12 mb-3">
-                        <label class="form-label">Foto Guru</label>
+                        <label class="form-label">Foto Guru (KTP/Formal)</label>
                         @if ($teacher && $teacher->photo)
                             <div class="mb-2">
                                 <img src="{{ asset('storage/' . $teacher->photo) }}" alt="Foto Guru"
@@ -125,7 +102,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                <div class="d-flex justify-content-between mt-3">
+                    <a href="{{ route('profile.password') }}" class="btn btn-warning">
+                        <i class="ti ti-lock"></i> Ganti Password
+                    </a>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
             </form>
         </div>
     </div>

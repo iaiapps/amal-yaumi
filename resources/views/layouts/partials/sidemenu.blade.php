@@ -51,9 +51,15 @@
                             <i class="ti ti-settings"></i>
                         </li>
                         <li class="pc-item">
+                            <a href="{{ route('profile.edit') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-user"></i></span>
+                                <span class="pc-mtext">Profil Saya</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
                             <a href="{{ route('admin.setting.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-settings"></i></span>
-                                <span class="pc-mtext">Pengaturan</span>
+                                <span class="pc-mtext">Pengaturan Sekolah</span>
                             </a>
                         </li>
                     @break
