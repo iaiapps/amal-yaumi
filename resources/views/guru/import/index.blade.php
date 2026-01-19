@@ -25,19 +25,47 @@
                         <i class="ti ti-info-circle"></i>
                         <strong>Panduan Import:</strong>
                         <ol class="mb-0 mt-2">
-                            <li>Download template Excel terlebih dahulu</li>
+                            <li>Pilih Kelas yang ingin di-import</li>
+                            <li>Download template Excel (akan terisi otomatis nama kelasnya)</li>
                             <li>Isi data siswa sesuai format</li>
-                            <li>Kolom: nama, nis, jk (L/P), kelas</li>
                             <li>Upload file Excel (xlsx, xls, csv)</li>
-                            <li>Maksimal ukuran file: 2MB</li>
                         </ol>
                     </div>
 
-                    <div class="mb-3">
-                        <a href="{{ route('guru.import.template') }}" class="btn btn-success btn-sm">
-                            <i class="ti ti-download"></i> Download Template
+                    <div class="mb-4">
+                        <label class="form-label font-weight-bold">1. Pilih Kelas untuk Template</label>
+                        <select id="classroom_select" class="form-select mb-3">
+                            <option value="">-- Pilih Kelas --</option>
+                            @foreach ($classrooms as $classroom)
+                                <option value="{{ $classroom->id }}">{{ $classroom->nama }}</option>
+                            @endforeach
+                        </select>
+                        <a href="{{ route('guru.import.template') }}" id="download_template_btn" class="btn btn-success w-100">
+                            <i class="ti ti-download"></i> Download Template .xlsx
                         </a>
                     </div>
+
+                    <script>
+                        document.getElementById('classroom_select').addEventListener('change', function() {
+                            const classroomId = this.value;
+                            const classroomName = this.options[this.selectedIndex].text;
+                            const btn = document.getElementById('download_template_btn');
+                            const baseUrl = "{{ route('guru.import.template') }}";
+                            
+                            // Update download URL
+                            if (classroomId) {
+                                btn.href = baseUrl + '?classroom_id=' + classroomId;
+                                
+                                // Update example table cells
+                                document.querySelectorAll('.example-class').forEach(el => {
+                                    el.textContent = classroomName;
+                                });
+                            } else {
+                                btn.href = baseUrl;
+                                // Reset to default example if needed, or leave last selected
+                            }
+                        });
+                    </script>
                     <hr>
                     <form action="{{ route('guru.import.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -63,7 +91,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5>Format Template</h5>
-                    <p class="text-muted">Contoh format data yang benar:</p>
+                    <p class="text-muted">Contoh format data yang benar (akan berubah sesuai kelas):</p>
                     <div class="table-responsive">
                         <table class="table table-bordered table-sm">
                             <thead class="table-light">
@@ -79,19 +107,19 @@
                                     <td>Ahmad Fauzi</td>
                                     <td>20240001</td>
                                     <td>L</td>
-                                    <td>5A</td>
+                                    <td class="example-class">5A</td>
                                 </tr>
                                 <tr>
                                     <td>Siti Nurhaliza</td>
                                     <td>20240002</td>
                                     <td>P</td>
-                                    <td>5A</td>
+                                    <td class="example-class">5A</td>
                                 </tr>
                                 <tr>
                                     <td>Muhammad Rizki</td>
                                     <td>20240003</td>
                                     <td>L</td>
-                                    <td>5B</td>
+                                    <td class="example-class">5B</td>
                                 </tr>
                             </tbody>
                         </table>

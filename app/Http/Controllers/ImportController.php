@@ -12,19 +12,35 @@ class ImportController extends Controller
 {
     public function index()
     {
+        $teacher = Auth::user()->teacher;
+        $classrooms = \App\Models\Classroom::where('teacher_id', $teacher->id)->get();
         $imports = Import::with('user')->orderBy('created_at', 'desc')->get();
-        return view('guru.import.index', compact('imports'));
+        return view('guru.import.index', compact('imports', 'classrooms'));
     }
 
-    public function template()
+    public function template(Request $request)
     {
-        return Excel::download(new class implements \Maatwebsite\Excel\Concerns\FromArray, \Maatwebsite\Excel\Concerns\WithHeadings {
+        $className = '5A'; // Default example
+        if ($request->has('classroom_id')) {
+            $classroom = \App\Models\Classroom::find($request->classroom_id);
+            if ($classroom) {
+                $className = $classroom->nama;
+            }
+        }
+
+        return Excel::download(new class($className) implements \Maatwebsite\Excel\Concerns\FromArray, \Maatwebsite\Excel\Concerns\WithHeadings {
+            private $className;
+
+            public function __construct($className)
+            {
+                $this->className = $className;
+            }
+
             public function array(): array
             {
                 return [
-                    ['Ahmad Fauzi', '20240001', 'L', 'X-A'],
-                    ['Siti Nurhaliza', '20240002', 'P', 'X-A'],
-                    ['Muhammad Rizki', '20240003', 'L', 'X-B'],
+                    ['Ahmad Fauzi', '20240001', 'L', $this->className],
+                    ['Siti Nurhaliza', '20240002', 'P', $this->className],
                 ];
             }
 
@@ -32,7 +48,7 @@ class ImportController extends Controller
             {
                 return ['nama', 'nis', 'jk', 'kelas'];
             }
-        }, 'template-siswa.xlsx');
+        }, 'template-siswa-' . $className . '.xlsx');
     }
 
     public function import(Request $request)
