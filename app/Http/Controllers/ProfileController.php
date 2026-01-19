@@ -73,6 +73,9 @@ class ProfileController extends Controller
             'jk' => 'nullable|in:L,P',
             'telp' => 'nullable|string|max:20',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'nama_sekolah' => 'nullable|string|max:255',
+            'alamat_sekolah' => 'nullable|string',
+            'logo_sekolah' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         // Update User
@@ -96,6 +99,8 @@ class ProfileController extends Controller
             'nip' => $request->nip,
             'jk' => $request->jk,
             'telp' => $request->telp,
+            'nama_sekolah' => $request->nama_sekolah,
+            'alamat_sekolah' => $request->alamat_sekolah,
         ];
 
         if ($request->hasFile('photo')) {
@@ -103,6 +108,13 @@ class ProfileController extends Controller
                 Storage::disk('public')->delete($teacher->photo);
             }
             $teacherData['photo'] = $request->file('photo')->store('teachers', 'public');
+        }
+
+        if ($request->hasFile('logo_sekolah')) {
+            if ($teacher->logo_sekolah) {
+                Storage::disk('public')->delete($teacher->logo_sekolah);
+            }
+            $teacherData['logo_sekolah'] = $request->file('logo_sekolah')->store('logos', 'public');
         }
 
         $teacher->update($teacherData);

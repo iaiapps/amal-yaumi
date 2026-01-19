@@ -51,6 +51,8 @@
 
                 <hr class="my-4">
 
+                <hr class="my-4">
+
                 <h6 class="mb-3">Detail Profil Guru</h6>
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -85,18 +87,52 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-12 mb-3">
-                        <label class="form-label">Foto Guru (KTP/Formal)</label>
-                        @if ($teacher && $teacher->photo)
-                            <div class="mb-2">
-                                <img src="{{ asset('storage/' . $teacher->photo) }}" alt="Foto Guru"
-                                    style="max-height: 100px;" class="rounded">
-                            </div>
-                        @endif
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Foto Guru/Identitas</label>
                         <input type="file" name="photo" class="form-control @error('photo') is-invalid @enderror"
                             accept="image/*">
-                        <small class="text-muted">Format: JPG, PNG. Max: 2MB</small>
                         @error('photo')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex align-items-center mb-3">
+                    <h6 class="mb-0">Identitas Sekolah</h6>
+                    <span class="badge bg-light-info text-info ms-2">Multi-Tenant</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nama Sekolah</label>
+                        <input type="text" name="nama_sekolah" class="form-control @error('nama_sekolah') is-invalid @enderror"
+                            value="{{ old('nama_sekolah', $teacher->nama_sekolah ?? '') }}" placeholder="Contoh: SD IT Amal Mulia">
+                        @error('nama_sekolah')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Logo Sekolah</label>
+                        @if ($teacher && $teacher->logo_sekolah)
+                            <div class="mb-2">
+                                <img src="{{ asset('storage/' . $teacher->logo_sekolah) }}" alt="Logo Sekolah"
+                                    style="max-height: 60px;" class="rounded border p-1">
+                            </div>
+                        @endif
+                        <input type="file" name="logo_sekolah" class="form-control @error('logo_sekolah') is-invalid @enderror"
+                            accept="image/*">
+                        <small class="text-muted">Logo akan muncul di dashboard siswa & laporan PDF.</small>
+                        @error('logo_sekolah')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Alamat Sekolah</label>
+                        <textarea name="alamat_sekolah" class="form-control @error('alamat_sekolah') is-invalid @enderror" rows="2">{{ old('alamat_sekolah', $teacher->alamat_sekolah ?? '') }}</textarea>
+                        @error('alamat_sekolah')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

@@ -12,12 +12,6 @@ return new class extends Migration {
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->text('alamat')->nullable();
-            $table->string('telp')->nullable();
-            $table->string('email')->nullable();
-            $table->string('website')->nullable();
-            $table->string('logo')->nullable();
             $table->integer('max_class_per_teacher')->default(5); // Default 5 kelas per guru
             $table->integer('max_students_per_class')->default(30);
             $table->timestamps();

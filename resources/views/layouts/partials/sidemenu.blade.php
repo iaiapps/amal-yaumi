@@ -43,7 +43,7 @@
                         <li class="pc-item">
                             <a href="{{ route('admin.mutabaah-item.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-list-check"></i></span>
-                                <span class="pc-mtext">Master Template Mutabaah</span>
+                                <span class="pc-mtext">Template Mutabaah</span>
                             </a>
                         </li>
                         <li class="pc-item">
@@ -77,7 +77,7 @@
                         <li class="pc-item">
                             <a href="{{ route('admin.setting.index') }}" class="pc-link">
                                 <span class="pc-micon"><i class="ti ti-settings"></i></span>
-                                <span class="pc-mtext">Pengaturan Sekolah</span>
+                                <span class="pc-mtext">Pengaturan Kelas</span>
                             </a>
                         </li>
                     @break

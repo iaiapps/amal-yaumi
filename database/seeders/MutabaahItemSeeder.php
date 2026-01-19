@@ -9,9 +9,7 @@ class MutabaahItemSeeder extends Seeder
 {
     public function run(): void
     {
-        $guru = \App\Models\Teacher::first();
-        $teacherId = $guru ? $guru->id : null;
-
+       
         $items = [
             // Sholat Fardhu
             ['nama' => 'Subuh', 'kategori' => 'sholat_fardhu', 'tipe' => 'ya_tidak', 'urutan' => 1, 'teacher_id' => null],

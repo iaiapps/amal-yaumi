@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('jk')->nullable();
             $table->string('telp')->nullable();
             $table->string('photo')->nullable();
+            $table->string('nama_sekolah')->nullable();
+            $table->text('alamat_sekolah')->nullable();
+            $table->string('logo_sekolah')->nullable();
             $table->timestamps();
         });
     }
