@@ -20,14 +20,11 @@
             </table>
             <div style="margin-left: 12px">
                 @foreach ($items->groupBy('kategori') as $kategori => $groupItems)
+                    @php
+                        $displayKategori = ucwords(str_replace(['_', '-'], ' ', $kategori));
+                    @endphp
                     <strong>
-                        @if ($kategori == 'sholat_wajib')
-                            Sholat Wajib
-                        @elseif($kategori == 'sholat_sunnah')
-                            Sholat Sunnah
-                        @else
-                            Lainnya
-                        @endif
+                        {{ $displayKategori }}
                     </strong>
                     <hr>
                     <div class="table-responsive">

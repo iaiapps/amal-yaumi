@@ -5,14 +5,18 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>
+
                 <h5 class="mb-0">Kalender Mutabaah - {{ $student->nama }}</h5>
-                <small class="text-muted">Kelas: {{ $student->kelas }}</small>
+                <p class="text-muted">Kelas: {{ $student->kelas }}</p>
+                <a href="{{ route('guru.mutabaah.calendar', ['month' => $month]) }}" class="btn btn-secondary btn-sm">
+                    {{-- <i class="ti ti-arrow-left"></i> --}}
+                    Kembali
+                </a>
             </div>
             <div class="d-flex gap-2">
-                <input type="month" id="monthPicker" class="form-control" value="{{ $month }}" onchange="changeMonth()">
-                <a href="{{ route('mutabaah.calendar', ['month' => $month]) }}" class="btn btn-secondary">
-                    <i class="ti ti-arrow-left"></i> Kembali
-                </a>
+                <input type="month" id="monthPicker" class="form-control" value="{{ $month }}"
+                    onchange="changeMonth()">
+
             </div>
         </div>
         <div class="card-body">
@@ -55,15 +59,12 @@
                                     </div>
 
                                     @foreach ($items->groupBy('kategori') as $kategori => $groupItems)
+                                        @php
+                                            $displayKategori = ucwords(str_replace(['_', '-'], ' ', $kategori));
+                                        @endphp
                                         <div class="mb-1">
                                             <small class="fw-bold">
-                                                @if ($kategori == 'sholat_wajib')
-                                                    Sholat Wajib
-                                                @elseif($kategori == 'sholat_sunnah')
-                                                    Sholat Sunnah
-                                                @else
-                                                    Lainnya
-                                                @endif
+                                                {{ $displayKategori }}
                                             </small>
                                             <ul class="list-unstyled ms-2 small mb-1">
                                                 @foreach ($groupItems as $item)
@@ -90,7 +91,7 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="d-flex gap-1 mt-2">
+                                    {{-- <div class="d-flex gap-1 mt-2">
                                         <a href="{{ route('mutabaah.show', $mutabaah->id) }}" class="btn btn-sm btn-info">
                                             <i class="ti ti-eye"></i>
                                         </a>
@@ -98,15 +99,15 @@
                                             class="btn btn-sm btn-warning">
                                             <i class="ti ti-edit"></i>
                                         </a>
-                                    </div>
+                                    </div> --}}
                                 @else
                                     <p class="text-muted small mb-2">Belum ada data</p>
-                                    @if (!$day['isFuture'])
+                                    {{-- @if (!$day['isFuture'])
                                         <a href="{{ route('mutabaah.create', ['date' => $day['date']]) }}"
                                             class="btn btn-sm btn-primary">
                                             <i class="ti ti-plus"></i> Tambah
                                         </a>
-                                    @endif
+                                    @endif --}}
                                 @endif
                             </div>
                         </div>
@@ -122,7 +123,7 @@
     <script>
         function changeMonth() {
             const month = document.getElementById('monthPicker').value;
-            window.location.href = "{{ route('mutabaah.student-calendar', $student->id) }}?month=" + month;
+            window.location.href = "{{ route('guru.mutabaah.student-calendar', $student->id) }}?month=" + month;
         }
     </script>
 @endpush

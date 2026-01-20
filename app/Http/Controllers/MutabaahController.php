@@ -43,8 +43,8 @@ class MutabaahController extends Controller
     {
         $teacherId = $this->getTeacherId();
         $mutabaahs = Mutabaah::with('student')
-            ->when($teacherId, function($q) use ($teacherId) {
-                return $q->whereHas('student', function($sq) use ($teacherId) {
+            ->when($teacherId, function ($q) use ($teacherId) {
+                return $q->whereHas('student', function ($sq) use ($teacherId) {
                     $sq->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
                 });
             })
@@ -59,10 +59,10 @@ class MutabaahController extends Controller
         $students = Student::when($teacherId, function ($q) use ($teacherId) {
             return $q->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
         })->get();
-        
-        $items = MutabaahItem::when($teacherId, function($q) use ($teacherId) {
+
+        $items = MutabaahItem::when($teacherId, function ($q) use ($teacherId) {
             return $q->where('teacher_id', $teacherId);
-        }, function($q) {
+        }, function ($q) {
             return $q->where('is_active', true);
         })->orderBy('urutan')->get();
 
@@ -174,7 +174,7 @@ class MutabaahController extends Controller
         // Streak check for gamification
         $currentStreak = (new DashboardController)->calculateStreak($student->id);
         $milestones = [3, 7, 14, 30, 60, 90, 100, 365];
-        
+
         if (in_array($currentStreak, $milestones)) {
             session()->flash('streak_milestone', $currentStreak);
         }
@@ -217,7 +217,7 @@ class MutabaahController extends Controller
     {
         $teacherId = $this->getTeacherId();
         $month = $request->query('month', now()->format('Y-m'));
-        
+
         $students = Student::when($teacherId, function ($q) use ($teacherId) {
             return $q->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
         })->with([
@@ -272,7 +272,7 @@ class MutabaahController extends Controller
                 'isToday' => $date->isToday(),
             ];
         }
-
+        // dd('coba');
         return view('guru.mutabaah.student-calendar', compact('student', 'month', 'calendarData', 'items', 'startDate'));
     }
 }

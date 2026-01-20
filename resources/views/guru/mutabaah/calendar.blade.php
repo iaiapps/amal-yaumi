@@ -86,7 +86,7 @@
                                         $isFuture = $currentDate->isFuture();
                                     @endphp
                                     <td class="text-center {{ $bgClass }} {{ $isToday ? 'border border-warning border-2' : '' }} mutabaah-cell"
-                                        data-url="{{ $mutabaah ? route('mutabaah.show', $mutabaah->id) : '' }}"
+                                        data-url="{{ $mutabaah ? route('guru.mutabaah.calendar', $mutabaah->id) : '' }}"
                                         style="font-size: 1.2rem;"
                                         title="{{ $mutabaah ? $itemCount . ' item - ' . $currentDate->format('d M Y') : 'Tidak ada data' }}">
                                         {{ $icon }}

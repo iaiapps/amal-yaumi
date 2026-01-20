@@ -50,7 +50,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
             $user = User::create([
                 'name' => $row['nama'],
                 'email' => $row['nis'] . '@student.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('password1234'),
             ]);
             $user->assignRole('siswa');
 
@@ -71,6 +71,14 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
             $this->errors[] = "Baris {$this->rowCount}: {$e->getMessage()}";
             return null;
         }
+    }
+
+    public function prepareForValidation($data, $index)
+    {
+        if (isset($data['nis'])) {
+            $data['nis'] = (string) $data['nis'];
+        }
+        return $data;
     }
 
     public function rules(): array

@@ -40,7 +40,8 @@
                                 <option value="{{ $classroom->id }}">{{ $classroom->nama }}</option>
                             @endforeach
                         </select>
-                        <a href="{{ route('guru.import.template') }}" id="download_template_btn" class="btn btn-success w-100">
+                        <a href="{{ route('guru.import.template') }}" id="download_template_btn"
+                            class="btn btn-success w-100">
                             <i class="ti ti-download"></i> Download Template .xlsx
                         </a>
                     </div>
@@ -51,11 +52,11 @@
                             const classroomName = this.options[this.selectedIndex].text;
                             const btn = document.getElementById('download_template_btn');
                             const baseUrl = "{{ route('guru.import.template') }}";
-                            
+
                             // Update download URL
                             if (classroomId) {
                                 btn.href = baseUrl + '?classroom_id=' + classroomId;
-                                
+
                                 // Update example table cells
                                 document.querySelectorAll('.example-class').forEach(el => {
                                     el.textContent = classroomName;
@@ -131,6 +132,8 @@
                             <li>Jenis Kelamin: L (Laki-laki) atau P (Perempuan)</li>
                             <li>NIS harus unik (tidak boleh duplikat)</li>
                             <li>Semua kolom wajib diisi</li>
+                            <li>Password akan otomatis tergenerate</li>
+                            <li>Password default = password1234</li>
                         </ul>
                     </div>
                 </div>
@@ -215,5 +218,5 @@
             </div>
         </div>
     </div>
-<div style="color:#eef2f6">iai</div>
+    <div style="color:#eef2f6">iai</div>
 @endsection

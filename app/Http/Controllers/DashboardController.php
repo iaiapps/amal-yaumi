@@ -133,7 +133,7 @@ class DashboardController extends Controller
         // Trends for last 14 days
         $trendData = [];
         for ($i = 13; $i >= 0; $i--) {
-            $date = now()->subDays($i)->format('Y-m-d');
+            $date = now()->subDays($i)->format('d/m/y');
             $count = Mutabaah::whereIn('student_id', function ($query) use ($teacher) {
                 $query->select('id')->from('students')->where('teacher_id', $teacher->id);
             })->whereDate('tanggal', $date)->count();
@@ -190,7 +190,6 @@ class DashboardController extends Controller
                 $student->streak = $this->calculateStreak($student->id);
                 return $student;
             });
-
         return view('guru.dashboard', compact(
             'teacher',
             'classrooms',
@@ -252,7 +251,7 @@ class DashboardController extends Controller
         }
 
         $recentMutabaah = Mutabaah::where('student_id', $student->id)->orderBy('tanggal', 'desc')->limit(5)->get();
-        
+
         // Gamification: Total Points (10 pts per item)
         $allMutabaah = Mutabaah::where('student_id', $student->id)->get();
         $totalPoints = 0;
@@ -263,18 +262,18 @@ class DashboardController extends Controller
         // Gamification: Class Rank (based on monthly completion)
         $classRank = Student::where('kelas', $student->kelas)
             ->withCount([
-                'mutabaah' => function($q) {
+                'mutabaah' => function ($q) {
                     $q->whereMonth('tanggal', now()->month)
-                      ->whereYear('tanggal', now()->year);
+                        ->whereYear('tanggal', now()->year);
                 }
             ])
             ->get()
             ->sortByDesc('mutabaah_count')
             ->values();
-        
+
         $myRank = $classRank->search(fn($s) => $s->id === $student->id) + 1;
         $totalInClass = $classRank->count();
-        
+
         // Take top 5 for leaderboard display
         $leaderboard = $classRank->take(5);
 
