@@ -20,16 +20,12 @@
             </table>
             <div style="margin-left: 12px">
                 @foreach ($items->groupBy('kategori') as $kategori => $groupItems)
+                    @php
+                        $displayKategori = ucwords(str_replace(['_', '-'], ' ', $kategori));
+                    @endphp
                     <strong>
-                        @if ($kategori == 'sholat_wajib')
-                            Sholat Wajib
-                        @elseif($kategori == 'sholat_sunnah')
-                            Sholat Sunnah
-                        @else
-                            Lainnya
-                        @endif
+                        {{ $displayKategori }}
                     </strong>
-                    <hr>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -62,8 +58,7 @@
                 @endforeach
             </div>
 
-            <a href="{{ Auth::user()->getRoleNames()->first() == 'siswa' ? route('siswaamal.index') : route('mutabaah.index') }}"
-                class="btn btn-secondary">Kembali</a>
+            <a href="{{ URL::previous() }}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
 

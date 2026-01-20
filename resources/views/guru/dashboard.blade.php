@@ -246,7 +246,7 @@
         <!-- Side Cards: Top Students & Recent Activity -->
         <div class="col-lg-4">
             <!-- Top Students -->
-            <div class="card border-0 shadow-sm mb-4">
+            {{-- <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-transparent border-0 pt-4 px-4">
                     <h5 class="mb-0 fw-bold"><i class="ti ti-award me-1 text-warning"></i> Siswa Inspiratif</h5>
                     <small class="text-muted">Keaktifan tertinggi bulan ini</small>
@@ -281,10 +281,10 @@
                         @endforelse
                     </ul>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Recent Activity -->
-            <div class="card border-0 shadow-sm mb-4">
+            <div class="card border-0 shadow-sm mb-4 ">
                 <div class="card-header bg-transparent border-0 pt-4 px-4">
                     <h5 class="mb-0 fw-bold"><i class="ti ti-history me-1"></i> Aktivitas Terbaru</h5>
                 </div>
