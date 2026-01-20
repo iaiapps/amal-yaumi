@@ -95,7 +95,7 @@ class MutabaahController extends Controller
         $validated['data'] = $data;
         Mutabaah::create($validated);
 
-        return redirect()->route('mutabaah.index')->with('success', 'Berhasil menambah data');
+        return redirect()->route('admin.mutabaah.index')->with('success', 'Berhasil menambah data');
     }
 
     public function show(Mutabaah $mutabaah)
@@ -120,7 +120,7 @@ class MutabaahController extends Controller
         ]);
 
         $mutabaah->update($validated);
-        return redirect()->route('mutabaah.index')->with('success', 'Berhasil update data');
+        return redirect()->route('admin.mutabaah.index')->with('success', 'Berhasil update data');
     }
 
     public function destroy(Mutabaah $mutabaah)
@@ -172,14 +172,14 @@ class MutabaahController extends Controller
         Mutabaah::create($validated);
 
         // Streak check for gamification
-        $currentStreak = (new DashboardController)->calculateStreak($student->id);
+        $currentStreak = $student->getCurrentStreak();
         $milestones = [3, 7, 14, 30, 60, 90, 100, 365];
 
         if (in_array($currentStreak, $milestones)) {
             session()->flash('streak_milestone', $currentStreak);
         }
 
-        return redirect()->route('siswa.dashboard')->with('success', 'Berhasil menambah data mutabaah');
+        return redirect()->route('home')->with('success', 'Berhasil menambah data mutabaah');
     }
 
     public function amalShow(Mutabaah $mutabaah)
@@ -203,7 +203,7 @@ class MutabaahController extends Controller
         ]);
 
         $mutabaah->update($validated);
-        return redirect()->route('amal.index')->with('success', 'Berhasil update data');
+        return redirect()->route('siswa.amal.index')->with('success', 'Berhasil update data');
     }
 
     public function amalDestroy(Mutabaah $mutabaah)

@@ -54,7 +54,7 @@ class DashboardController extends Controller
             ->limit(5)
             ->get()
             ->map(function ($student) {
-                $student->streak = $this->calculateStreak($student->id);
+                $student->streak = $student->getCurrentStreak();
                 return $student;
             });
 
@@ -187,7 +187,7 @@ class DashboardController extends Controller
             ->limit(5)
             ->get()
             ->map(function ($student) {
-                $student->streak = $this->calculateStreak($student->id);
+                $student->streak = $student->getCurrentStreak();
                 return $student;
             });
         return view('guru.dashboard', compact(
@@ -216,8 +216,8 @@ class DashboardController extends Controller
             abort(403, 'Profil siswa tidak ditemukan.');
 
         $monthlyCount = Mutabaah::where('student_id', $student->id)->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year)->count();
-        $streak = $this->calculateStreak($student->id);
-        $longestStreak = $this->calculateLongestStreak($student->id);
+        $streak = $student->getCurrentStreak();
+        $longestStreak = $student->getLongestStreak();
         $daysInMonth = now()->daysInMonth;
         $progressPercentage = ($monthlyCount / $daysInMonth) * 100;
 
@@ -281,7 +281,7 @@ class DashboardController extends Controller
         $level = floor($totalPoints / 500) + 1;
         $xpProgress = ($totalPoints % 500) / 5; // Percentage to next level
 
-        $badges = $this->calculateBadges($monthlyCount, $streak, $longestStreak);
+        $badges = $student->getBadges();
 
         return view('siswa.dashboard', compact(
             'student',
@@ -299,58 +299,5 @@ class DashboardController extends Controller
             'level',
             'xpProgress'
         ));
-    }
-
-    private function calculateStreak($studentId)
-    {
-        $streak = 0;
-        $date = Carbon::today();
-        while (true) {
-            $exists = Mutabaah::where('student_id', $studentId)->whereDate('tanggal', $date)->exists();
-            if (!$exists)
-                break;
-            $streak++;
-            $date->subDay();
-        }
-        return $streak;
-    }
-
-    private function calculateLongestStreak($studentId)
-    {
-        $mutabaahs = Mutabaah::where('student_id', $studentId)->orderBy('tanggal', 'asc')->pluck('tanggal')->map(fn($date) => $date->format('Y-m-d'))->toArray();
-        if (empty($mutabaahs))
-            return 0;
-        $longestStreak = 1;
-        $currentStreak = 1;
-        for ($i = 1; $i < count($mutabaahs); $i++) {
-            $prevDate = Carbon::parse($mutabaahs[$i - 1]);
-            $currDate = Carbon::parse($mutabaahs[$i]);
-            if ($prevDate->addDay()->isSameDay($currDate)) {
-                $currentStreak++;
-                $longestStreak = max($longestStreak, $currentStreak);
-            } else {
-                $currentStreak = 1;
-            }
-        }
-        return $longestStreak;
-    }
-
-    private function calculateBadges($monthlyCount, $streak, $longestStreak)
-    {
-        $badges = [];
-        if ($longestStreak >= 100)
-            $badges[] = ['icon' => '👑', 'name' => 'Istiqomah Master', 'desc' => '100 hari berturut-turut'];
-        elseif ($longestStreak >= 30)
-            $badges[] = ['icon' => '⭐', 'name' => 'Konsisten Sebulan', 'desc' => '30 hari berturut-turut'];
-        elseif ($longestStreak >= 7)
-            $badges[] = ['icon' => '🔥', 'name' => 'Semangat Seminggu', 'desc' => '7 hari berturut-turut'];
-
-        if ($monthlyCount >= now()->daysInMonth)
-            $badges[] = ['icon' => '💯', 'name' => 'Perfect Month', 'desc' => 'Lengkap sebulan penuh'];
-        elseif ($monthlyCount >= 25)
-            $badges[] = ['icon' => '🌟', 'name' => 'Rajin Banget', 'desc' => '25+ hari bulan ini'];
-        elseif ($monthlyCount >= 15)
-            $badges[] = ['icon' => '✨', 'name' => 'Terus Semangat', 'desc' => '15+ hari bulan ini'];
-        return $badges;
     }
 }
