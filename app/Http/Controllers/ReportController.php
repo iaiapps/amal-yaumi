@@ -49,7 +49,7 @@ class ReportController extends Controller
             }
         ])->get();
 
-        $pdf = Pdf::loadView('reports.all-pdf', compact('students', 'startDate', 'endDate'));
+        $pdf = Pdf::loadView('guru.reports.all-pdf', compact('students', 'startDate', 'endDate'));
         $pdf->setPaper('a4', 'landscape');
 
         return $pdf->download('laporan-semua-siswa-' . now()->format('Y-m-d') . '.pdf');

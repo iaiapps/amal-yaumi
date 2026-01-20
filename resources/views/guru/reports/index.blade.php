@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 mb-3">
+                {{-- <div class="col-md-12 mb-3">
                     <div class="card border">
                         <div class="card-body">
                             <h6 class="card-title"><i class="ti ti-file-pdf"></i> Laporan PDF Semua Siswa</h6>
@@ -65,7 +65,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
