@@ -2,197 +2,197 @@
 @section('title', 'Dashboard Admin')
 @section('content')
 
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <h3>Selamat Datang, {{ auth()->user()->name }}!</h3>
-                <p class="text-muted">Ringkasan operasional sistem Amal Yaumi</p>
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Selamat Datang, {{ auth()->user()->name }}!</h3>
+                    <p class="text-muted mb-0">Ringkasan statistik pengguna dan aktivitas sistem.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row mb-3">
-    <div class="col-md-3 mb-3">
-        <div class="card bg-primary text-white">
-            <div class="card-body d-flex align-items-center">
-                <i class="ti ti-school fs-1"></i>
-                <div class="ms-3">
-                    <h6 class="text-white mb-0">Total Siswa</h6>
-                    <h3 class="text-white mb-0">{{ $totalStudents }}</h3>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="ti ti-users fs-1"></i>
+                    <div class="ms-3">
+                        <h6 class="text-white mb-0">Total Pengguna</h6>
+                        <h3 class="text-white mb-0">{{ $totalUsers }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-secondary text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="ti ti-school fs-1"></i>
+                    <div class="ms-3">
+                        <h6 class="text-white mb-0">Total Guru</h6>
+                        <h3 class="text-white mb-0">{{ $totalTeachers }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="ti ti-user-check fs-1"></i>
+                    <div class="ms-3">
+                        <h6 class="text-white mb-0">Total Siswa</h6>
+                        <h3 class="text-white mb-0">{{ $totalStudents }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="ti ti-user-plus fs-1"></i>
+                    <div class="ms-3">
+                        <h6 class="text-white mb-0">User Baru (Bulan Ini)</h6>
+                        <h3 class="text-white mb-0">+{{ $newUsersThisMonth }}</h3>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card bg-success text-white">
-            <div class="card-body d-flex align-items-center">
-                <i class="ti ti-user-check fs-1"></i>
-                <div class="ms-3">
-                    <h6 class="text-white mb-0">Siswa Aktif</h6>
-                    <h3 class="text-white mb-0">{{ $activeStudents }}</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-3">
-        <div class="card bg-warning text-white">
-            <div class="card-body d-flex align-items-center">
-                <i class="ti ti-percentage fs-1"></i>
-                <div class="ms-3">
-                    <h6 class="text-white mb-0">Completion Rate</h6>
-                    <h3 class="text-white mb-0">{{ $completionRate }}%</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-3">
-        <div class="card bg-info text-white">
-            <div class="card-body d-flex align-items-center">
-                <i class="ti ti-users fs-1"></i>
-                <div class="ms-3">
-                    <h6 class="text-white mb-0">Total Guru</h6>
-                    <h3 class="text-white mb-0">{{ $totalTeachers }}</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header bg-light">
-                <h5 class="mb-0">Monitoring Performa Guru</h5>
+    <div class="row">
+        <div class="col-md-8 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">📈 Pertumbuhan Pengguna (6 Bulan Terakhir)</h5>
+                </div>
+                <div class="card-body">
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Nama Guru</th>
-                                <th class="text-center">Kelas Dibimbing</th>
-                                <th class="text-center">Total Siswa</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($teachersList as $t)
-                            <tr>
-                                <td><strong>{{ $t->nama }}</strong></td>
-                                <td class="text-center"><span class="badge bg-primary">{{ $t->classrooms_count }} Kelas</span></td>
-                                <td class="text-center"><span class="badge bg-success">{{ $t->students_count }} Siswa</span></td>
-                                <td><a href="{{ route('admin.user.index') }}" class="btn btn-sm btn-outline-info">Detail</a></td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">📊 Distribusi Role</h5>
+                </div>
+                <div class="card-body">
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="roleChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-8 mb-4">
-        <div class="card h-100">
-            <div class="card-header">
-                <h5 class="mb-0">📈 Trend Completion Rate (30 Hari)</h5>
-            </div>
-            <div class="card-body">
-                <canvas id="trendChart" height="150"></canvas>
+    <div class="row mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">🏆 Guru Teraktif (Berdasarkan Siswa)</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Nama Guru</th>
+                                    <th class="text-center">Total Siswa</th>
+                                    <th class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($activeTeachers as $t)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avtar avtar-xs bg-light-primary text-primary rounded-circle me-2">
+                                                    {{ substr($t->nama, 0, 1) }}
+                                                </div>
+                                                <strong>{{ $t->nama }}</strong>
+                                            </div>
+                                        </td>
+                                        <td class="text-center"><span class="badge bg-primary">{{ $t->students_count }}</span>
+                                        </td>
+                                        <td class="text-center"><a href="#" class="btn btn-sm btn-link-primary">Detail</a></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-header">
-                <h5 class="mb-0">📊 Distribusi Siswa</h5>
-            </div>
-            <div class="card-body">
-                <canvas id="classChart"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6 mb-4">
-        <div class="card h-100">
-            <div class="card-header">
-                <h5 class="mb-0">🏆 Top 5 Siswa Bulan Ini</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr><th>Nama</th><th>Kelas</th><th>Total</th><th>Streak</th></tr>
-                        </thead>
-                        <tbody>
-                            @foreach($topStudents as $s)
-                            <tr><td>{{ $s->nama }}</td><td>{{ $s->kelas }}</td><td>{{ $s->total_mutabaah }}</td><td>🔥 {{ $s->streak }}</td></tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">🆕 Pengguna Terbaru</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach($recentUsers as $user)
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="avtar avtar-sm bg-light-secondary text-secondary rounded-circle me-3">
+                                        <i class="ti ti-user"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">{{ $user->name }}</h6>
+                                        <small class="text-muted">{{ $user->email }}</small>
+                                    </div>
+                                </div>
+                                <span class="text-muted small">{{ $user->created_at->diffForHumans() }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6 mb-4">
-        <div class="card h-100 text-warning border-warning">
-            <div class="card-header border-warning bg-warning-subtle">
-                <h5 class="mb-0 text-warning-emphasis">⚠️ Siswa Tidak Aktif (3 Hari Terakhir)</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    @forelse($inactiveStudents as $s)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $s->nama }} <span class="badge bg-warning">{{ $s->kelas }}</span>
-                    </li>
-                    @empty
-                    <li class="list-group-item text-center text-muted">Semua siswa aktif mengisi!</li>
-                    @endforelse
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
 @endsection
 
 @push('js')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var trendDataArr = JSON.parse('{!! json_encode(array_column($trendData, "rate")) !!}');
-    var trendLabelsArr = JSON.parse('{!! json_encode(array_column($trendData, "date")) !!}');
-    var classDataArr = JSON.parse('{!! json_encode($statsByClass->pluck("total_students")) !!}');
-    var classLabelsArr = JSON.parse('{!! json_encode($statsByClass->pluck("kelas")) !!}');
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var growthLabels = @json($growthLabels);
+        var growthData = @json($growthValues);
 
-    new Chart(document.getElementById('trendChart'), {
-        type: 'line',
-        data: {
-            labels: trendLabelsArr,
-            datasets: [{
-                label: 'Rate (%)',
-                data: trendDataArr,
-                borderColor: '#4680FF',
-                backgroundColor: 'rgba(70, 128, 255, 0.1)',
-                tension: 0.4,
-                fill: true
-            }]
-        }
-    });
+        var roleLabels = ['Admin', 'Guru', 'Siswa'];
+        var roleData = @json($roleCounts);
 
-    new Chart(document.getElementById('classChart'), {
-        type: 'doughnut',
-        data: {
-            labels: classLabelsArr,
-            datasets: [{
-                data: classDataArr,
-                backgroundColor: ['#4680FF', '#2CA87F', '#FFB64D', '#FF5370', '#62d1f3']
-            }]
-        }
-    });
-</script>
+        new Chart(document.getElementById('growthChart'), {
+            type: 'line',
+            data: {
+                labels: growthLabels,
+                datasets: [{
+                    label: 'Pengguna Baru',
+                    data: growthData,
+                    borderColor: '#10b981', // Emerald Primary
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+            }
+        });
+
+        new Chart(document.getElementById('roleChart'), {
+            type: 'doughnut',
+            data: {
+                labels: roleLabels,
+                datasets: [{
+                    data: roleData,
+                    backgroundColor: ['#6366f1', '#10b981', '#3b82f6'] // Indigo, Emerald, Blue
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+            }
+        });
+    </script>
 @endpush

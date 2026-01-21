@@ -16,89 +16,50 @@ class DashboardController extends Controller
 {
     public function admin()
     {
-        // Statistik Global (Original)
-        $totalStudents = Student::count();
-        $totalTeachers = Teacher::count();
-        $totalClassrooms = Classroom::count();
-        $todayMutabaah = Mutabaah::whereDate('tanggal', today())->count();
-        $totalMutabaah = Mutabaah::count();
-
-        // Siswa tidak aktif (Original)
-        $inactiveStudents = Student::whereDoesntHave('mutabaah', function ($q) {
-            $q->whereBetween('tanggal', [now()->subDays(3), now()]);
-        })->limit(10)->get();
-
-        // Completion rate bulan ini (Original)
-        $daysInMonth = now()->day;
-        $expectedEntries = $totalStudents * $daysInMonth;
-        $actualEntries = Mutabaah::whereMonth('tanggal', now()->month)
-            ->whereYear('tanggal', now()->year)
+        // 1. Total Stats
+        $totalUsers = User::count();
+        $totalTeachers = User::role('guru')->count();
+        $totalStudents = User::role('siswa')->count();
+        $newUsersThisMonth = User::whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
             ->count();
-        $completionRate = $expectedEntries > 0 ? round(($actualEntries / $expectedEntries) * 100, 1) : 0;
 
-        // Siswa aktif bulan ini (Original)
-        $activeStudents = Student::whereHas('mutabaah', function ($q) {
-            $q->whereMonth('tanggal', now()->month)
-                ->whereYear('tanggal', now()->year);
-        })->count();
+        // 2. User Growth Trend (Last 6 Months)
+        $growthLabels = [];
+        $growthValues = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = now()->subMonths($i);
+            $count = User::whereYear('created_at', $month->year)
+                ->whereMonth('created_at', $month->month)
+                ->count();
 
-        $avgPerStudent = $totalStudents > 0 ? round($actualEntries / $totalStudents, 1) : 0;
-
-        // Top 5 siswa (Original)
-        $topStudents = Student::select('students.id', 'students.nama', 'students.kelas', DB::raw('COUNT(mutabaahs.id) as total_mutabaah'))
-            ->leftJoin('mutabaahs', 'students.id', '=', 'mutabaahs.student_id')
-            ->whereMonth('mutabaahs.tanggal', now()->month)
-            ->whereYear('mutabaahs.tanggal', now()->year)
-            ->groupBy('students.id', 'students.nama', 'students.kelas')
-            ->orderBy('total_mutabaah', 'desc')
-            ->limit(5)
-            ->get()
-            ->map(function ($student) {
-                $student->streak = $student->getCurrentStreak();
-                return $student;
-            });
-
-        // Trend 30 hari (Original)
-        $trendData = [];
-        for ($i = 29; $i >= 0; $i--) {
-            $date = Carbon::today()->subDays($i);
-            $count = Mutabaah::whereDate('tanggal', $date)->count();
-            $rate = $totalStudents > 0 ? round(($count / $totalStudents) * 100, 1) : 0;
-            $trendData[] = ['date' => $date->format('d M'), 'rate' => $rate];
+            $growthLabels[] = $month->format('M Y');
+            $growthValues[] = $count;
         }
 
-        // Statistik per kelas (Original)
-        $statsByClass = Student::select('kelas', DB::raw('COUNT(*) as total_students'))
-            ->groupBy('kelas')
-            ->orderBy('kelas')
-            ->get()
-            ->map(function ($class) {
-                $activeCount = Student::where('kelas', $class->kelas)
-                    ->whereHas('mutabaah', function ($q) {
-                        $q->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year);
-                    })->count();
-                $class->active_students = $activeCount;
-                $class->completion_rate = $class->total_students > 0 ? round(($activeCount / $class->total_students) * 100, 1) : 0;
-                return $class;
-            });
+        // 3. Role Distribution
+        $roleCounts = [
+            User::role('admin')->count(),
+            $totalTeachers,
+            $totalStudents
+        ];
 
-        // Data Monitoring Guru (New Requirement)
-        $teachersList = Teacher::withCount(['classrooms', 'students'])->get();
+        // 4. Active Teachers (Based on students assigned)
+        $activeTeachers = Teacher::has('students')->withCount('students')->orderByDesc('students_count')->limit(5)->get();
+
+        // 5. Recent Users
+        $recentUsers = User::latest()->limit(5)->get();
 
         return view('admin.dashboard', compact(
-            'totalStudents',
+            'totalUsers',
             'totalTeachers',
-            'totalClassrooms',
-            'todayMutabaah',
-            'totalMutabaah',
-            'inactiveStudents',
-            'completionRate',
-            'activeStudents',
-            'avgPerStudent',
-            'topStudents',
-            'trendData',
-            'statsByClass',
-            'teachersList'
+            'totalStudents',
+            'newUsersThisMonth',
+            'growthLabels',
+            'growthValues',
+            'roleCounts',
+            'activeTeachers',
+            'recentUsers'
         ));
     }
 
