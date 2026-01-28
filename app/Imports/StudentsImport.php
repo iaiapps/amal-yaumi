@@ -49,7 +49,7 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
             // Create user
             $user = User::create([
                 'name' => $row['nama'],
-                'email' => $row['nis'] . '@student.com',
+                'email' => $row['nis'] . '@amal.web.id',
                 'password' => Hash::make('password1234'),
             ]);
             $user->assignRole('siswa');

@@ -24,12 +24,12 @@
                 @csrf
 
                 <div class="mb-4">
-                    <label for="email" class="form-label fw-bold text-dark small text-uppercase">Email / Username</label>
+                    <label for="email" class="form-label fw-bold text-dark small text-uppercase">Email atau NIS</label>
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="ti ti-mail text-muted"></i></span>
-                        <input type="email" class="form-control border-start-0 @error('email') is-invalid @enderror"
-                            name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
-                            id="email" placeholder="name@example.com">
+                        <input type="text" class="form-control border-start-0 @error('email') is-invalid @enderror"
+                            name="email" value="{{ old('email') }}" required autocomplete="off" autofocus id="email"
+                            placeholder="Masukkan email atau NIS">
                     </div>
                     @error('email')
                         <span class="invalid-feedback d-block mt-1" role="alert">

@@ -131,7 +131,7 @@
                         <ul class="mb-0">
                             <li>Jenis Kelamin: L (Laki-laki) atau P (Perempuan)</li>
                             <li>NIS harus unik (tidak boleh duplikat)</li>
-                            <li>Semua kolom wajib diisi</li>
+                            <li>Login siswa menggunakan NIS@amal.web.id atau NIS saja</li>
                             <li>Password akan otomatis tergenerate</li>
                             <li>Password default = password1234</li>
                         </ul>
