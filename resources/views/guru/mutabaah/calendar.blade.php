@@ -23,8 +23,8 @@
                 <table class="table table-bordered table-hover">
                     <thead class="table-primary">
                         <tr>
-                            <th style="min-width: 200px;" class="py-1">Nama Siswa</th>
-                            <th class="text-center py-1">Kelas</th>
+                            <th style="min-width: 200px;" class="py-1">Nama Siswa/Kelas</th>
+
                             @for ($i = 1; $i <= $daysInMonth; $i++)
                                 @php
                                     $currentDate = $startDate->copy()->addDays($i - 1);
@@ -32,7 +32,7 @@
                                     $isToday = $currentDate->isToday();
                                 @endphp
                                 <th class="text-center py-1 {{ $isWeekend ? 'bg-danger' : '' }} {{ $isToday ? 'bg-warning' : '' }}"
-                                    style="min-width: 40px; font-size: 0.85rem;">
+                                    style="min-width: 35px; font-size: 0.85rem;">
                                     {{ $i }}
                                     <small class="text-light">{{ $currentDate->format('D') }}</small>
                                 </th>
@@ -43,13 +43,14 @@
                     <tbody>
                         @forelse($students as $student)
                             <tr class="py-1">
-                                <td>
+                                <td class="py-1">
                                     <a href="{{ route('guru.mutabaah.student-calendar', ['student' => $student->id, 'month' => $month]) }}"
                                         class="text-decoration-none fw-bold">
-                                        {{ $student->nama }}
+                                        {{ $student->nama }} <br>
                                     </a>
+                                    <small>{{ $student->kelas }}</small>
                                 </td>
-                                <td class="text-center">{{ $student->kelas }}</td>
+
                                 @php
                                     $mutabaahByDate = $student->mutabaah->keyBy(function ($item) {
                                         return $item->tanggal->format('Y-m-d');
@@ -146,7 +147,7 @@
         }
 
         .mutabaah-cell[data-url]:hover {
-            transform: scale(1.1);
+            border: 2px solid #1a7ff3;
             transition: transform 0.2s;
         }
     </style>

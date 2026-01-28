@@ -63,8 +63,8 @@ class StudentController extends Controller
 
         $id = User::create([
             'name' => $request->nama,
-            'email' => $request->nis . '@student.com',
-            'password' => Hash::make('password'),
+            'email' => $request->nis . '@amal.web.id',
+            'password' => Hash::make('password1234'),
         ])->assignRole('siswa')->id;
 
         $data['user_id'] = $id;
@@ -108,12 +108,12 @@ class StudentController extends Controller
             'name' => $request->nama,
             'email' => $request->nis . '@student.com',
         ]);
-        
+
         $role = Auth::user()->getRoleNames()->first();
         if ($role == 'guru') {
             $data['teacher_id'] = $this->getTeacherId();
         }
-        
+
         $student->update($data);
 
         return redirect()->route('guru.student.index')->with('success', 'Berhasil update data siswa');

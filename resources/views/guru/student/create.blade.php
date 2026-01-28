@@ -15,14 +15,18 @@
                 </div>
                 <div class="mb-3">
                     <label for="jk" class="form-label">Jenis Kelamin</label>
-                    <input id="jk" type="text" class="form-control" name="jk" required>
+                    <select name="jk" id="jk" class="form-select">
+                        <option selected disabled>pilih jenis kelamin</option>
+                        <option value="L">Laki-laki (L)</option>
+                        <option value="P">Perempuan (P)</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="kelas" class="form-label">Kelas</label>
                     <select id="kelas" class="form-select" name="kelas" required>
                         <option value="">Pilih Kelas</option>
-                        @foreach($kelas as $k)
-                        <option value="{{ $k->nama }}">{{ $k->nama }}</option>
+                        @foreach ($kelas as $k)
+                            <option value="{{ $k->nama }}">{{ $k->nama }}</option>
                         @endforeach
                     </select>
                 </div>

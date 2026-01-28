@@ -51,8 +51,6 @@
 
                 <hr class="my-4">
 
-                <hr class="my-4">
-
                 <h6 class="mb-3">Detail Profil Guru</h6>
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -106,8 +104,10 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Nama Sekolah</label>
-                        <input type="text" name="nama_sekolah" class="form-control @error('nama_sekolah') is-invalid @enderror"
-                            value="{{ old('nama_sekolah', $teacher->nama_sekolah ?? '') }}" placeholder="Contoh: SD IT Amal Mulia">
+                        <input type="text" name="nama_sekolah"
+                            class="form-control @error('nama_sekolah') is-invalid @enderror"
+                            value="{{ old('nama_sekolah', $teacher->nama_sekolah ?? '') }}"
+                            placeholder="Contoh: SD IT Amal Mulia">
                         @error('nama_sekolah')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -121,8 +121,8 @@
                                     style="max-height: 60px;" class="rounded border p-1">
                             </div>
                         @endif
-                        <input type="file" name="logo_sekolah" class="form-control @error('logo_sekolah') is-invalid @enderror"
-                            accept="image/*">
+                        <input type="file" name="logo_sekolah"
+                            class="form-control @error('logo_sekolah') is-invalid @enderror" accept="image/*">
                         <small class="text-muted">Logo akan muncul di dashboard siswa & laporan PDF.</small>
                         @error('logo_sekolah')
                             <div class="invalid-feedback">{{ $message }}</div>

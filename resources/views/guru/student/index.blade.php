@@ -13,6 +13,10 @@
                 siswa</a>
         </div>
         <hr>
+        <div class="px-4">
+            <p class="mb-0">Username login aplikasi adalah <b>NIS</b> atau <b>NIS@amal.web.id</b></p>
+            <p class="mb-0">Password default adalah <b>password1234</b></p>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-striped">
