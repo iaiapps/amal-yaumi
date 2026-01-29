@@ -10,8 +10,12 @@
                     <input id="nama" type="text" class="form-control" name="nama" required>
                 </div>
                 <div class="mb-3">
-                    <label for="nis" class="form-label">NIS</label>
-                    <input id="nis" type="text" class="form-control" name="nis" required>
+                    <label for="nis" class="form-label">NIS (Nomor Induk Siswa)</label>
+                    <input id="nis" type="text" class="form-control" name="nis" required placeholder="Contoh: 1001">
+                    <div class="form-text text-muted">
+                        NIS boleh sama dengan sekolah lain. Nantinya siswa login menggunakan <b>NIS</b> dan <b>Kode Guru
+                            Anda</b>.
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="jk" class="form-label">Jenis Kelamin</label>

@@ -8,6 +8,7 @@ use App\Models\Classroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -29,7 +30,9 @@ class StudentController extends Controller
             return $q->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
         })->get();
 
-        return view($role . '.student.index', compact('students', 'role'));
+        $teacher = $role == 'guru' ? Auth::user()->teacher : null;
+
+        return view($role . '.student.index', compact('students', 'role', 'teacher'));
     }
 
     public function create()
@@ -47,9 +50,17 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        $teacherId = $this->getTeacherId();
+
         $request->validate([
             'nama' => 'required|string',
-            'nis' => 'required|string|unique:students,nis',
+            'nis' => [
+                'required',
+                'string',
+                Rule::unique('students', 'nis')->where(function ($query) use ($teacherId) {
+                    return $query->where('teacher_id', $teacherId);
+                }),
+            ],
             'jk' => 'required|in:L,P',
             'kelas' => 'required|string',
         ]);
@@ -63,7 +74,7 @@ class StudentController extends Controller
 
         $id = User::create([
             'name' => $request->nama,
-            'email' => $request->nis . '@amal.web.id',
+            'email' => $request->nis . '.' . $teacherId . '@amal.web.id',
             'password' => Hash::make('password1234'),
         ])->assignRole('siswa')->id;
 
@@ -96,9 +107,17 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student)
     {
+        $teacherId = $this->getTeacherId();
+
         $request->validate([
             'nama' => 'required|string',
-            'nis' => 'required|string|unique:students,nis,' . $student->id,
+            'nis' => [
+                'required',
+                'string',
+                Rule::unique('students', 'nis')->ignore($student->id)->where(function ($query) use ($teacherId) {
+                    return $query->where('teacher_id', $teacherId);
+                }),
+            ],
             'jk' => 'required|in:L,P',
             'kelas' => 'required|string',
         ]);
@@ -106,7 +125,7 @@ class StudentController extends Controller
         $data = $request->all();
         $student->user->update([
             'name' => $request->nama,
-            'email' => $request->nis . '@student.com',
+            'email' => $request->nis . '.' . $teacherId . '@amal.web.id',
         ]);
 
         $role = Auth::user()->getRoleNames()->first();

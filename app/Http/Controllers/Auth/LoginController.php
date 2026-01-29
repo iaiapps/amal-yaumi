@@ -49,10 +49,33 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
+        // 1. Khusus Login Siswa (NIS + Kode Sekolah)
+        if ($request->has('nis') && $request->has('kode_guru')) {
+            $nis = $request->input('nis');
+            $kodeGuru = $request->input('kode_guru');
+            $password = $request->input('password');
+
+            // Decode Kode Guru menjadi Teacher ID
+            $teacherId = \App\Models\Teacher::decodeTeacherCode($kodeGuru);
+
+            if ($teacherId) {
+                // Rangkai ulang menjadi email autentikasi: nis.teacherId@amal.web.id
+                $email = $nis . '.' . $teacherId . '@amal.web.id';
+
+                return $this->guard()->attempt(
+                    ['email' => $email, 'password' => $password],
+                    $request->filled('remember')
+                );
+            }
+
+            return false;
+        }
+
+        // 2. Login Normal (Guru/Admin melalui Email)
         $credentials = $this->credentials($request);
         $username = $credentials[$this->username()] ?? null;
 
-        // Auto-detect: jika input numeric, anggap NIS
+        // Auto-detect: jika input numeric, anggap NIS (Backward compatibility if still needed)
         if ($username && is_numeric($username)) {
             $student = Student::where('nis', $username)->first();
             if ($student) {

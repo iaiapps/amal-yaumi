@@ -27,10 +27,10 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
         $this->rowCount++;
 
         try {
-            // Check if NIS already exists
-            if (Student::where('nis', $row['nis'])->exists()) {
+            // Check if NIS already exists for THIS teacher
+            if (Student::where('nis', $row['nis'])->where('teacher_id', $this->teacherId)->exists()) {
                 $this->failedCount++;
-                $this->errors[] = "Baris {$this->rowCount}: NIS {$row['nis']} sudah ada";
+                $this->errors[] = "Baris {$this->rowCount}: NIS {$row['nis']} sudah ada di daftar Anda";
                 return null;
             }
 
@@ -46,10 +46,10 @@ class StudentsImport implements ToModel, WithHeadingRow, WithValidation
                 }
             }
 
-            // Create user
+            // Create user with unique email format: nis.teacherId@amal.web.id
             $user = User::create([
                 'name' => $row['nama'],
-                'email' => $row['nis'] . '@amal.web.id',
+                'email' => $row['nis'] . '.' . $this->teacherId . '@amal.web.id',
                 'password' => Hash::make('password1234'),
             ]);
             $user->assignRole('siswa');

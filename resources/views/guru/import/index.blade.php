@@ -47,7 +47,7 @@
                     </div>
 
                     <script>
-                        document.getElementById('classroom_select').addEventListener('change', function() {
+                        document.getElementById('classroom_select').addEventListener('change', function () {
                             const classroomId = this.value;
                             const classroomName = this.options[this.selectedIndex].text;
                             const btn = document.getElementById('download_template_btn');
@@ -127,13 +127,14 @@
                     </div>
 
                     <div class="alert alert-warning mt-3">
-                        <strong>Catatan:</strong>
+                        <strong>Catatan Penting:</strong>
                         <ul class="mb-0">
                             <li>Jenis Kelamin: L (Laki-laki) atau P (Perempuan)</li>
-                            <li>NIS harus unik (tidak boleh duplikat)</li>
-                            <li>Login siswa menggunakan NIS@amal.web.id atau NIS saja</li>
-                            <li>Password akan otomatis tergenerate</li>
-                            <li>Password default = password1234</li>
+                            <li>NIS boleh sama dengan sekolah lain, sistem menggunakan <b>Kode Guru</b> sebagai pembeda.
+                            </li>
+                            <li>Siswa login di <b>Tab Siswa</b> menggunakan NIS dan Kode Guru: <b
+                                    class="text-primary">{{ $teacher->getTeacherCode() }}</b></li>
+                            <li>Password default siswa = <b>password1234</b></li>
                         </ul>
                     </div>
                 </div>
@@ -189,8 +190,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Error Details</h5>
-                                                        <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal"></button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <ul class="list-unstyled">

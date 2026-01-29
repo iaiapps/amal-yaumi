@@ -48,7 +48,7 @@
     <main class="auth-container">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-5 col-xl-4 position-relative">
+                <div class="col-md-5 position-relative">
                     <!-- Decor -->
                     <div class="position-absolute bg-primary rounded-circle opacity-10"
                         style="width: 200px; height: 200px; top: -50px; left: -50px; filter: blur(60px);"></div>

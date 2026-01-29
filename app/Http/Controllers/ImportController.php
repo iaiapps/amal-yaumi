@@ -15,7 +15,7 @@ class ImportController extends Controller
         $teacher = Auth::user()->teacher;
         $classrooms = \App\Models\Classroom::where('teacher_id', $teacher->id)->get();
         $imports = Import::with('user')->orderBy('created_at', 'desc')->get();
-        return view('guru.import.index', compact('imports', 'classrooms'));
+        return view('guru.import.index', compact('imports', 'classrooms', 'teacher'));
     }
 
     public function template(Request $request)
@@ -28,7 +28,8 @@ class ImportController extends Controller
             }
         }
 
-        return Excel::download(new class($className) implements \Maatwebsite\Excel\Concerns\FromArray, \Maatwebsite\Excel\Concerns\WithHeadings {
+        return Excel::download(
+            new class ($className) implements \Maatwebsite\Excel\Concerns\FromArray, \Maatwebsite\Excel\Concerns\WithHeadings {
             private $className;
 
             public function __construct($className)
@@ -48,7 +49,9 @@ class ImportController extends Controller
             {
                 return ['nama', 'nis', 'jk', 'kelas'];
             }
-        }, 'template-siswa-' . $className . '.xlsx');
+            },
+            'template-siswa-' . $className . '.xlsx'
+        );
     }
 
     public function import(Request $request)

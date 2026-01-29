@@ -10,7 +10,17 @@
                     <div class="row align-items-center position-relative z-index-1">
                         <div class="col-md-7">
                             <h2 class="text-white fw-bold mb-2">Selamat datang, {{ $teacher->nama }}!</h2>
-                            <p class="text-white text-opacity-75 mb-4 fs-5">Semoga hari ini penuh keberkahan.</p>
+                            <p class="text-white text-opacity-75 mb-3 fs-5">Semoga hari ini penuh keberkahan.</p>
+                            
+                            <!-- Teacher Code Badge -->
+                            <div class="d-inline-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 p-2 mb-4">
+                                <span class="text-white text-opacity-75 small me-2 ps-2">KODE GURU:</span>
+                                <span class="badge bg-warning text-dark fw-bold fs-6 px-3 py-2">{{ $teacher->getTeacherCode() }}</span>
+                                <button class="btn btn-sm btn-link text-white text-opacity-50 ms-1" onclick="copyToClipboard('{{ $teacher->getTeacherCode() }}')">
+                                    <i class="ti ti-copy"></i>
+                                </button>
+                            </div>
+
                             <div class="d-flex gap-2">
                                 <a href="{{ route('guru.mutabaah.calendar') }}" class="btn btn-light text-primary fw-bold">
                                     <i class="ti ti-calendar-event"></i> Kalender Monitoring
@@ -388,5 +398,11 @@
             var chart = new ApexCharts(document.querySelector("#trendChart"), options);
             chart.render();
         });
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Kode Guru disalin ke clipboard!');
+            });
+        }
     </script>
 @endpush
