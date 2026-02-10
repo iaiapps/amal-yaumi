@@ -4,7 +4,7 @@
 
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5>Kalender Mutabaah Per Siswa</h5>
+            <h5>Filter Bulan</h5>
             <div class="d-flex gap-2">
                 <input type="month" id="monthPicker" class="form-control" value="{{ $month }}" onchange="changeMonth()">
             </div>
@@ -15,8 +15,8 @@
             @endif
 
             <div class="alert alert-info">
-                <strong>Periode:</strong> {{ $startDate->format('F Y') }}
-                <span class="ms-3"><strong>Total Hari:</strong> {{ $daysInMonth }}</span>
+                <strong>Periode:</strong> {{ $startDate->format('F Y') }} <br>
+                <span class="mt-3"><strong>Total Hari:</strong> {{ $daysInMonth }}</span>
             </div>
 
             <div class="table-responsive">

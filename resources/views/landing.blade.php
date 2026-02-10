@@ -61,6 +61,48 @@
                             Lihat Informasi
                         </a>
                     </div>
+
+                    <!-- Mobile Mockup Card - Only visible on mobile -->
+                    <div class="d-lg-none mobile-mockup-card mt-4">
+                        <div class="card-modern shadow-lg p-3 border-0"
+                            style="background: rgba(255,255,255,0.85); backdrop-filter: blur(15px); transform: rotate(-1deg);">
+                            <div class="d-flex align-items-center gap-2 mb-3 text-start">
+                                <div class="avtar avtar-md bg-primary text-white rounded-circle"
+                                    style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="ti ti-user fs-5"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-extra-bold fs-6 text-dark">Zaidan Ahmad</div>
+                                    <div class="text-muted small">Kelas 5A</div>
+                                </div>
+                            </div>
+
+                            <!-- Streak Mockup -->
+                            <div class="streak-card mb-3 text-start border-0 shadow-sm" style="padding: 1rem;">
+                                <div class="small fw-bold opacity-75">Current Streak</div>
+                                <div class="fs-3 fw-extra-bold">12 Hari</div>
+                                <div class="small fw-bold opacity-75 mt-1">Jangan kasih kendor! 🔥</div>
+                            </div>
+
+                            <!-- Badges Mockup -->
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="badge-item border-0 shadow-sm py-2"
+                                        style="background: rgba(255,255,255,0.9);">
+                                        <span class="badge-icon" style="font-size: 1.25rem;">⭐</span>
+                                        <span class="small fw-extra-bold text-dark">Istiqomah</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="badge-item border-0 shadow-sm py-2"
+                                        style="background: rgba(255,255,255,0.9);">
+                                        <span class="badge-icon" style="font-size: 1.25rem;">🔥</span>
+                                        <span class="small fw-extra-bold text-dark">On Fire</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-5 d-none d-lg-block">
                     <div class="position-relative">
@@ -302,6 +344,50 @@
 
     <script src="{{ asset('assets/js/plugins/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/bootstrap.min.js') }}"></script>
+    
+    <!-- Scroll Animation Script -->
+    <script>
+        // Intersection Observer for fade-in animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all sections for fade-in
+            document.querySelectorAll('section').forEach((section, index) => {
+                section.classList.add('fade-in-section');
+                if (index === 0) {
+                    section.classList.add('is-visible'); // Hero visible immediately
+                }
+                observer.observe(section);
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

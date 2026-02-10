@@ -5,7 +5,6 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <div class="card">
-
                 <div class="card-body">
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -47,7 +46,7 @@
                     </div>
 
                     <script>
-                        document.getElementById('classroom_select').addEventListener('change', function () {
+                        document.getElementById('classroom_select').addEventListener('change', function() {
                             const classroomId = this.value;
                             const classroomName = this.options[this.selectedIndex].text;
                             const btn = document.getElementById('download_template_btn');
@@ -190,7 +189,8 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Error Details</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <ul class="list-unstyled">

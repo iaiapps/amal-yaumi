@@ -17,7 +17,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12">
                     <div class="card border">
                         <div class="card-body">
                             <h6 class="card-title"><i class="ti ti-file-text"></i> Export Data Mutabaah</h6>

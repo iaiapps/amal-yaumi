@@ -271,3 +271,263 @@ footer {
     border-top: 1px solid var(--zinc-200);
     padding: 4rem 0 0;
 }
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+/* Tablet & Mobile - up to 991px */
+@media (max-width: 991.98px) {
+    section {
+        padding: 80px 0;
+    }
+    
+    .hero-section {
+        padding: 100px 0 80px;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+        line-height: 1.15;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .card-modern {
+        padding: 2rem;
+    }
+    
+    .card-icon {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+/* Mobile - up to 767px */
+@media (max-width: 767.98px) {
+    section {
+        padding: 60px 0;
+    }
+    
+    .hero-section {
+        padding: 80px 0 60px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
+        max-width: 100%;
+    }
+    
+    /* Compact cards for mobile */
+    .card-modern {
+        padding: 1.5rem;
+        border-radius: 20px;
+    }
+    
+    .card-modern:hover {
+        transform: translateY(-4px);
+    }
+    
+    .card-icon {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 1rem;
+    }
+    
+    .card-icon i {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Stats mobile */
+    .stat-value {
+        font-size: 2rem;
+    }
+    
+    .stat-item {
+        padding: 2rem 0;
+    }
+    
+    /* Tutorial section - remove scale on mobile */
+    .highlight-card {
+        transform: none !important;
+    }
+    
+    /* FAQ accordion */
+    .accordion-button {
+        font-size: 1rem !important;
+        padding: 1rem 1.25rem !important;
+    }
+    
+    .accordion-body {
+        padding: 0 1.25rem 1rem !important;
+    }
+    
+    /* Reduce section heading sizes */
+    h2.display-6 {
+        font-size: 1.75rem;
+    }
+    
+    /* Mobile mockup card styles */
+    .mobile-mockup-card {
+        max-width: 320px;
+        margin: 2rem auto 0;
+    }
+    
+    .mobile-mockup-card .card-modern {
+        padding: 1.25rem;
+    }
+    
+    .mobile-mockup-card .streak-card {
+        padding: 1rem;
+    }
+    
+    .mobile-mockup-card .streak-card .display-5 {
+        font-size: 1.5rem;
+    }
+    
+    .mobile-mockup-card .badge-item {
+        padding: 0.75rem;
+    }
+    
+    .mobile-mockup-card .badge-icon {
+        font-size: 1.5rem;
+    }
+    
+    /* Footer */
+    footer {
+        padding: 3rem 0 0;
+    }
+    
+    /* Badge section spacing */
+    #info .row.g-4 {
+        --bs-gutter-y: 1rem;
+    }
+}
+
+/* Small Mobile - up to 575px */
+@media (max-width: 575.98px) {
+    /* Full width buttons on mobile */
+    .btn-lg {
+        width: 100%;
+        padding: 0.875rem 1.5rem !important;
+    }
+    
+    /* Hero badge smaller */
+    .hero-section .badge {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.75rem !important;
+    }
+    
+    /* Typography adjustments */
+    .hero-title {
+        font-size: 1.875rem;
+    }
+    
+    /* Card spacing */
+    .card-modern {
+        padding: 1.25rem;
+    }
+    
+    /* Section headings */
+    h2.display-6 {
+        font-size: 1.5rem;
+    }
+    
+    /* Quote section */
+    section.bg-primary h3 {
+        font-size: 1.25rem !important;
+    }
+    
+    .fs-huge {
+        font-size: 3rem;
+    }
+    
+    /* CTA section */
+    section .display-5 {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Navigation adjustments */
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .navbar-brand img {
+        width: 28px;
+        height: 28px;
+    }
+    
+    /* Tutorial avtar smaller */
+    .avtar.avtar-xl {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    .card-modern:hover {
+        transform: none;
+    }
+    
+    .badge-item:hover {
+        transform: none;
+    }
+    
+    .btn-modern:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Safe area for notched devices */
+@supports (padding: max(0px)) {
+    footer {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+}
+
+/* ============================================
+   SCROLL ANIMATIONS
+   ============================================ */
+
+/* Fade in animation for sections */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Stagger delay for child elements */
+.fade-in-section .stagger-1 { transition-delay: 0.1s; }
+.fade-in-section .stagger-2 { transition-delay: 0.2s; }
+.fade-in-section .stagger-3 { transition-delay: 0.3s; }
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in-section {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    
+    .card-modern,
+    .btn-modern {
+        transition: none;
+    }
+}

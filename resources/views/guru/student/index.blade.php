@@ -15,12 +15,11 @@
         <hr>
         <div class="px-4">
             <div class="alert alert-info border-0 shadow-sm d-flex align-items-center">
-                <i class="ti ti-info-circle fs-3 me-2"></i>
                 <div>
                     Siswa dapat login di <b>Tab Siswa</b> menggunakan <b>NIS</b> dan Kode Guru:
                     <span class="badge bg-primary fs-6">{{ $teacher ? $teacher->getTeacherCode() : '-' }}</span>
                     <br>
-                    <small>Password default: <b>password1234</b></small>
+                    <p class="mt-2">Password default: <b>password1234</b></p>
                 </div>
             </div>
         </div>

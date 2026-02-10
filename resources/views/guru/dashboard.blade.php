@@ -11,12 +11,15 @@
                         <div class="col-md-7">
                             <h2 class="text-white fw-bold mb-2">Selamat datang, {{ $teacher->nama }}!</h2>
                             <p class="text-white text-opacity-75 mb-3 fs-5">Semoga hari ini penuh keberkahan.</p>
-                            
+
                             <!-- Teacher Code Badge -->
-                            <div class="d-inline-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 p-2 mb-4">
+                            <div
+                                class="d-inline-flex align-items-center bg-white bg-opacity-10 border border-white border-opacity-20 rounded-3 p-2 mb-4">
                                 <span class="text-white text-opacity-75 small me-2 ps-2">KODE GURU:</span>
-                                <span class="badge bg-warning text-dark fw-bold fs-6 px-3 py-2">{{ $teacher->getTeacherCode() }}</span>
-                                <button class="btn btn-sm btn-link text-white text-opacity-50 ms-1" onclick="copyToClipboard('{{ $teacher->getTeacherCode() }}')">
+                                <span
+                                    class="badge bg-warning text-dark fw-bold fs-6 px-3 py-2">{{ $teacher->getTeacherCode() }}</span>
+                                <button class="btn btn-sm btn-link text-white text-opacity-50 ms-1"
+                                    onclick="copyToClipboard('{{ $teacher->getTeacherCode() }}')">
                                     <i class="ti ti-copy"></i>
                                 </button>
                             </div>
@@ -42,7 +45,7 @@
                                 <div class="col-6">
                                     <div
                                         class="bg-white bg-opacity-10 rounded-3 p-3 text-center border border-white border-opacity-10">
-                                        <div class="text-white text-opacity-50 small mb-1">TOTAL DATA BULAN INI</div>
+                                        <div class="text-white text-opacity-50 small mb-1">DATA BULAN INI</div>
                                         <div class="h2 mb-0 text-white fw-bold">{{ $monthlyTotal }}</div>
                                     </div>
                                 </div>
@@ -55,67 +58,64 @@
     </div>
 
     <!-- Quick Stats Row -->
-    <div class="row mb-4">
-        <div class="col-md-3 col-6 mb-3 mb-md-0">
-            <div class="card border-0 shadow-sm h-100">
+    <div class="row">
+        <div class="col-md-3 col-6 mb-md-0">
+            <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="avtar avtar-s bg-light-primary text-primary rounded-circle me-2">
-                            <i class="ti ti-users"></i>
+                    <div class="d-flex align-items-center">
+                        <div class="avtar avtar-sm bg-light-primary text-primary rounded-circle me-2">
+                            <i class="ti ti-users fs-3"></i>
                         </div>
-                        <h6 class="mb-0 text-muted">Total Siswa</h6>
-                    </div>
-                    <div class="d-flex align-items-baseline">
-                        <h3 class="mb-0 fw-bold">{{ $totalStudents }}</h3>
-                        <span class="ms-2 text-muted small">santri</span>
+                        <div>
+                            <h6 class="mb-2 text-muted">Total Siswa</h6>
+                            <h2 class="mb-0 fw-bold">{{ $totalStudents }}
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-6 mb-3 mb-md-0">
-            <div class="card border-0 shadow-sm h-100">
+        <div class="col-md-3 col-6 mb-md-0">
+            <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="avtar avtar-s bg-light-success text-success rounded-circle me-2">
-                            <i class="ti ti-check"></i>
+                    <div class="d-flex align-items-center">
+                        <div class="avtar avtar-sm bg-light-success text-success rounded-circle me-2">
+                            <i class="ti ti-check fs-3"></i>
                         </div>
-                        <h6 class="mb-0 text-muted">Isi Hari Ini</h6>
-                    </div>
-                    <div class="d-flex align-items-baseline">
-                        <h3 class="mb-0 fw-bold">{{ $todayMutabaah }}</h3>
-                        <span class="ms-2 text-muted small">santri</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="avtar avtar-s bg-light-warning text-warning rounded-circle me-2">
-                            <i class="ti ti-alert-triangle"></i>
+                        <div>
+                            <h6 class="mb-2 text-muted">Isi Hari Ini</h6>
+                            <h2 class="mb-0 fw-bold">{{ $todayMutabaah }}</h2>
                         </div>
-                        <h6 class="mb-0 text-muted">Belum Isi</h6>
-                    </div>
-                    <div class="d-flex align-items-baseline">
-                        <h3 class="mb-0 fw-bold text-danger">{{ $totalStudents - $todayMutabaah }}</h3>
-                        <span class="ms-2 text-muted small">santri</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 col-6">
-            <div class="card border-0 shadow-sm h-100">
+            <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="avtar avtar-s bg-light-info text-info rounded-circle me-2">
-                            <i class="ti ti-layout-grid"></i>
+                    <div class="d-flex align-items-center">
+                        <div class="avtar avtar-sm bg-light-warning text-warning rounded-circle me-2">
+                            <i class="ti ti-alert-triangle fs-3"></i>
                         </div>
-                        <h6 class="mb-0 text-muted">Kelas Binaan</h6>
+                        <div>
+                            <h6 class="mb-2 text-muted">Belum Isi</h6>
+                            <h2 class="mb-0 fw-bold text-danger">{{ $totalStudents - $todayMutabaah }}</h2>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-baseline">
-                        <h3 class="mb-0 fw-bold">{{ $classrooms->count() }}</h3>
-                        <span class="ms-2 text-muted small">kelas</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="avtar avtar-sm bg-light-info text-info rounded-circle me-2">
+                            <i class="ti ti-layout-grid fs-3"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-2 text-muted">Kelas</h6>
+                            <h2 class="mb-0 fw-bold">{{ $classrooms->count() }}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
