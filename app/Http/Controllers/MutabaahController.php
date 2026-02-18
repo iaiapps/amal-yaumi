@@ -9,6 +9,7 @@ use App\Models\Classroom;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class MutabaahController extends Controller
 {
@@ -140,19 +141,39 @@ class MutabaahController extends Controller
     public function amalCreate(Request $request)
     {
         $student = Auth::user()->student;
+        $defaultDate = $request->query('date', now()->toDateString());
+
+        $existing = Mutabaah::where('student_id', $student->id)
+            ->whereDate('tanggal', $defaultDate)
+            ->first();
+
+        if ($existing) {
+            return redirect()
+                ->route('siswa.amal.edit', $existing)
+                ->with('warning', 'Mutabaah tanggal ini sudah ada. Silakan edit data yang sudah dibuat.');
+        }
+
         $items = $this->getItemsForStudent($student);
-        $defaultDate = $request->query('date', date('Y-m-d'));
         return view('siswa.mutabaah.create', compact('items', 'defaultDate'));
     }
 
     public function amalStore(Request $request)
     {
+        $student = Auth::user()->student;
+
         $validated = $request->validate([
-            'tanggal' => 'required|date',
+            'tanggal' => [
+                'required',
+                'date',
+                Rule::unique('mutabaahs', 'tanggal')->where(function ($query) use ($student) {
+                    return $query->where('student_id', $student->id);
+                }),
+            ],
             'data' => 'nullable|array',
+        ], [
+            'tanggal.unique' => 'Mutabaah untuk tanggal ini sudah ada. Silakan edit data yang sudah dibuat.',
         ]);
 
-        $student = Auth::user()->student;
         $items = $this->getItemsForStudent($student);
 
         $data = [];

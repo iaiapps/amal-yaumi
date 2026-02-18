@@ -6,7 +6,7 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-body text-center">
-                    @if($user->profile_photo)
+                    @if ($user->profile_photo)
                         <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="Foto Profil" class="rounded-circle mb-3"
                             width="150" height="150" style="object-fit: cover;">
                     @else
@@ -22,12 +22,12 @@
 
             <div class="card mt-3">
                 <div class="card-header">
-                    <h5>Guru Pembimbing</h5>
+                    <h5>Guru</h5>
                 </div>
                 <div class="card-body">
-                    @if($student->teacher)
+                    @if ($student->teacher)
                         <div class="d-flex align-items-center">
-                            @if($student->teacher->photo)
+                            @if ($student->teacher->photo)
                                 <img src="{{ asset('storage/' . $student->teacher->photo) }}" alt="Foto Guru"
                                     class="rounded-circle me-3" width="50" height="50" style="object-fit: cover;">
                             @else
@@ -54,7 +54,7 @@
                     <h5>Edit Profil</h5>
                 </div>
                 <div class="card-body">
-                    @if(session('success'))
+                    @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
@@ -85,7 +85,7 @@
                         <div class="mb-3">
                             <label class="form-label">Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email', $user->email) }}" required>
+                                value="{{ old('email', $user->email) }}" readonly>
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

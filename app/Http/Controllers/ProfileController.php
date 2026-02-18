@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        
+
         if ($user->hasRole('admin')) {
             return view('profile.edit-admin', compact('user'));
         } elseif ($user->hasRole('guru')) {
@@ -28,7 +28,7 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        
+
         if ($user->hasRole('admin')) {
             return $this->updateAdmin($request, $user);
         } elseif ($user->hasRole('guru')) {
@@ -37,7 +37,7 @@ class ProfileController extends Controller
             return $this->updateStudent($request, $user);
         }
     }
-    
+
     private function updateAdmin(Request $request, $user)
     {
         $request->validate([
@@ -121,7 +121,7 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.edit')->with('success', 'Profile Guru berhasil diperbarui');
     }
-    
+
     private function updateStudent(Request $request, $user)
     {
         $request->validate([
@@ -152,12 +152,12 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.edit')->with('success', 'Profile Siswa berhasil diperbarui');
     }
-    
+
     public function changePassword()
     {
         return view('profile.change-password');
     }
-    
+
     public function updatePassword(Request $request)
     {
         $request->validate([

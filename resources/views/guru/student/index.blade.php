@@ -40,7 +40,9 @@
                         @foreach ($students as $student)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $student->nama }}</td>
+                                <td>{{ $student->nama }}<br>
+                                    <small class="text-muted">{{ $student->user->email }}</small>
+                                </td>
                                 <td>{{ $student->nis }}</td>
                                 <td>{{ $student->jk }}</td>
                                 <td>{{ $student->kelas }}</td>
