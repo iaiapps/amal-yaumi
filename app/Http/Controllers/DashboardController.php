@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
+use App\Models\Mutabaah;
 use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\Mutabaah;
-use App\Models\Classroom;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -41,7 +38,7 @@ class DashboardController extends Controller
         $roleCounts = [
             User::role('admin')->count(),
             $totalTeachers,
-            $totalStudents
+            $totalStudents,
         ];
 
         // 4. Active Teachers (Based on students assigned)
@@ -66,12 +63,14 @@ class DashboardController extends Controller
     public function guru()
     {
         $user = Auth::user();
-        if (!$user instanceof User)
+        if (! $user instanceof User) {
             abort(401);
+        }
 
         $teacher = $user->teacher;
-        if (!$teacher)
+        if (! $teacher) {
             abort(403, 'Profil guru tidak ditemukan.');
+        }
 
         $classrooms = Classroom::where('teacher_id', $teacher->id)->withCount('students')->get();
         $totalStudents = $classrooms->sum('students_count');
@@ -88,21 +87,23 @@ class DashboardController extends Controller
                 })->count();
             $class->active_students = $activeCount;
             $class->completion_rate = $class->students_count > 0 ? round(($activeCount / $class->students_count) * 100, 1) : 0;
+
             return $class;
         });
 
         // Trends for last 14 days
         $trendData = [];
         for ($i = 13; $i >= 0; $i--) {
-            $date = now()->subDays($i)->format('d/m/y');
+            $date = now()->subDays($i);
+            $formattedDate = $date->format('d/m/y');
             $count = Mutabaah::whereIn('student_id', function ($query) use ($teacher) {
                 $query->select('id')->from('students')->where('teacher_id', $teacher->id);
             })->whereDate('tanggal', $date)->count();
 
             $trendData[] = [
-                'date' => $date,
+                'date' => $formattedDate,
                 'count' => $count,
-                'rate' => $totalStudents > 0 ? round(($count / $totalStudents) * 100) : 0
+                'rate' => $totalStudents > 0 ? round(($count / $totalStudents) * 100) : 0,
             ];
         }
 
@@ -142,15 +143,43 @@ class DashboardController extends Controller
                 'mutabaah' => function ($q) {
                     $q->whereMonth('tanggal', now()->month)
                         ->whereYear('tanggal', now()->year);
-                }
+                },
             ])
             ->orderByDesc('mutabaah_count')
             ->limit(5)
             ->get()
             ->map(function ($student) {
                 $student->streak = $student->getCurrentStreak();
+
                 return $student;
             });
+
+        // Highest streak from all students
+        $highestStreak = Student::where('teacher_id', $teacher->id)
+            ->get()
+            ->map(fn ($s) => $s->getCurrentStreak())
+            ->max() ?? 0;
+
+        // Average completion rate
+        $avgCompletionRate = $classStats->avg('completion_rate') ?? 0;
+
+        // Liga Kelas - Leaderboard per kelas
+        $leaderboards = [];
+        foreach ($classrooms as $class) {
+            $leaderboard = Student::where('kelas', $class->nama)
+                ->withCount([
+                    'mutabaah' => function ($q) {
+                        $q->whereMonth('tanggal', now()->month)
+                            ->whereYear('tanggal', now()->year);
+                    },
+                ])
+                ->orderByDesc('mutabaah_count')
+                ->limit(3)
+                ->get();
+
+            $leaderboards[$class->nama] = $leaderboard;
+        }
+
         return view('guru.dashboard', compact(
             'teacher',
             'classrooms',
@@ -162,19 +191,24 @@ class DashboardController extends Controller
             'topStudents',
             'inactiveStudents',
             'submissionRateToday',
-            'monthlyTotal'
+            'monthlyTotal',
+            'highestStreak',
+            'avgCompletionRate',
+            'leaderboards'
         ));
     }
 
     public function student()
     {
         $user = Auth::user();
-        if (!$user instanceof User)
+        if (! $user instanceof User) {
             abort(401);
+        }
 
         $student = $user->student;
-        if (!$student)
+        if (! $student) {
             abort(403, 'Profil siswa tidak ditemukan.');
+        }
 
         $monthlyCount = Mutabaah::where('student_id', $student->id)->whereMonth('tanggal', now()->month)->whereYear('tanggal', now()->year)->count();
         $streak = $student->getCurrentStreak();
@@ -190,14 +224,15 @@ class DashboardController extends Controller
             $mutabaah = Mutabaah::where('student_id', $student->id)->whereDate('tanggal', $date)->first();
             $itemCount = $mutabaah ? count($mutabaah->data) : 0;
 
-            if ($itemCount >= 10)
+            if ($itemCount >= 10) {
                 $color = 'success';
-            elseif ($itemCount >= 5)
+            } elseif ($itemCount >= 5) {
                 $color = 'warning';
-            elseif ($itemCount >= 1)
+            } elseif ($itemCount >= 1) {
                 $color = 'orange';
-            else
+            } else {
                 $color = 'secondary';
+            }
 
             $calendarData[] = [
                 'date' => $date->format('Y-m-d'),
@@ -207,7 +242,7 @@ class DashboardController extends Controller
                 'color' => $color,
                 'isFuture' => $date->isFuture(),
                 'isToday' => $date->isToday(),
-                'mutabaah' => $mutabaah
+                'mutabaah' => $mutabaah,
             ];
         }
 
@@ -226,13 +261,13 @@ class DashboardController extends Controller
                 'mutabaah' => function ($q) {
                     $q->whereMonth('tanggal', now()->month)
                         ->whereYear('tanggal', now()->year);
-                }
+                },
             ])
             ->get()
             ->sortByDesc('mutabaah_count')
             ->values();
 
-        $myRank = $classRank->search(fn($s) => $s->id === $student->id) + 1;
+        $myRank = $classRank->search(fn ($s) => $s->id === $student->id) + 1;
         $totalInClass = $classRank->count();
 
         // Take top 5 for leaderboard display
