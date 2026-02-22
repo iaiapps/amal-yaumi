@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
+use App\Models\Classroom;
 use App\Models\Mutabaah;
 use App\Models\MutabaahItem;
-use App\Models\Classroom;
+use App\Models\Student;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -16,11 +17,17 @@ class MutabaahController extends Controller
     private function getTeacherId()
     {
         $user = Auth::user();
-        if (!$user instanceof \App\Models\User) return null;
+        if (! $user instanceof \App\Models\User) {
+            return null;
+        }
         $role = $user->getRoleNames()->first();
-        if ($role !== 'guru') return null;
+        if ($role !== 'guru') {
+            return null;
+        }
+
         return $user->teacher->id;
     }
+
     /**
      * Get items specifically for the teacher of the student
      */
@@ -28,7 +35,7 @@ class MutabaahController extends Controller
     {
         // Temukan kelas siswa
         $classroom = Classroom::where('nama', $student->kelas)->first();
-        if (!$classroom || !$classroom->teacher_id) {
+        if (! $classroom || ! $classroom->teacher_id) {
             return collect();
         }
 
@@ -51,6 +58,7 @@ class MutabaahController extends Controller
             })
             ->latest('tanggal')
             ->get();
+
         return view('guru.mutabaah.index', compact('mutabaahs'));
     }
 
@@ -68,6 +76,7 @@ class MutabaahController extends Controller
         })->orderBy('urutan')->get();
 
         $defaultDate = $request->query('date', date('Y-m-d'));
+
         return view('guru.mutabaah.create', compact('students', 'items', 'defaultDate'));
     }
 
@@ -102,6 +111,7 @@ class MutabaahController extends Controller
     public function show(Mutabaah $mutabaah)
     {
         $items = $this->getItemsForStudent($mutabaah->student);
+
         return view('guru.mutabaah.show', compact('mutabaah', 'items'));
     }
 
@@ -109,6 +119,7 @@ class MutabaahController extends Controller
     {
         $students = Student::all();
         $items = $this->getItemsForStudent($mutabaah->student);
+
         return view('guru.mutabaah.edit', compact('mutabaah', 'students', 'items'));
     }
 
@@ -121,12 +132,14 @@ class MutabaahController extends Controller
         ]);
 
         $mutabaah->update($validated);
+
         return redirect()->route('admin.mutabaah.index')->with('success', 'Berhasil update data');
     }
 
     public function destroy(Mutabaah $mutabaah)
     {
         $mutabaah->delete();
+
         return redirect()->back()->with('success', 'Berhasil menghapus data');
     }
 
@@ -135,6 +148,7 @@ class MutabaahController extends Controller
     {
         $student = Auth::user()->student;
         $mutabaahs = Mutabaah::where('student_id', $student->id)->latest('tanggal')->get();
+
         return view('siswa.mutabaah.index', compact('mutabaahs'));
     }
 
@@ -154,6 +168,7 @@ class MutabaahController extends Controller
         }
 
         $items = $this->getItemsForStudent($student);
+
         return view('siswa.mutabaah.create', compact('items', 'defaultDate'));
     }
 
@@ -206,6 +221,7 @@ class MutabaahController extends Controller
     public function amalShow(Mutabaah $mutabaah)
     {
         $items = $this->getItemsForStudent($mutabaah->student);
+
         return view('siswa.mutabaah.show', compact('mutabaah', 'items'));
     }
 
@@ -213,6 +229,7 @@ class MutabaahController extends Controller
     {
         $student = Auth::user()->student;
         $items = $this->getItemsForStudent($student);
+
         return view('siswa.mutabaah.edit', compact('mutabaah', 'items'));
     }
 
@@ -224,12 +241,14 @@ class MutabaahController extends Controller
         ]);
 
         $mutabaah->update($validated);
+
         return redirect()->route('siswa.amal.index')->with('success', 'Berhasil update data');
     }
 
     public function amalDestroy(Mutabaah $mutabaah)
     {
         $mutabaah->delete();
+
         return redirect()->back()->with('success', 'Berhasil menghapus data');
     }
 
@@ -237,22 +256,55 @@ class MutabaahController extends Controller
     public function calendar(Request $request)
     {
         $teacherId = $this->getTeacherId();
+
         $month = $request->query('month', now()->format('Y-m'));
+        $kelas = $request->query('kelas');
+        $startDateParam = $request->query('start_date');
+        $endDateParam = $request->query('end_date');
+        $filter = $request->query('filter', 'month');
+
+        $classes = [];
+        if ($teacherId) {
+            $classNames = Classroom::where('teacher_id', $teacherId)->pluck('nama')->unique()->values();
+            $classes = $classNames->toArray();
+        }
+
+        $baseDate = \Carbon\Carbon::parse($month.'-01');
+
+        if ($startDateParam && $endDateParam) {
+            $startDate = \Carbon\Carbon::parse($startDateParam);
+            $endDate = \Carbon\Carbon::parse($endDateParam);
+            $month = $startDate->format('Y-m');
+        } elseif ($filter === 'week') {
+            $startDate = now()->startOfWeek(Carbon::MONDAY);
+            $endDate = $startDate->copy()->endOfWeek(Carbon::SUNDAY);
+        } elseif ($filter === '7days') {
+            $startDate = now()->subDays(6)->startOfDay();
+            $endDate = now()->endOfDay();
+        } elseif ($filter === 'weekdays') {
+            $startDate = now()->startOfWeek(Carbon::MONDAY);
+            $endDate = now()->startOfWeek(Carbon::FRIDAY);
+        } else {
+            $startDate = $baseDate->copy()->startOfMonth();
+            $endDate = $baseDate->copy()->endOfMonth();
+        }
+
+        $daysInRange = $startDate->diffInDays($endDate) + 1;
+
+        $mutabaahQuery = function ($q) use ($month) {
+            $q->whereYear('tanggal', date('Y', strtotime($month)))
+                ->whereMonth('tanggal', date('m', strtotime($month)));
+        };
 
         $students = Student::when($teacherId, function ($q) use ($teacherId) {
             return $q->whereIn('kelas', Classroom::where('teacher_id', $teacherId)->pluck('nama'));
+        })->when($kelas, function ($q) use ($kelas) {
+            return $q->where('kelas', $kelas);
         })->with([
-            'mutabaah' => function ($q) use ($month) {
-                $q->whereYear('tanggal', date('Y', strtotime($month)))
-                    ->whereMonth('tanggal', date('m', strtotime($month)));
-            }
-        ])->orderBy('nama')->get();
+            'mutabaah' => $mutabaahQuery,
+        ])->orderBy('kelas')->orderBy('nama')->get();
 
-        $startDate = \Carbon\Carbon::parse($month . '-01');
-        $endDate = $startDate->copy()->endOfMonth();
-        $daysInMonth = $startDate->daysInMonth;
-
-        return view('guru.mutabaah.calendar', compact('students', 'month', 'startDate', 'endDate', 'daysInMonth'));
+        return view('guru.mutabaah.calendar', compact('students', 'month', 'startDate', 'endDate', 'daysInRange', 'classes', 'kelas', 'request'));
     }
 
     public function studentCalendar(Student $student, Request $request)
@@ -260,13 +312,13 @@ class MutabaahController extends Controller
         $teacherId = $this->getTeacherId();
         if ($teacherId) {
             $myClassNames = Classroom::where('teacher_id', $teacherId)->pluck('nama')->toArray();
-            if (!in_array($student->kelas, $myClassNames)) {
+            if (! in_array($student->kelas, $myClassNames)) {
                 abort(403, 'Anda tidak memiliki akses ke data siswa ini.');
             }
         }
 
         $month = $request->query('month', now()->format('Y-m'));
-        $startDate = \Carbon\Carbon::parse($month . '-01');
+        $startDate = \Carbon\Carbon::parse($month.'-01');
         $endDate = $startDate->copy()->endOfMonth();
 
         $mutabaahs = Mutabaah::where('student_id', $student->id)
@@ -293,6 +345,7 @@ class MutabaahController extends Controller
                 'isToday' => $date->isToday(),
             ];
         }
+
         // dd('coba');
         return view('guru.mutabaah.student-calendar', compact('student', 'month', 'calendarData', 'items', 'startDate'));
     }

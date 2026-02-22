@@ -56,7 +56,7 @@
     @include('layouts.partials.header')
 
     <div class="pc-container">
-        <div class="pc-content">
+        <div class="pc-content pb-1">
             @include('layouts.partials.title')
             @yield('content')
         </div>
